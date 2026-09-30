@@ -33,7 +33,7 @@ Offene Selbstlernumgebung für die gymnasiale Oberstufe zu Ferdinand von Schirac
 
 Keine Buch-PDF oder Filmkopie wird mit der Website verbreitet. Die bereitgestellten Quellen wurden für Aufgaben und Seitenverweise ausgewertet. Originale können lokal im Browser geöffnet werden. Die Filmszenen wurden anhand einer lokalen Transkription, Textabgleich und Filmstandbildern zeitlich zugeordnet. Der Player springt zum Kapitelanfang und stoppt am Ende. Die Filmwerkstatt bietet zusätzlich frei definierbare Zeitmarken.
 
-Offene Texte werden nicht automatisch bewertet. Die Website enthält keine KI-API, keine Klassenkonten, keine zentrale Lernstandserfassung und keine Live-Abstimmung. Notizen bleiben im Browser. Externe Seiten und Videodienste können eigene Zugangsbedingungen haben.
+Offene Texte werden nicht automatisch benotet. Die Website enthält keine KI-API, keine Klassenkonten, keine zentrale Lernstandserfassung und keine Live-Abstimmung. Notizen bleiben im Browser. Externe Seiten und Videodienste können eigene Zugangsbedingungen haben.
 
 ## Inhaltliche Orientierung
 
@@ -54,3 +54,13 @@ Beim Wechsel von einer anderen Webadresse werden lokale Journale nicht automatis
 Die gewählte PDF wird auf Wunsch ausschliesslich in IndexedDB (`terror-reader-media`) gespeichert. Die Datei kann im Leseraum entfernt werden. Die Journal-Sicherung enthält weiterhin nur Antworten und Lernstand, keine Medien. Filmdateien werden nicht dauerhaft im Browser gespeichert. Externes Filmstreaming wird erst nach Auswahl aktiviert.
 
 PDF.js 6.3.289 liegt samt Worker, Standardschriften und Apache-2.0-Lizenz unter `dist/vendor/pdfjs/`. Quellen: https://github.com/mozilla/pdf.js und https://www.npmjs.com/package/pdfjs-dist. Kein CDN und kein Buildschritt erforderlich.
+
+## Sofortfeedback für Lektürefragen
+
+Alle 36 Einzelaufträge im Leseraum haben eigene Erwartungshorizonte, Referenzantworten und überprüfte PDF-Fundstellen. `dist/feedback.js` enthält die lokalen Regeln: umfangreiche Synonymfelder, Wortformen, ss/ß und Umlautvarianten, begrenzte Tippfehlertoleranz bei langen Wörtern sowie Kontextfenster aus höchstens zwei Sätzen. Feedback erscheint nach 650 ms Schreibpause oder sofort über «Antwort prüfen». Es wird beim Wiederöffnen einer gespeicherten Antwort neu berechnet.
+
+Erkannte Aspekte werden mit einem Ausschnitt der eigenen Antwort angezeigt. Fehlende Treffer erzeugen Hinweise, keine automatische Falschwertung. Explizite typische Fehlannahmen erhalten Korrektur, Begründung und PDF-Verweis. Die Fehlerregeln behandeln Verneinungen, Zitate und zurückgewiesene Behauptungen vorsichtig. Die Referenzbuttons öffnen die Fundstelle im lokal geladenen PDF-Reader. Kurzchecks nennen nach jeder Auswahl die richtige Antwort, die Begründung und eine Fundstelle.
+
+Dies ist ein transparenter Sprachabgleich, kein allgemeines Sprachverständnis, keine Benotung und kein externer KI-Dienst. Er kann Umformulierungen übersehen und Zusammenhänge falsch einordnen. Bei kreativen und interpretierenden Aufgaben bleiben abweichende textgestützte Lösungen zulässig. Eine Zahl erkannter Aspekte ist kein Qualitäts- oder Richtigkeitsscore.
+
+`node feedback-check.cjs` prüft alle 36 Erwartungshorizonte und Referenzantworten, sinngleiche Formulierungen, typische Fehler samt Korrekturen, Verneinungen, Zitate, Schreibvarianten und Fundstellen. Beide Prüfscripte laufen vor jeder Veröffentlichung auf GitHub Pages.
