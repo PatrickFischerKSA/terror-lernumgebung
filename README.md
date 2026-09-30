@@ -4,6 +4,10 @@ Offene Selbstlernumgebung für die gymnasiale Oberstufe zu Ferdinand von Schirac
 
 ## Start
 
+**Website:** https://patrickfischerksa.github.io/terror-lernumgebung/
+
+**Repository:** https://github.com/PatrickFischerKSA/terror-lernumgebung
+
 `dist/index.html` direkt im Browser öffnen oder den Ordner `dist` als statische Website bereitstellen. Für zuverlässige Speicherung einen normalen Browser und eine feste Webadresse verwenden. Externe Videos benötigen Internetzugang und werden erst nach Klick geladen.
 
 ## Inhalte
@@ -32,3 +36,11 @@ Offene Texte werden nicht automatisch bewertet. Die Website enthält keine KI-AP
 ## Inhaltliche Orientierung
 
 Moralische Bewertung, literarische Interpretation und rechtliche Prüfung werden getrennt. Der Fall ist im deutschen Recht verortet; ein eigener Vergleichsauftrag behandelt die Schweizer Bundesverfassung. Staatsrechtliche Befugnis, Rechtfertigung, Entschuldigung und Strafzumessung sind nicht austauschbar. Die Lernkarten vereinfachen für die Sekundarstufe II und verlinken zur Vertiefung.
+
+## Veröffentlichung und Prüfung
+
+Änderungen auf `main` werden automatisch geprüft und aus `dist` mit GitHub Actions auf GitHub Pages veröffentlicht. Die Website benötigt keinen Server und keine API-Schlüssel.
+
+Lokale Prüfung: `node check.cjs`. Der Check prüft die 48 Ansichten, Inhaltsverweise, Simulationsschritte, Zeitangaben und das JSON-Exportformat.
+
+Beim Wechsel von einer anderen Webadresse werden lokale Journale nicht automatisch übertragen. Exportiere dort eine JSON-Sicherung und importiere sie unter „Mein Journal“ auf dieser Website.
