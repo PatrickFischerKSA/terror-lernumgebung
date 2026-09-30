@@ -130,3 +130,11 @@ Dateien: `dist/spielraum/assistant.js`, `argumentation.js`; Regressionen: `tests
 ## Filmische Gestaltung
 
 `dist/visuals.js` verzeichnet die originalen Zeitmarken, Bildbeschreibungen und Beobachtungsaufträge. WebP-Standbilder (1280 × 720) und MP4-Ausschnitte (854 × 480, H.264/AAC) werden von GitHub Pages ausgeliefert. Insgesamt ca. 5,5 MB; Videos laden erst bei Bedarf (`preload="none"`), ohne Autoplay. Die sechs Fenster dienen der Analyse von Raum, Auftreten und Kamera; sie ersetzen keine vollständige Aussage. Die zugehörige Textstation erschliesst jeweils den Kontext. Die Urteilsvarianten werden in den Vorschaubildern nicht vorweggenommen.
+
+## Aviatik · Lage und Verantwortung
+
+`#aviatik` erschliesst acht selbstständig nutzbare Stationen, 18 Glossareinträge, ein interaktives schematisches Lagebild, einen Zeit-Distanz-Rechner, eine literarische Zeitlinie und acht Auswahlfragen mit begründetem Sofortfeedback. Freie Transfertexte verwenden das bestehende lokale Journal; sie erhalten ein offengelegtes Selbstprüfraster. Es gibt keine Flug-Livedaten, keine echte Funkverbindung und keine automatische rechtliche Schlussfolgerung.
+
+Fachquellen und vollständige Bildnachweise stehen in `dist/aviation.js` und auf der Website. Zwei kleinere, vom Bildarchiv bezogene Vorschauen beschleunigen die Darstellung; Originale öffnen erst auf Klick. Fünf Original-JPEGs in `dist/media/aviatik/`: München (High Contrast, CC BY 3.0 DE), Zürich (Hornet Driver, CC BY-SA 3.0), DLR-Simulator (DLR, CC BY 3.0 DE), Washington ARTCC (FAA, Public Domain USA), Anchorage-Kartenausschnitt 21.03.2024 (FAA, Public Domain). Die verschiedenen Fotoorte und Jahre sind ausdrücklich bezeichnet. Das Kartenbeispiel ist kein Deutschland-Flugweg; die DFS-AIP ist als Originalquelle für EDDM verlinkt. Inhalte und Quellen am 30.09.2026 geprüft.
+
+`node tests/aviation.cjs` prüft Quellenverknüpfung, Bildlizenzen, Erklärungen, Rechenfälle und ungültige Eingaben.

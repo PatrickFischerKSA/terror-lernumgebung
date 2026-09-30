@@ -31,6 +31,8 @@ jobs:
           node --check dist/data.js
           node --check dist/visuals.js
           node tests/visuals.cjs
+          node --check dist/aviation.js
+          node tests/aviation.cjs
           node check.cjs
           node feedback-check.cjs
           node --check dist/spielraum/court.js

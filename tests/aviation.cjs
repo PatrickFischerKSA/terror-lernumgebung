@@ -1,0 +1,7 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const c={};vm.createContext(c);vm.runInContext(fs.readFileSync('dist/aviation.js','utf8')+';this.units=AV_UNITS;this.sources=AV_SOURCES;this.images=AV_IMAGES;',c);
+assert.equal(c.units.length,8);assert.equal(new Set(c.units.map(u=>u.id)).size,8);
+for(const u of c.units){assert(u.blocks.length>=4);assert(u.task.length>60);assert(c.images[u.image]);assert(u.check[2]>=0&&u.check[2]<u.check[1].length);assert(c.sources[u.check[4]]);for(const s of u.source)assert(c.sources[s]);assert(c.avQuizFeedback(u,(u.check[2]+1)%3).includes('Richtige Antwort:'));}
+assert.equal(c.avCalculate(60,360,2).flight,10);assert.equal(c.avCalculate(60,480,2).flight,7.5);assert.equal(c.avCalculate(60,360,12).remaining,0);assert(c.avCalculate(60,360,10).exceeded);for(const values of [[0,360,2],[60,0,2],[NaN,360,2],[60,360,-1],[201,360,2],[60,601,2]])assert.equal(c.avCalculate(...values),null);
+assert(c.avGlossary('radar').includes('Primärradar'));assert(c.avGlossary('qxyz').includes('Kein passender Begriff'));
+for(const [key,m] of Object.entries(c.images)){assert(fs.statSync('dist/media/aviatik/'+key+'.jpg').size>10000);assert(m[3]&&m[4].startsWith('https://creativecommons.org/'));}
+assert(c.avRadar().includes('Kein Live-Radar'));assert(c.avRadar().includes('Keine reale Geografie'));console.log('PASS: eight aviation units, sources and image licences, quiz explanations, model assumptions, calculator boundaries, glossary.');

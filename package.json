@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev:server": "wrangler dev",
-    "check": "node check.cjs && node tests/visuals.cjs && node feedback-check.cjs && node tests/content.mjs && node tests/assistant.mjs && tsc --noEmit",
+    "check": "node check.cjs && node tests/visuals.cjs && node tests/aviation.cjs && node feedback-check.cjs && node tests/content.mjs && node tests/assistant.mjs && tsc --noEmit",
     "test:room": "node tests/room.mjs",
     "deploy:server": "wrangler deploy"
   },
