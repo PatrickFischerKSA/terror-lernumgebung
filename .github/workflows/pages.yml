@@ -34,6 +34,9 @@ jobs:
           node --check dist/spielraum/court.js
           node --check dist/spielraum/content.js
           node tests/content.mjs
+          node --check dist/spielraum/assistant.js
+          node --check dist/spielraum/argumentation.js
+          node tests/assistant.mjs
           npx tsc --noEmit
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

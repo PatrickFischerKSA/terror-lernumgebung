@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {analyse,formCheck,THINKING,MANUAL} from '../dist/spielraum/argumentation.js';
+import {QUESTIONS,questionFeedback,makeDraft,phasePrompts} from '../dist/spielraum/assistant.js';
+assert(analyse('Entweder wir schiessen ab oder alle sterben.').flags.some(f=>f.id==='dilemma'));
+assert(analyse('Die Mehrheit findet den Freispruch richtig.').flags.some(f=>f.id==='majority'));
+assert(analyse('Die Passagiere waren ohnehin tot.').flags.some(f=>f.id==='certainty'));
+assert(analyse('Koch sagt: „Die Passagiere waren ohnehin tot.“ Ich bestreite das.').flags.find(f=>f.id==='certainty').reported);
+assert(analyse('Die Passagiere wären nicht ohnehin gestorben.').flags.find(f=>f.id==='certainty').reported);
+assert.equal(analyse('Meiser schildert ihre Trauer und den Verlust ihres Mannes.').flags.length,0);
+assert.equal(analyse('').flags.length,0);
+assert(analyse('Die These ist plausibel, weil der Befehl laut F02 feststeht. Allerdings bleibt ein Einwand. Somit braucht es eine weitere Prüfung.').structure.filter(x=>x.found).length>=4);
+assert(formCheck('a','b').includes('Modus ponens'));
+assert(formCheck('notb','nota').includes('Modus tollens'));
+assert(formCheck('b','a').includes('nicht zwingend'));
+assert(formCheck('nota','notb').includes('nicht zwingend'));
+for(const q of QUESTIONS){assert(questionFeedback(q,q[3]).includes('passt'));assert(q[4].includes('PDF')||q[4].includes('StGB'));}
+for(let i=0;i<11;i++)assert(phasePrompts(i).length);
+const notes=Object.fromEntries(['tenor','facts','evidence','offence','justification','excuse','counter','reasons'].map(x=>[x,'Eigener begründeter Satz zu '+x]));
+const d=makeDraft({notes,evidence:{12:{status:'umstritten',text:'Testbeleg'}}},{variant:'original'});
+assert.equal(d.tenor,notes.tenor);assert(d.evidence.includes('Beitrag #12 (umstritten)'));assert(d.facts.includes('Texttreuer Fall'));assert.equal(Object.keys(d).length,8);
+assert.equal(makeDraft({notes:{},evidence:{}},{variant:'original'}).tenor,'');
+assert(THINKING.length+MANUAL.length>=20);
+console.log('PASS: guided questions, all eleven phase prompts, evidence-based draft, argument signals, quotation/negation caution and formal logic.');
