@@ -31,7 +31,7 @@ Offene Selbstlernumgebung für die gymnasiale Oberstufe zu Ferdinand von Schirac
 - `dist/style.css`: responsive Gestaltung und Druckformat
 - `dist/index.html`: Einstieg und Metadaten
 
-Keine Buch-PDF oder Filmkopie wird mit der Website verbreitet. Die bereitgestellten Quellen wurden für Aufgaben und Seitenverweise ausgewertet. Originale können lokal im Browser geöffnet werden. Die Filmszenen wurden anhand einer lokalen Transkription, Textabgleich und Filmstandbildern zeitlich zugeordnet. Der Player springt zum Kapitelanfang und stoppt am Ende. Die Filmwerkstatt bietet zusätzlich frei definierbare Zeitmarken.
+Keine Buch-PDF oder vollständige Filmkopie wird mit der Website verbreitet. Auf ausdrücklichen Wunsch enthält `dist/media/film/` 14 ausgewählte Filmstandbilder und sechs Ausschnitte von je 20 Sekunden aus der bereitgestellten Filmfassung. Die bereitgestellten Quellen wurden für Aufgaben und Seitenverweise ausgewertet. Originale können lokal im Browser geöffnet werden. Die Filmszenen wurden anhand einer lokalen Transkription, Textabgleich und Filmstandbildern zeitlich zugeordnet. Der Player springt zum Kapitelanfang und stoppt am Ende. Die Filmwerkstatt bietet zusätzlich frei definierbare Zeitmarken.
 
 Offene Texte werden nicht automatisch benotet. Die Website enthält keine KI-API, keine Klassenkonten, keine zentrale Lernstandserfassung und keine Live-Abstimmung. Der zusätzliche Multiplayer-Prozess synchronisiert nur seine eigenen Chatbeiträge und den Verfahrensstand. Lektürenotizen bleiben im Browser. Externe Seiten und Videodienste können eigene Zugangsbedingungen haben.
 
@@ -126,3 +126,7 @@ Die bereitgestellte **Argumentationslehre.pdf**, S. 1–4, liefert die Schlussar
 Private Belegnotizen und Zwischenschritte liegen in `sessionStorage` (`terror-guide-<Raumcode>`); Entwürfe werden erst durch die bestehende ausdrückliche Urteilsverkündung geteilt. Kein zusätzlicher API-Key und keine Änderung des Multiplayer-Backends sind erforderlich.
 
 Dateien: `dist/spielraum/assistant.js`, `argumentation.js`; Regressionen: `tests/assistant.mjs`. Geprüft werden die Faktenrückmeldungen, elf Phasen, Belegübernahme in Entwürfe, Mustertreffer, Zitat-/Verneinungshinweise sowie gültige und ungültige formale Schlüsse.
+
+## Filmische Gestaltung
+
+`dist/visuals.js` verzeichnet die originalen Zeitmarken, Bildbeschreibungen und Beobachtungsaufträge. WebP-Standbilder (1280 × 720) und MP4-Ausschnitte (854 × 480, H.264/AAC) werden von GitHub Pages ausgeliefert. Insgesamt ca. 5,5 MB; Videos laden erst bei Bedarf (`preload="none"`), ohne Autoplay. Die sechs Fenster dienen der Analyse von Raum, Auftreten und Kamera; sie ersetzen keine vollständige Aussage. Die zugehörige Textstation erschliesst jeweils den Kontext. Die Urteilsvarianten werden in den Vorschaubildern nicht vorweggenommen.
