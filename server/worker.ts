@@ -49,7 +49,7 @@ export class Courtroom extends DurableObject<Env> {
   meta(): Meta|undefined {const row=this.ctx.storage.sql.exec<{data:string}>('SELECT data FROM meta WHERE id=1').toArray()[0];return row?JSON.parse(row.data):undefined;}
   put(meta: Meta) {this.ctx.storage.sql.exec('INSERT OR REPLACE INTO meta(id,data) VALUES (1,?)',JSON.stringify(meta));}
   people() {return this.ctx.storage.sql.exec<Person>('SELECT * FROM people').toArray();}
-  online(role: string) {return this.ctx.getWebSockets(role).some(ws=>ws.readyState===1);}
+  online(role: string) {return this.ctx.getWebSockets(role).some(ws=>ws.readyState===1&&!ws.deserializeAttachment()?.disconnected);}
   publicState() {return {...this.meta(),people:this.people().map(p=>({role:p.role,online:this.online(p.role),raised:p.raised})),messages:this.ctx.storage.sql.exec<Entry>('SELECT * FROM messages ORDER BY id').toArray().map(({request,...e})=>e)};}
   send(ws: WebSocket, data: unknown) {try {ws.send(JSON.stringify(data));}catch { /* A reconnect obtains the persisted snapshot. */ }}
   broadcast() {const value=JSON.stringify({type:'state',state:this.publicState()});for(const ws of this.ctx.getWebSockets()){try{ws.send(value);}catch{ /* Reconnect loads persisted state. */ }}}
@@ -146,7 +146,12 @@ export class Courtroom extends DurableObject<Env> {
       this.send(ws,{type:'ack',id:request});this.broadcast();
     } catch(e) {this.send(ws,{type:'error',id:request,error:e instanceof Error?e.message:'Ungültige Anfrage.'});}
   }
-  async webSocketClose(ws: WebSocket, code:number) {ws.close(code);this.broadcast();}
-  async webSocketError(ws: WebSocket) {ws.close(1011,'Verbindungsfehler');this.broadcast();}
+  async webSocketClose(ws: WebSocket, code:number) {
+    ws.serializeAttachment({...ws.deserializeAttachment(),disconnected:true});
+    // 1005/1006 are received-only status codes and must never be sent in a close frame.
+    if(ws.readyState===1)ws.close(code===1005||code===1006?1000:code);
+    if(!this.ended)this.broadcast();
+  }
+  async webSocketError(ws: WebSocket) {ws.serializeAttachment({...ws.deserializeAttachment(),disconnected:true});ws.close(1011,'Verbindungsfehler');if(!this.ended)this.broadcast();}
   async alarm() {this.ended=true;for(const ws of this.ctx.getWebSockets()){this.send(ws,{type:'deleted'});ws.close(4002,'Raum abgelaufen');}await this.ctx.storage.deleteAll();}
 }
