@@ -1,3 +1,8 @@
 research/
 .sites-runtime/
 *.zip
+node_modules/
+.wrangler/
+.dev.vars
+.env
+server-build/

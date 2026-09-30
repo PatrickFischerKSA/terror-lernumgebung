@@ -1,0 +1,39 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "terror-spielraum",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-09-30",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ROOMS",
+        "class_name": "Courtroom"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "Courtroom"
+      ]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.01
+  },
+  "ratelimits": [
+    {
+      "name": "CREATE_LIMIT",
+      "namespace_id": "10930",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ]
+}

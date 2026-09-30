@@ -1,0 +1,17 @@
+{
+  "name": "terror-lernumgebung",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:server": "wrangler dev",
+    "check": "node check.cjs && node feedback-check.cjs && node tests/content.mjs && tsc --noEmit",
+    "test:room": "node tests/room.mjs",
+    "deploy:server": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260930.2",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.145.0",
+    "ws": "^8.22.0"
+  }
+}

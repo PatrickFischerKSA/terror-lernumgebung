@@ -33,7 +33,7 @@ Offene Selbstlernumgebung für die gymnasiale Oberstufe zu Ferdinand von Schirac
 
 Keine Buch-PDF oder Filmkopie wird mit der Website verbreitet. Die bereitgestellten Quellen wurden für Aufgaben und Seitenverweise ausgewertet. Originale können lokal im Browser geöffnet werden. Die Filmszenen wurden anhand einer lokalen Transkription, Textabgleich und Filmstandbildern zeitlich zugeordnet. Der Player springt zum Kapitelanfang und stoppt am Ende. Die Filmwerkstatt bietet zusätzlich frei definierbare Zeitmarken.
 
-Offene Texte werden nicht automatisch benotet. Die Website enthält keine KI-API, keine Klassenkonten, keine zentrale Lernstandserfassung und keine Live-Abstimmung. Notizen bleiben im Browser. Externe Seiten und Videodienste können eigene Zugangsbedingungen haben.
+Offene Texte werden nicht automatisch benotet. Die Website enthält keine KI-API, keine Klassenkonten, keine zentrale Lernstandserfassung und keine Live-Abstimmung. Der zusätzliche Multiplayer-Prozess synchronisiert nur seine eigenen Chatbeiträge und den Verfahrensstand. Lektürenotizen bleiben im Browser. Externe Seiten und Videodienste können eigene Zugangsbedingungen haben.
 
 ## Inhaltliche Orientierung
 
@@ -41,7 +41,7 @@ Moralische Bewertung, literarische Interpretation und rechtliche Prüfung werden
 
 ## Veröffentlichung und Prüfung
 
-Änderungen auf `main` werden automatisch geprüft und aus `dist` mit GitHub Actions auf GitHub Pages veröffentlicht. Die Website benötigt keinen Server und keine API-Schlüssel.
+Änderungen auf `main` werden automatisch geprüft und aus `dist` mit GitHub Actions auf GitHub Pages veröffentlicht. Die Selbstlernbereiche benötigen keinen Server und keine API-Schlüssel. Der zusätzliche Multiplayer-Spielraum nutzt den unten beschriebenen Cloudflare-Server.
 
 Lokale Prüfung: `node check.cjs`. Der Check prüft die 48 Ansichten, Inhaltsverweise, Simulationsschritte, Zeitangaben und das JSON-Exportformat.
 
@@ -64,3 +64,53 @@ Erkannte Aspekte werden mit einem Ausschnitt der eigenen Antwort angezeigt. Fehl
 Dies ist ein transparenter Sprachabgleich, kein allgemeines Sprachverständnis, keine Benotung und kein externer KI-Dienst. Er kann Umformulierungen übersehen und Zusammenhänge falsch einordnen. Bei kreativen und interpretierenden Aufgaben bleiben abweichende textgestützte Lösungen zulässig. Eine Zahl erkannter Aspekte ist kein Qualitäts- oder Richtigkeitsscore.
 
 `node feedback-check.cjs` prüft alle 36 Erwartungshorizonte und Referenzantworten, sinngleiche Formulierungen, typische Fehler samt Korrekturen, Verneinungen, Zitate, Schreibvarianten und Fundstellen. Beide Prüfscripte laufen vor jeder Veröffentlichung auf GitHub Pages.
+
+## Multiplayer-Prozess für sechs Rollen
+
+**Spielraum:** https://patrickfischerksa.github.io/terror-lernumgebung/spielraum/
+
+Eine Person eröffnet den Raum als Vorsitz. Fünf weitere Personen wählen über den Einladungslink Lars Koch, Biegler, Nelson, Lauterbach oder Franziska Meiser. Die Rollen werden serverseitig exklusiv vergeben. Alle haben Zugriff auf zwölf belegte Fallkarten, alle Rollenakten, die rechtlichen Orientierungshilfen, 17 einschlägige StGB-/StPO-Normen und das vollständige durchsuchbare Grundgesetz. Die Gesetzestexte stammen aus den XML-Paketen von Gesetze im Internet (Abruf 30.09.2026); die didaktischen Erläuterungen sind ausdrücklich von den Normtexten getrennt. Die heutige Gesetzesfassung wird nicht als historischer Rechtsstand von 2013 ausgegeben.
+
+Der Vorsitz steuert elf Verfahrensphasen und das Rederecht. Wortmeldungen, Einwände und Organisationsnachrichten bleiben möglich. Eine achtteilige textbasierte Entscheidungshilfe führt von den Tatsachen über Beweise, Tatbestand, Rechtfertigung und Schuld bis zu Gegenargument und Begründung. Sie vergibt keine juristische Richtigkeitsnote. Nur der Vorsitz kann das ausgearbeitete Urteil veröffentlichen. Drei gekennzeichnete erfundene Fallvarianten können in der Vorbereitung gewählt werden. Eine neue Verhandlung kann auf den Vorbereitungsschritt zurückgesetzt werden; Änderungen bleiben im Protokoll erkennbar.
+
+### Technik und Datenschutz
+
+Die **gesamte Oberfläche und der gesamte Quellcode liegen auf GitHub**, die Oberfläche läuft auf GitHub Pages. Echte geräteübergreifende Synchronisation benötigt zusätzlich einen Server: `terror-spielraum.patrick-fischer.workers.dev` im bestehenden Cloudflare-Konto. Ein SQLite Durable Object koordiniert jeden Raum. Die WebSocket-Verbindungen können hibernieren; kein kostenpflichtiges Upgrade ist eingerichtet.
+
+- Keine Anmeldung, keine echten Namen, keine KI-API; die Figuren sind menschliche Mitspieler*innen.
+- Der zufällige Raumcode im Einladungslink ermöglicht das Beanspruchen freier Rollen. Es gibt kein öffentliches Raumverzeichnis. Belegte Rollen können nicht über den Link übernommen werden.
+- Ein eigener zufälliger Rollenschlüssel wird in `sessionStorage` dieses Browserfensters gespeichert und beim WebSocket-Verbindungsaufbau als Unterprotokoll übertragen, nicht als URL-Parameter. Der Server speichert nur dessen SHA-256-Hash. Keine Tokens werden im öffentlichen Zustand oder Protokoll ausgegeben.
+- Chat und gemeinsamer Verfahrensstand werden bei Cloudflare gespeichert. Automatische Löschung 24 Stunden nach Eröffnung über einen Durable-Object-Alarm. Zugriff endet spätestens mit der Ablaufzeit. Der Vorsitz kann früher löschen. Bei einer technischen Verzögerung des Alarms erfolgt die physische Löschung beim nächsten Alarmdurchlauf.
+- Urteilsentwurf und ungesendeter Beitrag bleiben im jeweiligen Browserfenster, bis sie bewusst veröffentlicht werden. Neuladen erhält die Rolle. Nach Schliessen/Verlust des Fensters ist die Wiederherstellung browserabhängig. Der Vorsitz kann eine offline befindliche Mitspielerrolle freigeben; deren alter Schlüssel verliert dabei seine Gültigkeit. Geht der Vorsitz-Zugang verloren, einen neuen Raum erstellen.
+- Das gemeinsame Protokoll lässt sich als Markdown sichern. **Vor Löschung oder Ablauf exportieren.** Die lokale Sicherung wird nicht durch den Server gelöscht.
+- Begrenzte Nachrichtenlänge, serverseitige Rollenrechte, Schreibbremse, maximal 1200 Protokolleinträge, maximal drei Verbindungen pro Rolle, Begrenzung neuer Räume pro IP. Keine Chattexte oder Zugangsschlüssel werden durch Anwendungscode geloggt. Cloudflare verarbeitet technisch erforderliche Verbindungsdaten und Betriebsmetadaten.
+- Die bisherigen Lektürenotizen, PDF-Dateien und Journale verbleiben weiterhin lokal; sie werden nicht an den Spielraum-Server gesendet.
+
+### Entwicklung und Veröffentlichung
+
+```sh
+npm ci
+npx wrangler types
+npm run check
+npx wrangler dev --port 8787
+# In einem zweiten Terminal:
+python3 -m http.server 8769 --directory dist
+# In einem dritten Terminal, gegen den lokalen Worker:
+npm run test:room
+```
+
+Die beiden lokalen Origins `localhost:8769` und `127.0.0.1:8769` sind erlaubt. Die Oberfläche wählt nur dort den lokalen Worker. Produktion verwendet die feste Adresse aus `dist/spielraum/config.js`.
+
+```sh
+# Mit vorhandener Cloudflare-Anmeldung:
+npx wrangler deploy --dry-run
+npm run deploy:server
+# Integrationstest gegen die veröffentlichte API; legt einen eigenen Testraum an und löscht ihn:
+ROOM_API=https://terror-spielraum.patrick-fischer.workers.dev npm run test:room
+# Gesetzesakte bei Bedarf bewusst aktualisieren:
+python3 scripts/fetch-laws.py
+```
+
+Backend-Veröffentlichungen erfolgen bewusst separat mit Wrangler; GitHub Pages veröffentlicht die statischen Dateien nach den Prüfungen auf `main`. Secrets gehören weder in `dist` noch ins Repository. `wrangler.jsonc`, Backend, Tests und npm-Lockdatei sind versioniert. Die automatisch erzeugten Laufzeittypen befinden sich in `worker-configuration.d.ts`.
+
+`tests/room.mjs` prüft sechs gleichzeitige Clients, konkurrierende Rollenvergabe, bereinigte öffentliche Daten, Richterberechtigungen, Rederecht, Einwände, Wortmeldungen, gemeinsame Nachrichten, Duplikatschutz, Wiederverbindung, Varianten, Urteilsübertragung, Abschluss und Löschung. `tests/content.mjs` kontrolliert die Gesetzesakte, Quellenverweise und das Rollen-/Phasenschema. Die Oberfläche wurde zusätzlich mit zwei unabhängigen Browser-Tabs und schmalem Viewport geprüft.

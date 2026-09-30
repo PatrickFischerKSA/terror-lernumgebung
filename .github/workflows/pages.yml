@@ -18,6 +18,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
       - name: Validate learning environment
         run: |
           node --check dist/feedback.js
@@ -26,6 +31,10 @@ jobs:
           node --check dist/data.js
           node check.cjs
           node feedback-check.cjs
+          node --check dist/spielraum/court.js
+          node --check dist/spielraum/content.js
+          node tests/content.mjs
+          npx tsc --noEmit
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
