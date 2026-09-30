@@ -10,6 +10,8 @@ assert.equal(analyse('Meiser schildert ihre Trauer und den Verlust ihres Mannes.
 assert.equal(analyse('').flags.length,0);
 assert(analyse('Die These ist plausibel, weil der Befehl laut F02 feststeht. Allerdings bleibt ein Einwand. Somit braucht es eine weitere Prüfung.').structure.filter(x=>x.found).length>=4);
 assert(formCheck('a','b').includes('Modus ponens'));
+assert(formCheck('a','a').includes('wiederholst'));
+assert(formCheck('notb','notb').includes('wiederholst'));
 assert(formCheck('notb','nota').includes('Modus tollens'));
 assert(formCheck('b','a').includes('nicht zwingend'));
 assert(formCheck('nota','notb').includes('nicht zwingend'));
