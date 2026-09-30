@@ -12,7 +12,9 @@ Offene Selbstlernumgebung für die gymnasiale Oberstufe zu Ferdinand von Schirac
 
 ## Inhalte
 
-- 12 Lektürestationen mit PDF-Seitenverweisen, Aufgaben, zwei Hilfestufen und Reflexionsrastern
+- Szenenleseraum nach dem Vorbild des Faust-Leseraums: Film und PDF parallel, Szenenleiste, 36 einzeln bearbeitbare Analyseaufträge, Filmspuren und gestufte Hilfen
+- Zehn didaktische Filmkapitel mit geprüften Marken für die 93:37-Fassung; Entscheidungspause und beide Urteilsfassungen separat anwählbar
+- Lokaler PDF-Reader mit PDF.js, automatischem Seitenwechsel, optionalem Merken der Datei im Browser und Löschfunktion
 - 7 Rollenakten, 6 Dilemmavarianten und ein Perspektivwechsel nach Rawls
 - 8 philosophische Positionen und ein Vergleichswerkzeug
 - Rechtslabor mit 8 kommentierten Kurzchecks
@@ -29,7 +31,7 @@ Offene Selbstlernumgebung für die gymnasiale Oberstufe zu Ferdinand von Schirac
 - `dist/style.css`: responsive Gestaltung und Druckformat
 - `dist/index.html`: Einstieg und Metadaten
 
-Keine Buch-PDF oder Filmkopie wird mit der Website verbreitet. Die bereitgestellten Quellen wurden für Aufgaben und Seitenverweise ausgewertet. Originale können lokal im Browser geöffnet werden. Die Filmstellen sind nicht vorgetäuscht: Nutzende setzen ihre Zeitmarken passend zur vorhandenen Fassung selbst.
+Keine Buch-PDF oder Filmkopie wird mit der Website verbreitet. Die bereitgestellten Quellen wurden für Aufgaben und Seitenverweise ausgewertet. Originale können lokal im Browser geöffnet werden. Die Filmszenen wurden anhand einer lokalen Transkription, Textabgleich und Filmstandbildern zeitlich zugeordnet. Der Player springt zum Kapitelanfang und stoppt am Ende. Die Filmwerkstatt bietet zusätzlich frei definierbare Zeitmarken.
 
 Offene Texte werden nicht automatisch bewertet. Die Website enthält keine KI-API, keine Klassenkonten, keine zentrale Lernstandserfassung und keine Live-Abstimmung. Notizen bleiben im Browser. Externe Seiten und Videodienste können eigene Zugangsbedingungen haben.
 
@@ -44,3 +46,11 @@ Moralische Bewertung, literarische Interpretation und rechtliche Prüfung werden
 Lokale Prüfung: `node check.cjs`. Der Check prüft die 48 Ansichten, Inhaltsverweise, Simulationsschritte, Zeitangaben und das JSON-Exportformat.
 
 Beim Wechsel von einer anderen Webadresse werden lokale Journale nicht automatisch übertragen. Exportiere dort eine JSON-Sicherung und importiere sie unter „Mein Journal“ auf dieser Website.
+
+## Szenenleseraum
+
+`dist/reader.js` enthält Mediensteuerung, PDF-Reader und Einzelaufträge. `TERROR.scenes` in `dist/data.js` enthält die Marken (Sekunden) der bereitgestellten Fassung. Andere Filmschnitte brauchen eigene Marken. PDF-Seiten sind absolute Dateiseiten der 103-seitigen btb-Ausgabe. Die Varianten unter `urteile.parts` verknüpfen Freispruch mit PDF 91 und Verurteilung mit PDF 87. Die Entscheidungspause endet vor dem ersten Urteilstitel.
+
+Die gewählte PDF wird auf Wunsch ausschliesslich in IndexedDB (`terror-reader-media`) gespeichert. Die Datei kann im Leseraum entfernt werden. Die Journal-Sicherung enthält weiterhin nur Antworten und Lernstand, keine Medien. Filmdateien werden nicht dauerhaft im Browser gespeichert. Externes Filmstreaming wird erst nach Auswahl aktiviert.
+
+PDF.js 6.3.289 liegt samt Worker, Standardschriften und Apache-2.0-Lizenz unter `dist/vendor/pdfjs/`. Quellen: https://github.com/mozilla/pdf.js und https://www.npmjs.com/package/pdfjs-dist. Kein CDN und kein Buildschritt erforderlich.
