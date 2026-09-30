@@ -1,0 +1,15 @@
+{
+  "version": "simulation-2026-09-30-v1",
+  "title": "Fiktive Bundesregierung: übergesetzlicher Notstand als Rechtfertigung",
+  "fictional": true,
+  "rule": "Ausschliesslich in dieser erfundenen Simulation ist der übergesetzliche Notstand als möglicher Rechtfertigungsgrund für den Abschuss zugelassen. Das ist eine Spielvorgabe der Lehrperson, keine Aussage über geltendes deutsches Recht und kein automatischer Freispruch.",
+  "requirements": [
+    "Eine gegenwärtige Gefahr für Menschen im Stadion muss anhand des damaligen Wissensstands begründet sein.",
+    "Der Abschuss muss nach diesem Wissensstand geeignet und erforderlich erscheinen; mildere Mittel wie Evakuierung, Kontakt oder Abwarten sind konkret zu prüfen.",
+    "Die angenommene Unvermeidbarkeit und der erwartete Rettungserfolg sind mit Belegen zu prüfen; Unsicherheit darf nicht in Gewissheit umgedeutet werden.",
+    "Die Tötung der unbeteiligten Passagiere, die Menschenwürde-Gegenposition und die Gefahr einer Verallgemeinerung müssen ausdrücklich erörtert werden.",
+    "Der Vorsitz begründet, ob diese erfundenen Voraussetzungen im verhandelten Fall erfüllt sind. Rechtfertigung und blosse Entschuldigung bleiben unterschiedliche Prüfungsschritte."
+  ],
+  "actualLaw": "Diese Spielvorgabe weicht bewusst von der verfassungsrechtlichen Menschenwürdegrenze ab. Eine Bundesregierung kann diese Grenze nicht durch eine politische Festlegung aufheben. BVerfG, 15.02.2006, 1 BvR 357/05: Die damalige Abschussermächtigung war nichtig; Rn. 130 lässt die strafrechtliche Bewertung einer tatsächlich vorgenommenen Tötung ausdrücklich offen.",
+  "source": "https://www.bundesverfassungsgericht.de/SharedDocs/Entscheidungen/DE/2006/02/rs20060215_1bvr035705.html"
+}

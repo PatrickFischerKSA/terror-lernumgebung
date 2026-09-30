@@ -1,0 +1,15 @@
+{
+  "title": "Begründungsraster für die richterliche Beratung",
+  "instructions": "Formativ beraten, keine automatische Note und kein fertiges Urteil. Erkläre für 15-Jährige: Was trägt? Was fehlt? Welche konkrete Frage hilft weiter?",
+  "criteria": [
+    "These und Schlussfolgerung: Ist klar, was behauptet wird?",
+    "Beleg: Stammt die Behauptung aus einer PDF-Stelle, einer Norm oder nur aus einer Vermutung?",
+    "Wissensstand: Was wusste Koch vor dem Abschuss, was wissen Zuschauer erst später?",
+    "Schlussregel: Warum stützt dieser Beleg die These? Sind die Voraussetzungen wirklich erfüllt?",
+    "Gegenargument: Wird die stärkste Gegenposition fair wiedergegeben und beantwortet?",
+    "Rechtsebenen: Tatbestand, Rechtfertigung, Entschuldigung und politische Bewertung unterscheiden.",
+    "Simulation: Die erfundene Regierungsregel getrennt vom tatsächlichen Recht anwenden.",
+    "Denkfehler nur als begründeten Prüfverdacht benennen: falsches Dilemma, Zirkelschluss, Personenangriff, Mehrheitsargument, Fehlschluss aus Folgen, vorschnelle Verallgemeinerung, Bejahung des Konsequens, Verneinung des Antezedens. Nicht jeden emotionalen Satz als Fehlschluss abwerten."
+  ],
+  "sources": ["Argumentationslehre.pdf (lokale Unterrichtsunterlage)", "https://github.com/PatrickFischerKSA/argumentationspruefer", "../dist/spielraum/argumentation.js"]
+}

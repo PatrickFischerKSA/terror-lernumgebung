@@ -41,6 +41,8 @@ jobs:
           node --check dist/spielraum/assistant.js
           node --check dist/spielraum/argumentation.js
           node tests/assistant.mjs
+          node --check dist/spielraum/library.js
+          node tests/client-send.mjs
           npx tsc --noEmit
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
