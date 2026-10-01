@@ -138,3 +138,11 @@ Dateien: `dist/spielraum/assistant.js`, `argumentation.js`; Regressionen: `tests
 Fachquellen und vollständige Bildnachweise stehen in `dist/aviation.js` und auf der Website. Zwei kleinere, vom Bildarchiv bezogene Vorschauen beschleunigen die Darstellung; Originale öffnen erst auf Klick. Fünf Original-JPEGs in `dist/media/aviatik/`: München (High Contrast, CC BY 3.0 DE), Zürich (Hornet Driver, CC BY-SA 3.0), DLR-Simulator (DLR, CC BY 3.0 DE), Washington ARTCC (FAA, Public Domain USA), Anchorage-Kartenausschnitt 21.03.2024 (FAA, Public Domain). Die verschiedenen Fotoorte und Jahre sind ausdrücklich bezeichnet. Das Kartenbeispiel ist kein Deutschland-Flugweg; die DFS-AIP ist als Originalquelle für EDDM verlinkt. Inhalte und Quellen am 30.09.2026 geprüft.
 
 `node tests/aviation.cjs` prüft Quellenverknüpfung, Bildlizenzen, Erklärungen, Rechenfälle und ungültige Eingaben.
+
+## Fallakte Flydubai
+
+`#flydubai` ergänzt die Lektüre um vier Stationen zum Vorfall auf FZ1073 vom 30. September 2026: Basistext, drei Textquellen, zwei DW-Filmbeiträge und Transfer zu «Terror». Separater redaktioneller Quellenstand: 1. Oktober 2026, kein Live-Ticker. Die genauen Abläufe und Motive werden als Gegenstand der laufenden Untersuchung behandelt.
+
+`dist/flydubai.js` enthält Quellen, Lernaufträge und Ansichten, `dist/flydubai.css` die Ergänzungen zur vorhandenen Gestaltung. Links im Hauptmenü, am Ende der Lektüreübersicht, bei Auftakt, Meiser, Koch und Grenzfällen sowie im Aviatikbereich öffnen die Akte. Alle freien Antworten verwenden die vorhandenen lokalen Journal-, Export- und Importfunktionen. Die DW-Beiträge öffnen extern; es werden keine externen Player oder Tracking-Anfragen automatisch geladen. Die Videometadaten wurden geprüft, die vollständige Wiedergabe nicht.
+
+`node check.cjs` prüft auch die fünf neuen Routen, ihre internen Verweise, die Journaldarstellung und die Maskierung gespeicherter Texte.
