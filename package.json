@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev:server": "wrangler dev",
-    "check": "node check.cjs && node tests/visuals.cjs && node tests/aviation.cjs && node feedback-check.cjs && node tests/content.mjs && node tests/assistant.mjs && node tests/client-send.mjs && node tests/coach.mjs && tsc --noEmit",
+    "check": "node check.cjs && node tests/visuals.cjs && node tests/aviation.cjs && node feedback-check.cjs && node tests/content.mjs && node tests/assistant.mjs && node tests/client-send.mjs && node tests/coach.mjs && node tests/foundations.cjs && tsc --noEmit",
     "test:room": "node tests/room.mjs",
     "deploy:server": "wrangler deploy",
     "test:rotation": "node tests/rotation.mjs",
