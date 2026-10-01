@@ -6,7 +6,7 @@ Die Prüfung einer Quellenkennung garantiert nicht, dass die KI den Inhalt richt
 
 ## Betrieb auf diesem Mac
 
-Der aktivierte LaunchAgent `ch.patrickfischer.terror-richterbibliothek` startet beim Anmelden den lokalen Dienst. Cloudflare-Verbindung und Veröffentlichung wurden am 01.10.2026 ausdrücklich freigegeben. LM Studio lauscht nur auf `127.0.0.1:1234`. Der Rechner muss eingeschaltet, angemeldet, wach und mit dem Internet verbunden sein. Im Ruhezustand ist die Bibliothek offline. Anfragen werden nacheinander bearbeitet, typischerweise mit Wartezeit von einer bis mehreren Minuten.
+Der aktivierte LaunchAgent `ch.patrickfischer.terror-richterbibliothek` startet beim Anmelden den lokalen Dienst. Cloudflare-Verbindung und Veröffentlichung wurden am 01.10.2026 ausdrücklich freigegeben. LM Studio lauscht nur auf `127.0.0.1:1234`. Der Rechner muss eingeschaltet, angemeldet, wach und mit dem Internet verbunden sein. Im Ruhezustand ist die Bibliothek offline. Anfragen werden pro Computer nacheinander bearbeitet; mehrere Computer können unterschiedliche Fragen gleichzeitig beantworten, typischerweise mit Wartezeit von einer bis mehreren Minuten.
 
 Der lokale Dienst ruft ausgehend die geschützte Warteschlange im Worker ab. Es wird kein öffentlicher Port zum Mac geöffnet. Das gemeinsame Geheimnis liegt ausschliesslich als Cloudflare-Secret und in `library/private/config.json` (Dateirechte 600). Nicht veröffentlichen. PDFs und Volltextindex liegen nur in `library/private/`, von Git ausgeschlossen. Nur Fragen und begrenzte Antworten/Quellenausschnitte verlassen den Rechner; der Verhandlungschat wird nicht automatisch übertragen.
 
@@ -36,3 +36,7 @@ Maximal eine laufende Frage pro Raum, mindestens 30 Sekunden zwischen Fragen, ma
 ## Entwicklung
 
 `npm run check`, `node tests/rotation.mjs`, `node tests/library.mjs` (lokaler Worker und private Konfiguration erforderlich). PDF-Index mit `library/index-pdf.py <Drama-PDF> <Argumentationslehre-PDF>` erzeugen. Die Installation benötigt Python mit pypdf; der laufende Dienst nur Node und LM Studio. Änderungen an Backend und Frontend müssen mit Wrangler bzw. GitHub Pages veröffentlicht werden. Der Worker verwendet eine separate SQLite Durable Object für die gemeinsame Bibliothekswarteschlange.
+
+## Zweiter Lehrercomputer (Windows)
+
+[Windows-Anleitung](WINDOWS.md) · [Installationspaket herunterladen](https://patrickfischerksa.github.io/terror-lernumgebung/downloads/terror-bibliothek-windows.zip). Beide Rechner können gleichzeitig unterschiedliche Fragen bearbeiten; Windows übernimmt standardmässig die zentrale Spielregel des Macs. Offline-Meldungen werden pro Computer ausgewertet. Die Vergabe von Fragen ist transaktional und an die Rechnerkennung gebunden.

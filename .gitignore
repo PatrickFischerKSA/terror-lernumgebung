@@ -7,3 +7,4 @@ node_modules/
 .env
 server-build/
 library/private/
+!dist/downloads/terror-bibliothek-windows.zip

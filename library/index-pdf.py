@@ -15,5 +15,5 @@ for source,tag,label in [(sys.argv[1],'PDF','Terror · btb-PDF'),(sys.argv[2],'A
         for start in range(0,len(text),1400):
             chunk=text[start:start+1800].strip()
             if chunk:docs.append({'id':f'{tag}-{page_no}-{start//1400+1}','label':f'{label}, PDF-S. {page_no}{section}','text':chunk,'page':page_no,'kind':tag})
-(out/'documents.json').write_text(json.dumps(docs,ensure_ascii=False))
+(out/'documents.json').write_text(json.dumps(docs,ensure_ascii=False),encoding='utf-8')
 print(f'{len(docs)} lokale Textabschnitte indexiert.')

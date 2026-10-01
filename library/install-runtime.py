@@ -1,5 +1,5 @@
 """Install the explicitly authorised local service in macOS Application Support."""
-import os, plistlib, shutil, subprocess
+import os, plistlib, shutil, subprocess, time
 from pathlib import Path
 source=Path(__file__).resolve().parent.parent
 runtime=Path.home()/'Library/Application Support/TerrorRichterbibliothek'
@@ -22,5 +22,9 @@ subprocess.run(['launchctl','bootout',service],capture_output=True)
 config={'Label':'ch.patrickfischer.terror-richterbibliothek','ProgramArguments':['/usr/local/bin/node',str(runtime/'library/start-service.mjs')],'WorkingDirectory':str(runtime),'RunAtLoad':True,'KeepAlive':True,'ThrottleInterval':30,'StandardOutPath':str(runtime/'library/private/service.log'),'StandardErrorPath':str(runtime/'library/private/service-error.log'),'EnvironmentVariables':{'PATH':'/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin'}}
 plist.write_bytes(plistlib.dumps(config));plist.chmod(0o600)
 subprocess.run(['launchctl','enable',service],check=True)
-subprocess.run(['launchctl','bootstrap',f'gui/{os.getuid()}',str(plist)],check=True)
+for attempt in range(10):
+    result=subprocess.run(['launchctl','bootstrap',f'gui/{os.getuid()}',str(plist)],capture_output=True,text=True)
+    if result.returncode==0:break
+    time.sleep(1)
+else:raise RuntimeError('Autostart konnte nicht registriert werden: '+result.stderr)
 print('Lokaler Dienst installiert:',runtime)

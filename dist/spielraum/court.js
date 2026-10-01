@@ -1,4 +1,4 @@
-import {mountLibrary,stopLibrary} from './library.js';
+import {mountLibrary,stopLibrary} from './library.js?v=20261001-windows';
 import {mountAssistant,mountArguments,rememberEvidence,refreshAssistant} from './assistant.js';
 import {API as LIVE_API} from './config.js';
 import {ROLES,PHASES,VARIANTS,FACTS,LAW_GUIDES,VERDICT_FIELDS,COURT_SOURCE} from './content.js';

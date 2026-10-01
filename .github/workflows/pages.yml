@@ -43,6 +43,7 @@ jobs:
           node tests/assistant.mjs
           node --check dist/spielraum/library.js
           node tests/client-send.mjs
+          python3 tests/windows-package.py
           npx tsc --noEmit
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
