@@ -40,3 +40,9 @@ Maximal eine laufende Frage pro Raum, mindestens 30 Sekunden zwischen Fragen, ma
 ## Zweiter Lehrercomputer (Windows)
 
 [Windows-Anleitung](WINDOWS.md) · [Installationspaket herunterladen](https://patrickfischerksa.github.io/terror-lernumgebung/downloads/terror-bibliothek-windows.zip). Beide Rechner können gleichzeitig unterschiedliche Fragen bearbeiten; Windows übernimmt standardmässig die zentrale Spielregel des Macs. Offline-Meldungen werden pro Computer ausgewertet. Die Vergabe von Fragen ist transaktional und an die Rechnerkennung gebunden.
+
+## Private Live-Begleitung im Spielraum
+
+Der aktuelle Vorsitz erhält automatisch kleine Hinweiskarten zur laufenden Verhandlung. Sie werden lokal im Browser aus Verfahrensphase, neuen Beiträgen und Wortmeldungen erzeugt; der Chat wird dafür nicht an LM Studio übertragen. Inhaltliche Stichwörter sind nur Gesprächssignale, keine Bewertung der Person oder juristische Richtigkeitsprüfung. Es gibt jeweils empfohlene Optionen und passende Rückfragen; nichts wird automatisch gesendet, keine Phase oder Worterteilung automatisch geändert.
+
+„Als eigenen Entwurf übernehmen“ fügt eine Formulierung in das Chat-Eingabefeld ein. Erst der Vorsitz sendet selbst. Hinweise können verworfen, fünf Minuten pausiert oder mit „Live-Tipps“ ausgeschaltet werden. Neue Hinweise werden begrenzt gesammelt; wichtigere Einwände können vorgezogen werden. Während ein Element der Karte den Tastaturfokus hat, wird ihr Inhalt nicht automatisch ersetzt. Nach einem Rollenwechsel verschwindet die Hilfe beim bisherigen Vorsitz und erscheint beim neuen. Die vorhandene geführte Richterhilfe und LM-Bibliothek bleiben ergänzend verfügbar.

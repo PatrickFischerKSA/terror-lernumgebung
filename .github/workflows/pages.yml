@@ -43,6 +43,8 @@ jobs:
           node tests/assistant.mjs
           node --check dist/spielraum/library.js
           node tests/client-send.mjs
+          node --check dist/spielraum/coach.js
+          node tests/coach.mjs
           python3 tests/windows-package.py
           npx tsc --noEmit
       - uses: actions/configure-pages@v5
