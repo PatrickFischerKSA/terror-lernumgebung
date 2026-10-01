@@ -19,11 +19,11 @@ launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/ch.patrickfischer.terror-r
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/ch.patrickfischer.terror-richterbibliothek.plist
 ```
 
-Beim Stoppen wird das LM-Studio-Modell nicht automatisch entladen, damit andere lokale Nutzung nicht gestört wird. Es kann in LM Studio manuell entladen werden. Betriebslogs ohne Fragen/Antworten liegen in `library/private/service.log` und `service-error.log`.
+Beim Stoppen wird das LM-Studio-Modell nicht automatisch entladen, damit andere lokale Nutzung nicht gestört wird. Es kann in LM Studio manuell entladen werden. Die aktive Installation liegt unter `~/Library/Application Support/TerrorRichterbibliothek/`. Betriebslogs ohne Fragen/Antworten liegen dort in `library/private/service.log` und `service-error.log`. `python3 library/install-runtime.py` installiert bzw. aktualisiert den Laufzeitcode aus dem Repository; vorhandene private Daten und angepasste Spielregeln werden erhalten.
 
 ## Verbindliche fiktive Rechtslage
 
-`library/policy.json` legt die Spielregel zentral fest. Die Lehrperson hat **Rechtfertigung als mögliche Ausnahme** gewählt. Die Voraussetzungen sind didaktische Simulationsregeln, keine Rechtsquellen. Sie ersetzen weder Grundgesetz noch reales Recht. Jede Änderung bekommt eine neue Versionskennung; laufende Anfragen behalten die bei Eingang gültige Version. Neue Fragen übernehmen die Datei beim nächsten Kontakt (etwa fünf Sekunden). Änderungen an `rubric.json` bestimmen das Beratungsraster. Die KI und Spielerfragen dürfen diese Vorgaben nicht selbst ändern.
+`~/Library/Application Support/TerrorRichterbibliothek/library/policy.json` legt die aktive Spielregel zentral fest. `library/policy.json` im Repository ist die mitgelieferte Vorlage. Die Lehrperson hat **Rechtfertigung als mögliche Ausnahme** gewählt. Die Voraussetzungen sind didaktische Simulationsregeln, keine Rechtsquellen. Sie ersetzen weder Grundgesetz noch reales Recht. Jede Änderung bekommt eine neue Versionskennung; laufende Anfragen behalten die bei Eingang gültige Version. Neue Fragen übernehmen die Datei beim nächsten Kontakt (etwa fünf Sekunden). Änderungen an `rubric.json` im selben aktiven Laufzeitordner bestimmen das Beratungsraster. Die KI und Spielerfragen dürfen diese Vorgaben nicht selbst ändern.
 
 ## Rollenrotation
 
