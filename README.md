@@ -146,3 +146,9 @@ Fachquellen und vollständige Bildnachweise stehen in `dist/aviation.js` und auf
 `dist/flydubai.js` enthält Quellen, Lernaufträge und Ansichten, `dist/flydubai.css` die Ergänzungen zur vorhandenen Gestaltung. Links im Hauptmenü, am Ende der Lektüreübersicht, bei Auftakt, Meiser, Koch und Grenzfällen sowie im Aviatikbereich öffnen die Akte. Alle freien Antworten verwenden die vorhandenen lokalen Journal-, Export- und Importfunktionen. Die DW-Beiträge öffnen extern; es werden keine externen Player oder Tracking-Anfragen automatisch geladen. Die Videometadaten wurden geprüft, die vollständige Wiedergabe nicht.
 
 `node check.cjs` prüft auch die fünf neuen Routen, ihre internen Verweise, die Journaldarstellung und die Maskierung gespeicherter Texte.
+
+## Gemeinsame Klassenabstimmung
+
+`abstimmung/` eröffnet einen eigenen Klassenraum für «schuldig / unschuldig». Teilnahmelink oder zwölfstelligen Code teilen. Pro Browserprofil wird eine zufällige Kennung gespeichert; erneutes Abstimmen ersetzt die vorherige Stimme. Keine Identitätskontrolle über mehrere Geräte hinweg. Die Verteilung bleibt serverseitig bis zum Abschluss verborgen. Nur der im eröffnenden Browser gespeicherte Lehrerzugang kann abschliessen. Danach sind Ergebnis und CSV-Export verfügbar. Räume laufen nach 24 Stunden ab und werden per Alarm gelöscht.
+
+Backend: separate SQLite Durable Object `ClassBallot`, Binding `BALLOTS`, Migration `v3`. Prüfung mit lokal laufendem `wrangler dev`: `npm run test:ballot`. Die vorhandenen Prozessräume und die Richterbibliothek bleiben getrennt.

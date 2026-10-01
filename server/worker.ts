@@ -1,4 +1,5 @@
 import { timingSafeEqual } from 'node:crypto';
+export { ClassBallot } from './ballot';
 export { JudgeLibrary } from './library';
 import { DurableObject } from 'cloudflare:workers';
 
@@ -28,7 +29,13 @@ export default {
         if(!env.LIBRARY_SECRET || supplied.length!==expected.length || !timingSafeEqual(Buffer.from(supplied),Buffer.from(expected))) return json({error:'Nicht autorisiert.'},401);
         response=await env.LIBRARY.getByName('shared').fetch(new Request('https://library/poll',request));
       }
-      else if(url.pathname==='/rooms' && request.method==='POST') {
+      else if(url.pathname==='/ballots' && request.method==='POST'){
+        const allowed=await env.CREATE_LIMIT.limit({key:request.headers.get('CF-Connecting-IP')||'local'});
+        if(!allowed.success)response=json({error:'Bitte vor einer weiteren Abstimmung eine Minute warten.'},429);
+        else {const code=token().slice(0,12).toUpperCase();response=await env.BALLOTS.getByName(code).fetch(new Request('https://ballot/ballots/'+code+'/create',{method:'POST'}));}
+      } else if(/^\/ballots\/[A-F0-9]{12}(?:\/(vote|close))?$/.test(url.pathname)){
+        response=await env.BALLOTS.getByName(url.pathname.split('/')[2]).fetch(request);
+      } else if(url.pathname==='/rooms' && request.method==='POST') {
         const allowed=await env.CREATE_LIMIT.limit({key:request.headers.get('CF-Connecting-IP')||'local'});
         if(!allowed.success) return new Response(JSON.stringify({error:'Bitte eine Minute warten, bevor du einen weiteren Raum eröffnest.'}),{status:429,headers:{...headers,'Content-Type':'application/json'}});
         const code=token().slice(0,16).toUpperCase();

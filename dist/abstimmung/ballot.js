@@ -1,0 +1,24 @@
+import {API as PROD} from '../spielraum/config.js';
+const API=['localhost','127.0.0.1'].includes(location.hostname)?'http://127.0.0.1:8787':PROD;
+const $=id=>document.getElementById(id);let code='',host='',voter='',current=null,busy=false,timer;
+const notice=t=>$('notice').textContent=t;
+function storageGet(k){return localStorage.getItem(k)||'';}
+async function request(path,body,token=''){
+ const r=await fetch(API+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(12000)});
+ const data=await r.json();if(!r.ok)throw Error(data.error||'Verbindung fehlgeschlagen.');return data;
+}
+function paint(s){if(current?.closed&&!s.closed)return;current=s;$('participation').textContent=s.total+' Stimme'+(s.total===1?'':'n')+' eingegangen'+(s.closed?' · abgeschlossen':' · Verteilung noch verdeckt');$('voteBox').hidden=s.closed;$('hostControls').hidden=!host||s.closed;$('results').hidden=!s.closed;
+ if(s.closed){$('bars').replaceChildren();for(const [key,label] of [['schuldig','Schuldig'],['unschuldig','Unschuldig']]){const n=s.counts[key],pct=s.total?Math.round(n/s.total*100):0;const row=document.createElement('div');row.className='result-row';const p=document.createElement('p');p.textContent=label+': '+n+' Stimmen · '+pct+' %';const bar=document.createElement('progress');bar.max=Math.max(s.total,1);bar.value=n;bar.setAttribute('aria-label',label+' '+pct+' Prozent');row.append(p,bar);$('bars').append(row);}$('outcome').textContent=!s.total?'Keine Stimmen abgegeben.':s.counts.schuldig===s.counts.unschuldig?'Stimmengleichheit.':s.counts.schuldig>s.counts.unschuldig?'Die Mehrheit stimmt für schuldig.':'Die Mehrheit stimmt für unschuldig / Freispruch.';clearTimeout(timer);}
+ $('connection').textContent='Verbunden · Stand '+new Date().toLocaleTimeString('de-CH');
+}
+async function refresh(){try{paint(await request('/ballots/'+code));}catch(e){$('connection').textContent='Verbindung unterbrochen – erneuter Versuch folgt. '+e.message;}finally{if(!current?.closed)timer=setTimeout(refresh,3000);}}
+async function enter(value){const next=value.replace(/[\s-]/g,'').toUpperCase();if(!/^[A-F0-9]{12}$/.test(next))throw Error('Bitte den zwölfstelligen Klassenraum-Code eingeben.');const data=await request('/ballots/'+next);const key='terror-ballot-voter-'+next;let id=storageGet(key);if(!id){id=Array.from(crypto.getRandomValues(new Uint8Array(32)),v=>v.toString(16).padStart(2,'0')).join('');localStorage.setItem(key,id);}voter=id;code=next;host=storageGet('terror-ballot-host-'+code);history.replaceState(null,'','#'+code);$('entry').hidden=true;$('room').hidden=false;$('roomCode').textContent=code;const link=location.href;$('shareLink').href=link;$('shareLink').textContent=link;const choice=storageGet('terror-ballot-choice-'+code);if(choice)selected(choice);paint(data);clearTimeout(timer);if(!data.closed)timer=setTimeout(refresh,3000);notice('');}
+function selected(choice){$('myVote').textContent='Deine zuletzt bestätigte Stimme: '+choice+'.';document.querySelectorAll('[data-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.choice===choice)));}
+async function action(fn){if(busy)return;busy=true;document.querySelectorAll('button').forEach(b=>b.disabled=true);try{await fn();}catch(e){notice(e.message||'Verbindung fehlgeschlagen. Bitte erneut versuchen.');}finally{busy=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);}}
+$('create').onclick=()=>action(async()=>{localStorage.setItem('terror-ballot-storage-check','ok');localStorage.removeItem('terror-ballot-storage-check');const s=await request('/ballots',{});localStorage.setItem('terror-ballot-host-'+s.code,s.token);await enter(s.code);});
+$('join').onsubmit=e=>{e.preventDefault();action(()=>enter($('code').value));};
+document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>action(async()=>{const s=await request('/ballots/'+code+'/vote',{voter,choice:b.dataset.choice});paint(s);selected(s.choice);try{localStorage.setItem('terror-ballot-choice-'+code,s.choice);}catch{}notice('Deine Stimme wurde gespeichert.');}));
+$('close').onclick=()=>action(async()=>{paint(await request('/ballots/'+code+'/close',{},host));notice('Die Abstimmung ist abgeschlossen.');});
+$('copy').onclick=()=>action(async()=>{await navigator.clipboard.writeText($('shareLink').href);notice('Teilnahmelink kopiert.');});
+$('export').onclick=()=>{if(!current?.closed)return;const blob=new Blob(['\ufeffAbstimmung;Stimmen\nSchuldig;'+current.counts.schuldig+'\nUnschuldig;'+current.counts.unschuldig+'\nGesamt;'+current.total+'\n'],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='terror-abstimmung-'+code+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+if(location.hash.slice(1))action(()=>enter(location.hash.slice(1)));

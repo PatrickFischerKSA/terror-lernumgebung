@@ -15,6 +15,10 @@
       {
         "name": "LIBRARY",
         "class_name": "JudgeLibrary"
+      },
+      {
+        "name": "BALLOTS",
+        "class_name": "ClassBallot"
       }
     ]
   },
@@ -29,6 +33,12 @@
       "tag": "v2",
       "new_sqlite_classes": [
         "JudgeLibrary"
+      ]
+    },
+    {
+      "tag": "v3",
+      "new_sqlite_classes": [
+        "ClassBallot"
       ]
     }
   ],

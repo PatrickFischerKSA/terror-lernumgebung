@@ -8,7 +8,8 @@
     "test:room": "node tests/room.mjs",
     "deploy:server": "wrangler deploy",
     "test:rotation": "node tests/rotation.mjs",
-    "test:library": "node tests/library.mjs"
+    "test:library": "node tests/library.mjs",
+    "test:ballot": "node tests/ballot.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260930.2",
