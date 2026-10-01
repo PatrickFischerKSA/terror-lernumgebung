@@ -46,6 +46,7 @@ jobs:
           node --check dist/spielraum/coach.js
           node tests/coach.mjs
           python3 tests/windows-package.py
+          python3 tests/mac-package.py
           npx tsc --noEmit
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

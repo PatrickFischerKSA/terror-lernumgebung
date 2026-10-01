@@ -8,3 +8,4 @@ node_modules/
 server-build/
 library/private/
 !dist/downloads/terror-bibliothek-windows.zip
+!dist/downloads/terror-bibliothek-mac.zip
