@@ -6,7 +6,7 @@ Die Prüfung einer Quellenkennung garantiert nicht, dass die KI den Inhalt richt
 
 ## Betrieb auf diesem Mac
 
-Der vorbereitete LaunchAgent `ch.patrickfischer.terror-richterbibliothek` kann beim Anmelden den lokalen Dienst starten. Solange die Cloudflare-Veröffentlichung nicht freigegeben ist, bleibt er ausdrücklich deaktiviert. LM Studio lauscht nur auf `127.0.0.1:1234`. Der Rechner muss eingeschaltet, angemeldet, wach und mit dem Internet verbunden sein. Im Ruhezustand ist die Bibliothek offline. Anfragen werden nacheinander bearbeitet, typischerweise mit Wartezeit von einer bis mehreren Minuten.
+Der aktivierte LaunchAgent `ch.patrickfischer.terror-richterbibliothek` startet beim Anmelden den lokalen Dienst. Cloudflare-Verbindung und Veröffentlichung wurden am 01.10.2026 ausdrücklich freigegeben. LM Studio lauscht nur auf `127.0.0.1:1234`. Der Rechner muss eingeschaltet, angemeldet, wach und mit dem Internet verbunden sein. Im Ruhezustand ist die Bibliothek offline. Anfragen werden nacheinander bearbeitet, typischerweise mit Wartezeit von einer bis mehreren Minuten.
 
 Der lokale Dienst ruft ausgehend die geschützte Warteschlange im Worker ab. Es wird kein öffentlicher Port zum Mac geöffnet. Das gemeinsame Geheimnis liegt ausschliesslich als Cloudflare-Secret und in `library/private/config.json` (Dateirechte 600). Nicht veröffentlichen. PDFs und Volltextindex liegen nur in `library/private/`, von Git ausgeschlossen. Nur Fragen und begrenzte Antworten/Quellenausschnitte verlassen den Rechner; der Verhandlungschat wird nicht automatisch übertragen.
 
