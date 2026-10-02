@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {endpoint,models,reaction,payload,validateReaction} from '../dist/cockpit/lm-studio.js';
+const config={url:'http://127.0.0.1:1234/v1/',model:'test-model',token:'test-only'};
+assert.equal(endpoint(config.url),'http://127.0.0.1:1234/v1');assert.throws(()=>endpoint('file:///tmp'));assert.throws(()=>endpoint('https://secret:token@example.org/v1'));
+const state={dialog:{escalation:'none'},log:Array.from({length:20},(_,at)=>({at,who:'Du',text:'Meldung '+at}))};const event={at:12,text:'Brauchst du eine Entscheidung?'};
+const body=payload(config,state,event);const history=JSON.parse(body.messages[1].content);assert.equal(history.length,10);assert(history.every(e=>!e.text.includes('19')));assert.equal(body.stream,false);
+assert.equal(validateReaction('Welche Beobachtung macht dir gerade am meisten Sorge?'),'Welche Beobachtung macht dir gerade am meisten Sorge?');for(const t of ['Der Minister erlaubt es.','Feuer frei!','164 Menschen sind gerettet.','<script>x</script>'])assert.equal(validateReaction(t),null);
+let calls=0;const fake=async(url,options)=>{calls++;assert.equal(options.credentials,'omit');assert.equal(options.headers.Authorization,'Bearer test-only');assert(options.signal);if(url.endsWith('/models'))return {ok:true,json:async()=>({data:[{id:'test-model'}]})};const sent=JSON.parse(options.body);assert.equal(sent.model,'test-model');return {ok:true,json:async()=>({choices:[{message:{content:JSON.stringify({reaction:'Welche Beobachtung macht dir gerade am meisten Sorge?'})}}]})};};
+assert.deepEqual(await models(config,fake),['test-model']);assert((await reaction(config,state,event,fake)).includes('Beobachtung'));assert.equal(calls,2);
+await assert.rejects(()=>models(config,async()=>({ok:false,status:401})),/401/);
+await assert.rejects(()=>reaction(config,state,event,async()=>({ok:true,json:async()=>({choices:[{message:{content:'not json'}}]})})),/Antwortformat/);
+await assert.rejects(()=>reaction(config,state,event,async()=>({ok:true,json:async()=>({choices:[{message:{content:'{"reaction":"Der Minister erlaubt es."}'}}]})})),/verworfen/);
+await assert.rejects(()=>models(config,async()=>{throw Error('offline');}),/offline/);
+console.log('PASS: optional LM endpoint, bounded history, token transport, model lookup, constrained payload, accepted reaction, invalid output and offline fallback errors.');

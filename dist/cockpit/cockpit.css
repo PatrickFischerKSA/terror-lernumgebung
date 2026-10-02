@@ -3,3 +3,5 @@
 #cinema{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}.video-ready #cinema{opacity:1}.video-ready .airliner{visibility:hidden}.still #cinema{display:none}.still .airliner{visibility:visible}
 
 #radioForm textarea{min-height:110px;margin-bottom:12px}#decisionStatus{color:#e8d29a}#log{height:600px}#radioForm label,#decisionForm label{font-weight:650}
+
+.lm-settings{max-width:1000px;margin:24px auto;padding:20px;border:1px solid var(--line)}.lm-settings label{display:block;margin-top:12px}.lm-settings input:not([type=checkbox]){display:block;width:100%;padding:10px;background:#15232d;color:var(--paper);border:1px solid #667881;border-radius:4px}.lm-settings button{margin-top:16px}#lmStatus{color:var(--lime)}
