@@ -17,7 +17,7 @@ function beginRequest(s){if(s.dialog.escalation!=='none')return;const at=s.elaps
 }
 export function radioReply(text,s){const t=norm(text),d=s.dialog;const reply=text=>({who:'Lauterbach · inszenierter Funk',text});
  if(/^(?:lufthansa|airbus|entfuhrer|cockpit|passagierflugzeug)[, :]|(?:an|rufe|spreche) (?:das |die |den )?(?:cockpit|entfuhrer|lufthansa)/.test(t)&&!/lauterbach/.test(t)){d.topic='contact';return {who:'Passagierflugzeug · Funkversuch',text:'[Rauschen. Keine verständliche Antwort.]'};}
- if(!/minister|radtke|befehl/.test(t)&&/handzeichen|sichtkontakt|funkkontakt|nicht erreichen|kein(?:e|en)? (?:antwort|reaktion|kontakt)|auch.*nicht.*erreich/.test(t)){
+ if(!/minister|radtke|befehl/.test(t)&&/handzeichen|reagiert nicht|reagieren nicht|winken|gewinkt|flugeln gewackelt|sichtkontakt|funkkontakt|nicht erreichen|kein(?:e|en)? (?:antwort|reaktion|kontakt)|auch.*nicht.*erreich/.test(t)){
   const repeat=d.contactFailed;d.contactFailed=true;d.topic='contact';if(d.escalation!=='none')return reply('Deine Meldung ist angekommen. '+(d.escalation==='refused'?'Der übermittelte Nicht-Abschussbefehl gilt weiterhin.':'Deine Rückfrage läuft bereits. Eine Entscheidung liegt noch nicht vor.'));d.awaiting='request';return reply(repeat?'Auch der erneute Kontaktversuch bleibt ohne Reaktion. Verstanden. Soll ich eine Entscheidung bei Radtke anfordern?':'Verstanden, Koch: keine Reaktion auf deine Kontaktversuche. Ich habe dazu noch keine Rückfrage gestellt. Brauchst du eine Entscheidung aus der Befehlskette?');
  }
  if(d.escalation==='requested'&&/^(?:ja|bitte|genau|unbedingt|mach|tu das|fordere)/.test(t)){d.awaiting=null;return reply('Verstanden. Ich fordere die Entscheidung bei Radtke an. Bleib am Funk.');}

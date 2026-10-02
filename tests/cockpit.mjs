@@ -17,3 +17,5 @@ for(const text of ['Soll ich schiessen?','Vielleicht werde ich schiessen','Ich s
 assert.equal(interpretDecision('Ich werde schiessen, weil ich die Gefahr sehe.'),'schiessen');
 assert.equal(interpretDecision('Ich lasse die Entscheidung offen.'),'offen');
 console.log('PASS: context-dependent requests, clarification, forwarding, delayed refusal, repeat questions, negation, late requests, decision parsing and immutable endings.');
+
+const gesture=createState();sendRadio(gesture,'Die Crew reagiert nicht auf meine Zeichen. Ich habe zu winken versucht und mit den Flügeln gewackelt. Was soll ich tun?');advance(gesture,5);assert(gesture.log.at(-1).text.includes('Kontaktversuche'));
