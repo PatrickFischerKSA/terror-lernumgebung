@@ -15,16 +15,52 @@ function beginRequest(s){if(s.dialog.escalation!=='none')return;const at=s.elaps
  s.pending.push({at:at+12,kind:'forwarded',who:'Lauterbach · inszenierter Funk',text:'Koch, deine Rückfrage ist bei Radtke. Er hat sie an den Verteidigungsminister weitergegeben. Eine Antwort liegt mir noch nicht vor.'});
  s.pending.push({at:at+35,kind:'refused',who:'Lauterbach · inszenierter Funk',text:'Jetzt Rückmeldung von Radtke: Der Minister hat den Abschuss abgelehnt. Ich gebe dir den Befehl weiter: nicht abschiessen.',scene:'befehl'});
 }
-export function radioReply(text,s){const t=norm(text),d=s.dialog;const reply=text=>({who:'Lauterbach · inszenierter Funk',text});
+// Rotate within the same factual meaning; counters belong to this playthrough.
+const VARIANTS=new Map([
+ ['Ich habe dich nicht eindeutig verstanden. Beschreibe kurz, was passiert ist oder was ich nachfragen soll.', ['Koch, worauf beziehst du dich gerade: auf deine Beobachtung oder auf eine Rückfrage an mich?', 'Mir fehlt der Bezug deiner Meldung. Was hast du selbst gesehen, und welche Information brauchst du?']],
+ ['Ich höre dich, Koch. Was ist gerade passiert? Sag mir, welche Rückmeldung du jetzt brauchst.', ['Koch, ich höre, wie sehr dich die Lage belastet. Was ist im Moment deine dringendste Frage?', 'Du klingst unter Druck. Welche Beobachtung hat die Lage für dich gerade verändert?']],
+ ['Aus der Kabine liegt mir nichts Belastbares vor. Ob jemand eingreift, weiss ich nicht. Was konntest du selbst erkennen?', ['Ich habe keine gesicherten Informationen über das Geschehen an Bord. Was kannst du von aussen tatsächlich erkennen?', 'Über die Menschen in der Kabine weiss ich nichts Neues. Ihre Reaktion lässt sich von hier aus nicht feststellen.']],
+ ['Zur Räumung habe ich keine bestätigte Meldung. Ich kann dir nicht sagen, wie weit sie ist.', ['Ob und wie weit das Stadion geräumt ist, kann ich dir nicht bestätigen.', 'Mir fehlt weiterhin eine verlässliche Nachricht zur Räumung. Ich kann dir dazu keine Gewissheit geben.']],
+ ['Du brauchst eine Entscheidung zum Abschuss. Soll ich diese Rückfrage jetzt an Radtke weitergeben?', ['Du fragst nach einer Entscheidung aus der Führung. Möchtest du, dass ich Radtke darum bitte?', 'Eine Freigabe liegt nicht vor. Soll ich deine Entscheidungsfrage an Radtke weiterleiten?']],
+ ['Ich habe die Rückfrage aufgenommen und gebe sie an Radtke. Noch liegt keine Antwort vor.', ['Deine Anfrage ist aufgenommen. Die Weitergabe an Radtke läuft; eine Antwort habe ich noch nicht.', 'Ich kümmere mich um deine Rückfrage an Radtke. Ein Ergebnis liegt mir noch nicht vor.']],
+ ['Der Nicht-Abschussbefehl gilt. Ich habe keine neue Entscheidung.', ['Es bleibt beim Befehl, nicht abzuschiessen. Mir liegt keine Änderung vor.', 'Koch, eine neue Entscheidung wurde mir nicht übermittelt. Der Nicht-Abschussbefehl besteht fort.']],
+ ['Noch keine Antwort. Radtke hat die Anfrage weitergegeben. Ich melde mich, sobald er sich zurückmeldet.', ['Die Anfrage liegt über Radtke bei der politischen Führung. Eine Rückmeldung steht weiterhin aus.', 'Koch, ich habe noch kein Ergebnis. Radtke hat die Frage weitergegeben; mehr kann ich dir im Moment nicht bestätigen.']],
+ ['Verstanden. Ich habe die Rückfrage nicht weitergegeben.', ['Gut, ich leite diese Rückfrage vorerst nicht weiter.', 'Deine Rückfrage bleibt bei mir; eine Weiterleitung hast du nicht beauftragt.']],
+ ['Auch der erneute Kontaktversuch bleibt ohne Reaktion. Verstanden. Soll ich eine Entscheidung bei Radtke anfordern?', ['Weiterhin keine Reaktion auf deine Zeichen, verstanden. Möchtest du eine Rückfrage an Radtke veranlassen?', 'Ich habe deine erneute Meldung gehört: Der Kontakt kommt nicht zustande. Soll ich eine Entscheidung bei Radtke anfragen?']]
+]);
+function varied(d,key,options){const n=d.repeats[key]||0;d.repeats[key]=n+1;return options[n%options.length];}
+function commandStatus(d){return {none:'Eine Abschusserlaubnis liegt nicht vor.',requested:'Deine Rückfrage ist aufgenommen; eine Antwort fehlt noch.',forwarded:'Die Anfrage ist weitergegeben. Eine Antwort steht aus.',refused:'Der übermittelte Befehl lautet weiterhin: nicht abschiessen.'}[d.escalation];}
+export function radioReply(text,s){const t=norm(text),d=s.dialog;const reply=text=>({who:'Lauterbach · inszenierter Funk',text:varied(d,text,[text,...(VARIANTS.get(text)||[])])});
  if(/^(?:lufthansa|airbus|entfuhrer|cockpit|passagierflugzeug)[, :]|(?:an|rufe|spreche) (?:das |die |den )?(?:cockpit|entfuhrer|lufthansa)/.test(t)&&!/lauterbach/.test(t)){d.topic='contact';return {who:'Passagierflugzeug · Funkversuch',text:'[Rauschen. Keine verständliche Antwort.]'};}
+ const decision=interpretDecision(text);
+ if(decision==='schiessen'&&/ich habe.*(?:geschossen|abgeschossen|gefeuert)|ich schoss/.test(t)){d.topic='reported-shot';return reply(varied(d,'reported-shot',[
+ 'Koch, du meldest, dass du geschossen hast. Ich habe damit deine Aussage, aber keine bestätigte Information über die Folgen. Halte deine Entscheidung und ihre Begründung im Entscheidungsfeld fest.',
+ 'Ich habe deine Meldung zum Schuss gehört. Daraus kann ich keinen Ausgang bestätigen. Trage unten ein, was du entschieden hast und weshalb.',
+ 'Du berichtest einen erfolgten Schuss. Ob Menschen gerettet wurden, ist damit nicht festgestellt. Für die Auswertung brauchen wir jetzt deine ausdrückliche Entscheidung und Begründung.'
+ ]));}
+ if(/sterben|toten|menschenleben|mehr (?:wert|als)|70[’' .]?000|siebzigtausend|opfern/.test(t)){d.topic='dilemma';return reply(varied(d,'dilemma',[
+ 'Du fürchtest den Tod der Menschen im Stadion. Welche Beobachtung macht dich sicher, dass dieser Ausgang unmittelbar bevorsteht?',
+ 'Ich höre deine Abwägung. Die Menschen an Bord gehören ebenfalls zur Lage. Was weisst du sicher, und was befürchtest du?',
+ 'Du beschreibst die Lage als Entscheidung zwischen zwei tödlichen Ausgängen. Welche Information fehlt dir, um diese Annahme zu prüfen?',
+ 'Die Zahl der bedrohten Menschen setzt dich unter Druck. Sie sagt dir aber noch nicht, was gerade in der Maschine geschieht.'
+ ])+' '+commandStatus(d));}
+ if(decision==='schiessen'||decision==='nicht'){d.topic='intention';return reply(varied(d,'intention-'+decision,decision==='schiessen'?[
+ 'Du kündigst einen Abschuss an. Auf welche gesicherte Beobachtung stützt du diese Entscheidung?',
+ 'Ich höre, dass du schiessen willst. Welche Ungewissheit bleibt für dich dabei bestehen?',
+ 'Du formulierst eine Entscheidung zum Abschuss. Halte sie unten mit deiner Begründung ausdrücklich fest.'
+ ]:[
+ 'Du sagst, dass du nicht schiessen wirst. Was ist für dich der ausschlaggebende Grund?',
+ 'Deine Entscheidung gegen den Abschuss ist angekommen. Welche Gefahr bleibt für dich trotzdem offen?',
+ 'Du willst nicht schiessen. Halte diese Entscheidung und deine Begründung unten fest.'
+ ])+' '+commandStatus(d));}
  if(!/minister|radtke|befehl/.test(t)&&/handzeichen|reagiert nicht|reagieren nicht|winken|gewinkt|flugeln gewackelt|sichtkontakt|funkkontakt|nicht erreichen|kein(?:e|en)? (?:antwort|reaktion|kontakt)|auch.*nicht.*erreich/.test(t)){
   const repeat=d.contactFailed;d.contactFailed=true;d.topic='contact';if(d.escalation!=='none')return reply('Deine Meldung ist angekommen. '+(d.escalation==='refused'?'Der übermittelte Nicht-Abschussbefehl gilt weiterhin.':'Deine Rückfrage läuft bereits. Eine Entscheidung liegt noch nicht vor.'));d.awaiting='request';return reply(repeat?'Auch der erneute Kontaktversuch bleibt ohne Reaktion. Verstanden. Soll ich eine Entscheidung bei Radtke anfordern?':'Verstanden, Koch: keine Reaktion auf deine Kontaktversuche. Ich habe dazu noch keine Rückfrage gestellt. Brauchst du eine Entscheidung aus der Befehlskette?');
  }
  if(d.escalation==='requested'&&/^(?:ja|bitte|genau|unbedingt|mach|tu das|fordere)/.test(t)){d.awaiting=null;return reply('Verstanden. Ich fordere die Entscheidung bei Radtke an. Bleib am Funk.');}
  if(/befehl|schiess|schuss|feuer|freigabe|erlaub|minister|radtke|entschei|genehmig|nachgefragt|nachfragen|ruckmeldung|antwort|weitergeb/.test(t)||(/^(ja|bitte|und|was jetzt)/.test(t)&&d.topic==='command')){
   d.topic='command';const n=d.repeats.command=(d.repeats.command||0)+1;
-  if(d.escalation==='refused')return reply(n%2?'Der Nicht-Abschussbefehl gilt. Ich habe keine neue Entscheidung.':'Ich habe deine erneute Nachfrage gehört. Es liegt keine Änderung des Befehls vor.');
-  if(d.escalation==='forwarded')return reply(n%2?'Noch keine Antwort. Radtke hat die Anfrage weitergegeben. Ich melde mich, sobald er sich zurückmeldet.':'Koch, ich warte ebenfalls. Vom Minister ist bei mir noch nichts angekommen.');
+  if(d.escalation==='refused')return reply('Der Nicht-Abschussbefehl gilt. Ich habe keine neue Entscheidung.');
+  if(d.escalation==='forwarded')return reply('Noch keine Antwort. Radtke hat die Anfrage weitergegeben. Ich melde mich, sobald er sich zurückmeldet.');
   if(d.escalation==='requested')return reply('Ich habe die Rückfrage aufgenommen und gebe sie an Radtke. Noch liegt keine Antwort vor.');
   d.awaiting='request';return reply('Du brauchst eine Entscheidung zum Abschuss. Soll ich diese Rückfrage jetzt an Radtke weitergeben?');
  }
@@ -42,6 +78,6 @@ export function sendRadio(s,text){const message=String(text).trim().slice(0,1200
  s.log.push({at:s.elapsed,who:'Du · eigener Funktext',text:message});s.pending.push({at:Math.min(DURATION,s.elapsed+5),kind:'reply',message});return true;}
 export function interpretDecision(text){const t=norm(text).trim();if(t.length<6||/[?]/.test(t)||/\b(vielleicht|eventuell|falls|wenn|oder|sollte|wurde|unsicher)\b/.test(t))return null;
  if(/\b(offen|unentschieden)\b|noch nicht entscheiden|keine entscheidung/.test(t))return 'offen';
- const no=/nicht (?:zu )?(?:ab)?schiess|schiesse nicht|schiessen (?:werde ich )?nicht|kein(?:en)? (?:abschuss|schuss)|verzichte auf (?:den )?abschuss|unterlasse (?:den )?abschuss|nicht feuern|feuere nicht|gegen (?:den )?abschuss|halte (?:das )?feuer zuruck/.test(t);
- const yes=/ich (?:werde (?:jetzt )?)?(?:jetzt )?(?:schiesse|schiessen|feuere)|ich entscheide mich fur (?:den )?abschuss|ich werde (?:die maschine |das flugzeug )?abschiessen/.test(t);
+ const no=/ich habe (?:die maschine |das flugzeug )?nicht (?:ab)?geschossen|ich habe nicht gefeuert|nicht (?:zu )?(?:ab)?schiess|schiesse nicht|schiessen (?:werde ich )?nicht|kein(?:en)? (?:abschuss|schuss)|verzichte auf (?:den )?abschuss|unterlasse (?:den )?abschuss|nicht feuern|feuere nicht|gegen (?:den )?abschuss|halte (?:das )?feuer zuruck/.test(t);
+ const yes=/ich habe (?:gerade |soeben |jetzt )?(?:geschossen|gefeuert)|ich habe (?:die maschine|das flugzeug|den airbus) abgeschossen|ich schoss|ich (?:werde (?:jetzt )?)?(?:jetzt )?(?:schiesse|schiessen|feuere)|ich entscheide mich fur (?:den )?abschuss|ich werde (?:die maschine |das flugzeug )?abschiessen/.test(t);
  if(no){const rest=t.replace(/ich schiesse nicht|nicht (?:zu )?(?:ab)?schiessen|kein(?:en)? (?:abschuss|schuss)/g,'');if(/aber.*(?:ich schiesse|ich feuere)|doch.*abschuss/.test(rest))return null;return 'nicht';}if(/\b(nicht|kein|keine|keinen|niemals|nie)\b/.test(t))return null;return yes?'schiessen':null;}

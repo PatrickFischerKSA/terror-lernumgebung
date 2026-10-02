@@ -19,3 +19,17 @@ assert.equal(interpretDecision('Ich lasse die Entscheidung offen.'),'offen');
 console.log('PASS: context-dependent requests, clarification, forwarding, delayed refusal, repeat questions, negation, late requests, decision parsing and immutable endings.');
 
 const gesture=createState();sendRadio(gesture,'Die Crew reagiert nicht auf meine Zeichen. Ich habe zu winken versucht und mit den Flügeln gewackelt. Was soll ich tun?');advance(gesture,5);assert(gesture.log.at(-1).text.includes('Kontaktversuche'));
+
+// The two reported screenshot failures: dilemma acknowledgement and past-tense decision.
+assert.equal(interpretDecision('Ich habe geschossen! 70000 Menschen sind mehr als 164!'),'schiessen');
+assert.equal(interpretDecision('Ich habe nicht geschossen.'),'nicht');
+for(const text of ['Habe ich geschossen?','Wenn ich geschossen habe …','Er sagt: Ich habe geschossen?'])assert.equal(interpretDecision(text),null);
+const {radioReply}=await import('../dist/cockpit/model.js');
+const varied=createState();varied.dialog.escalation='refused';
+const dilemma=radioReply('70000 Menschen werden sterben oder ich schiesse!',varied);
+assert(dilemma.text.includes('Menschen im Stadion'));assert(dilemma.text.includes('nicht abschiessen'));assert.equal(varied.dialog.escalation,'refused');
+const report=radioReply('Ich habe geschossen!',varied);assert(report.text.includes('du meldest'));assert(!report.text.includes('nicht eindeutig'));assert(!varied.ended);
+for(const message of ['Was ist mit der Crew?','Ich habe Angst!','Was ist mit dem Stadion?','Wie lautet der Befehl?','xyzxyz','70000 Menschen werden sterben oder ich schiesse!','Ich habe geschossen!']){
+ const run=createState();run.dialog.escalation='refused';const replies=Array.from({length:3},()=>radioReply(message,run).text);assert.equal(new Set(replies).size,3,message);assert.equal(run.dialog.escalation,'refused');assert(!run.ended);
+}
+console.log('PASS: three distinct responses per repeated topic, dilemma context, past-tense shot report and confirmed-decision parsing without auto-ending.');

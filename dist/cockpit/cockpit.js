@@ -1,5 +1,5 @@
-import {models,reaction} from './lm-studio.js?v=20261002-lm';
-import {createState,advance,decide,sendRadio,interpretDecision,DURATION} from './model.js?v=20261002-autofunk';
+import {models,reaction} from './lm-studio.js?v=20261002-varianten';
+import {createState,advance,decide,sendRadio,interpretDecision,DURATION} from './model.js?v=20261002-varianten';
 const $=id=>document.getElementById(id);let state=createState(),paused=false,quiet=false,sound=false,started=false,last=0,pendingChoice='',priorPause=false,lmBusy=false,lmEpoch=0;
 const time=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0');
 function speak(text){if(sound&&'speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';u.rate=.9;speechSynthesis.speak(u);}}
