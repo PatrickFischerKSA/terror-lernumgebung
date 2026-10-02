@@ -74,7 +74,7 @@ if(a.openClip!==undefined){const c=state.clips[Number(a.openClip)];document.getE
 if(a.export)exportData(a.export);if('print' in a)window.print();if('clear' in a){if(!document.getElementById('confirmDelete').checked){toast('Bestätige zuerst das Löschen mit dem Kontrollkästchen.');return;}state={notes:{},done:[],answers:{},sim:{stage:0,answers:{}},clips:[],votes:{},prefs:{}};save();render();toast('Lokale Lerndaten gelöscht.');}
 });
 initFeedbackEvents();
-document.getElementById('nav').innerHTML='<a class="news-nav" href="#flydubai"><b>AKTUELL · 01.10.2026<br>Fallakte Flydubai →</b></a>'+navGroups.map((group,g)=>`<div class="nav-group"><p class="nav-group-title">${group.title}</p>${group.items.map(([id,n],i)=>`<a href="#${id}">${g===0?`<span>${String(i+1).padStart(2,'0')}</span>`:''}${n}</a>`).join('')}${g===2?'<a class="ballot-nav" href="abstimmung/">Abschluss: Klassenabstimmung</a><a href="spielraum/"><span>LIVE</span>Multiplayer-Prozess</a>':''}</div>`).join('');
+document.getElementById('nav').innerHTML='<a class="news-nav" href="#flydubai"><b>AKTUELL · 02.10.2026<br>Fallakte Flydubai →</b></a>'+navGroups.map((group,g)=>`<div class="nav-group"><p class="nav-group-title">${group.title}</p>${group.items.map(([id,n],i)=>`<a href="#${id}">${g===0?`<span>${String(i+1).padStart(2,'0')}</span>`:''}${n}</a>`).join('')}${g===2?'<a class="ballot-nav" href="abstimmung/">Abschluss: Klassenabstimmung</a><a href="spielraum/"><span>LIVE</span>Multiplayer-Prozess</a>':''}</div>`).join('');
 document.querySelector('.skip').addEventListener('click',e=>{e.preventDefault();main.focus();main.scrollIntoView({block:'start'});});
 window.addEventListener('hashchange',()=>{render();main.focus({preventScroll:true});});
 render();
