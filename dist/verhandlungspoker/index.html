@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verantwortungspoker: Terror</title>
+  <meta
+    name="description"
+    content="Ein digitales Verantwortungspoker zu Ferdinand von Schirachs Terror mit Rollen, Kartenwahl, Verantwortungsmatrix und jurischer Endauswertung."
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section id="phoneApp" class="phone-app hidden">
+    <div class="phone-shell">
+      <header class="phone-hero panel">
+        <p class="eyebrow">Handy-Modus</p>
+        <h1>Rollenansicht</h1>
+        <p id="phoneLead" class="lead">
+          Diese Ansicht zeigt genau eine Rolle für genau eine Runde. Es gibt keine
+          Live-Kopplung: Ihr scannt pro Runde den frischen QR-Code, trefft eure
+          Rollenentscheidungen auf dem Handy und übertragt danach den Code oder
+          das Rollenpaket auf den Desktop.
+        </p>
+      </header>
+
+      <section id="phoneStatusPanel" class="panel phone-panel"></section>
+      <section id="phoneRolePanel" class="panel phone-panel"></section>
+      <section id="phoneActionPanel" class="panel phone-panel"></section>
+    </div>
+  </section>
+
+  <div id="desktopApp" class="page-shell"><nav class="platform-return" aria-label="Lernplattform"><a href="../#spiele" target="_top">← Lernplattform · Lernspiele</a> · <a href="../#befehlskette" target="_top">Befehlskette</a> · <a href="../#recht" target="_top">Rechtsgrundlagen</a> · <a href="../#lektuere/urteile" target="_top">Urteilstexte</a> · <a href="../abstimmung/" target="_top">Klassenabstimmung</a><p>Spielregeln, Gewichtungen und politische Szenarien sind didaktische Setzungen. Die Endauswertung ist kein juristisches Urteil. Der Handy-Modus überträgt Rollenpakete per QR-Code; er ist keine Live-Verbindung.</p></nav>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Digitales Unterrichts- und Diskussionsspiel</p>
+        <h1>Verantwortungspoker: <span>Terror</span></h1>
+        <p class="lead">
+          Ein rundenbasiertes Rollen- und Entscheidungsspiel zu Ferdinand von Schirachs
+          <em>Terror</em>: sechs Rollen, dreizehn Lagefenster, keine Zufallswürfel,
+          dafür Konsequenzen, Unterlassungen und eine sichtbare Verantwortungsmatrix.
+        </p>
+      </div>
+
+      <aside class="hero-note">
+        <p class="note-kicker">Didaktischer Fokus</p>
+        <p>
+          Nicht nur Handeln, auch Nicht-Handeln erzeugt Verantwortung. Zwischen
+          Menschenwürde, Zeitdruck, Befehlskette und Rettungslogik verschiebt sich
+          die Schuldfrage mit jeder Karte.
+        </p>
+      </aside>
+    </header>
+
+    <section class="top-bar panel">
+      <div class="top-bar-copy">
+        <h2>Lagezentrum</h2>
+        <p id="storageHint">
+          Die Partie wird lokal gespeichert. Ihr könnt eine Sitzung später wieder aufnehmen.
+        </p>
+      </div>
+      <div class="button-row">
+        <button id="resumeGameBtn" class="ghost-btn hidden" type="button">Laufende Partie öffnen</button>
+        <button id="newGameBtn" class="primary-btn" type="button">Neue Partie</button>
+        <button id="resetBtn" class="ghost-btn" type="button">Speicher löschen</button>
+      </div>
+    </section>
+
+    <section id="restoredBanner" class="restore-banner hidden" aria-live="polite">
+      Eine gespeicherte Partie wurde geladen.
+    </section>
+
+    <nav class="panel page-nav" aria-label="Seitennavigation">
+      <div class="panel-head compact">
+        <h2>Schnellnavigation</h2>
+        <p>
+          Hier klärt ihr sofort, ob ihr nur am Desktop spielt oder den zusätzlichen
+          Handy-Weg benutzen wollt.
+        </p>
+      </div>
+      <div class="page-nav-buttons">
+        <a href="#desktopGuide" class="ghost-link">Desktop erklärt</a>
+        <a href="#phoneGuide" class="ghost-link">Handy-Weg erklärt</a>
+        <a href="#discussionGuide" class="ghost-link">Diskussion</a>
+        <button id="navOpenGameBtn" class="ghost-link ghost-button" type="button">Direkt zur Partie</button>
+        <button id="navCompanionBtn" class="ghost-link ghost-button" type="button">Handy-Weg öffnen</button>
+        <a href="#endScreen" class="ghost-link">Zum Ergebnis</a>
+      </div>
+    </nav>
+
+    <section class="guide-grid">
+      <article id="desktopGuide" class="panel guide-panel">
+        <div class="panel-head">
+          <h2>Desktop-Spiel ohne Handy</h2>
+          <p>Wenn ihr nur einen Bildschirm nutzt, folgt ihr immer demselben klaren Rhythmus.</p>
+        </div>
+        <ol class="guide-steps">
+          <li><strong>Spiel öffnen:</strong> Nach „Spiel starten“ erscheint die Partie als eigenes Spielfenster.</li>
+          <li><strong>Runde lesen:</strong> Schaut zuerst auf <strong>1. Lageüberblick</strong> und direkt darunter auf <strong>2. Lagefenster</strong>.</li>
+          <li><strong>Abstimmen:</strong> In Schritt 4 wählt jede Rolle einen Weg und schreibt ein kurzes Votum. Daraus entsteht automatisch der Rundenentscheid.</li>
+          <li><strong>Sonderrechte prüfen:</strong> In Schritt 5 entscheiden einzelne Rollen mit Sonderrecht, ob der Mehrheitsweg freigegeben, nur unter Bedingungen erlaubt oder blockiert wird.</li>
+          <li><strong>Pro Rolle eine Auswahlkarte anklicken:</strong> Erst danach klickt ihr in jedem Rollenfeld genau eine rechteckige Auswahlkarte an.</li>
+          <li><strong>Auflösen:</strong> Mit „Runde auswerten“ wird die feste Reihenfolge abgearbeitet.</li>
+          <li><strong>Folgen lesen:</strong> Matrix, Meta-System und Protokoll zeigen sofort, wie Verantwortung verschoben wurde.</li>
+        </ol>
+        <p class="guide-note">
+          Ohne Handy braucht ihr nichts weiter einzurichten. Die App ist vollständig als
+          lokales Desktop-Spiel spielbar.
+        </p>
+      </article>
+
+      <article id="phoneGuide" class="panel guide-panel">
+        <div class="panel-head">
+          <h2>Handy-Weg klar starten</h2>
+          <p>Wenn ihr mit Handys spielen wollt, ist der Ablauf schon vor Runde 1 festgelegt.</p>
+        </div>
+        <ol class="guide-steps">
+          <li><strong>Ganz oben Spielmodus wählen:</strong> Im Unterrichtsstart stellt ihr auf <strong>Desktop + Handys</strong>.</li>
+          <li><strong>Rollen einrichten:</strong> Legt fest, wer welche Rolle spielt oder welche Rolle gemeinsam in der Gruppe bleibt.</li>
+          <li><strong>Spiel starten:</strong> Erst nach diesem Klick wird der Handy-Weg wirklich aktiv.</li>
+          <li><strong>Handy-Version starten:</strong> Danach erscheint im Unterrichtsstart und oben in der Schnellnavigation der Knopf <strong>Handy-Version starten</strong>.</li>
+          <li><strong>QR-Bereich öffnen:</strong> Dort markiert ihr, welche Rollen per Handy laufen sollen. Erst dann scannt jede dieser Personen ihren QR-Code.</li>
+          <li><strong>Rest bleibt am Desktop sichtbar:</strong> Auch mit Handys steuert der Desktop die Runde, Auswertung und Gesamtübersicht.</li>
+        </ol>
+        <p class="guide-note">
+          Wenn der Knopf noch nicht startet, ist fast immer eines von zwei Dingen offen:
+          Entweder wurde der Modus noch nicht auf <strong>Desktop + Handys</strong> gestellt
+          oder die Partie wurde noch nicht mit <strong>Spiel starten</strong> begonnen.
+        </p>
+      </article>
+
+      <article id="discussionGuide" class="panel guide-panel">
+        <div class="panel-head">
+          <h2>Worüber diskutiert ihr?</h2>
+          <p>Jede Runde stellt dieselbe Grundfrage neu: Wer muss jetzt handeln und wer trägt Verantwortung, wenn nicht gehandelt wird?</p>
+        </div>
+        <ol class="guide-steps">
+          <li><strong>Lage einschätzen:</strong> Ist das größere Problem gerade Zeitverlust, Rechtsbruch, unklare Information oder Panik?</li>
+          <li><strong>Drei Wege vergleichen:</strong> Soll die Gruppe in dieser Runde eher Weg 1, Weg 2 oder Weg 3 folgen?</li>
+          <li><strong>Rollen gewichtet abstimmen lassen:</strong> Jede Rolle gibt ihr Kurzvotum ab. Nicht alle Stimmen haben gleich viel Gewicht, weil die Verantwortung unterschiedlich groß ist.</li>
+          <li><strong>Sonderrechte ernst nehmen:</strong> Einige Rollen dürfen den Mehrheitsweg jetzt noch stoppen oder nur unter Bedingungen zulassen. Das ist kein Fehler, sondern Teil des Spiels.</li>
+          <li><strong>Auswahlkarten begründen:</strong> Erst nach dem erzeugten Rundenentscheid klickt jede Rolle die passende Auswahlkarte an.</li>
+          <li><strong>Entscheid lesen:</strong> Unter der Abstimmung seht ihr offen, welcher Weg gewonnen hat und warum.</li>
+        </ol>
+        <p class="guide-note">
+          Ihr schreibt also nicht mehr nur eine Gruppennotiz, sondern erzeugt pro Runde einen transparenten Entscheid aus sechs Rollenstimmen.
+        </p>
+        <p class="guide-note">
+          Wenn ihr die Unterscheidung zwischen utilitaristischem und deontologischem Denken vor der Diskussion noch einmal anschaulich auffrischen wollt, könnt ihr zur Vorbereitung dieses Video öffnen:
+          <a href="https://www.dropbox.com/scl/fi/0q2zm7rgr03b7l9bz133z/STRASSENBAHN-das-philosophische-Gedankenexperiment-filosofix.mp4?rlkey=oh1qz7n1nhgq0kcuu8jpgipt2&st=ud6qhs4q&dl=0" target="_blank" rel="noreferrer noopener">Straßenbahn - das philosophische Gedankenexperiment</a>.
+        </p>
+      </article>
+    </section>
+
+    <section class="panel assignment-panel">
+      <div class="panel-head">
+        <h2>0. Wer spielt welche Rolle?</h2>
+        <p>
+          Legt vor dem Start für jede Rolle fest, ob sie von einer einzelnen Person oder
+          gemeinsam in der Gruppe gespielt wird. Danach startet ihr die Partie bewusst mit
+          einem Klick.
+        </p>
+      </div>
+      <div id="roleAssignmentPanel" class="assignment-grid"></div>
+      <div id="setupPanel" class="setup-panel"></div>
+    </section>
+
+    <section id="gameOverlay" class="game-overlay hidden" aria-hidden="true">
+      <div class="game-overlay-backdrop"></div>
+      <div class="game-overlay-shell">
+        <header class="panel game-overlay-header">
+          <div>
+            <p class="eyebrow">Spielfenster</p>
+            <h2 id="gameOverlayTitle">Verantwortungspoker läuft</h2>
+            <p id="gameOverlayLead" class="lead compact-lead">
+              Nach dem Unterrichtsstart erscheint die Partie als eigenes Spielfenster. Lest hier Runde für Runde und arbeitet die Schritte nacheinander ab.
+            </p>
+          </div>
+          <div class="button-row">
+            <button id="closeGameBtn" class="ghost-btn" type="button">Spielfenster schließen</button>
+          </div>
+        </header>
+
+        <main id="gameSection" class="dashboard">
+          <section class="board-column">
+            <section class="panel status-panel">
+              <div class="panel-head compact">
+                <h2>1. Lageüberblick</h2>
+                <p>Hier seht ihr sofort Runde, Zeitdruck, Stadionlage und jurische Tendenz.</p>
+              </div>
+              <div id="statusStrip" class="status-strip"></div>
+            </section>
+
+            <section class="panel briefing-panel">
+              <div class="panel-head">
+                <h2>2. Lagefenster</h2>
+                <p>Hier steht die konkrete Situation dieser Runde. Lest dieses Lagefenster gemeinsam, bevor ihr diskutiert.</p>
+              </div>
+              <div id="briefingCard" class="briefing-card"></div>
+            </section>
+
+            <section class="panel workflow-panel">
+              <div class="panel-head">
+                <h2>3. Was ist jetzt zu tun?</h2>
+                <p>Dieser Bereich sagt euch Schritt für Schritt, was in der aktuellen Runde als Nächstes passiert.</p>
+              </div>
+              <div id="currentTaskPanel" class="task-panel"></div>
+            </section>
+
+            <section class="panel discussion-panel">
+              <div class="panel-head">
+                <h2>4. Diskussion und Abstimmung</h2>
+                <p>Hier stimmt jede Rolle mit einem kurzen Votum ab. Aus diesen gewichteten Stimmen erzeugt die App den Rundenentscheid transparent und sichtbar.</p>
+              </div>
+              <div id="discussionPanel" class="discussion-panel-body"></div>
+            </section>
+
+            <section class="panel authority-panel">
+              <div class="panel-head">
+                <h2>5. Prüf- und Vetorechte</h2>
+                <p>Jetzt prüfen einzelne Rollen mit Sonderrecht den Mehrheitsweg. Sie dürfen ihn freigeben, nur unter Bedingungen zulassen oder blockieren.</p>
+              </div>
+              <div id="authorityPanel" class="discussion-panel-body"></div>
+            </section>
+
+            <section class="panel roles-panel">
+              <div class="panel-head">
+                <h2>6. Auswahlkarten pro Rolle anklicken</h2>
+                <p>
+                  Unter diesem Abschnitt seht ihr sechs große Rollenfelder. Hier setzt jede Rolle den zuvor
+                  erzeugten Rundenentscheid in ihr eigenes Handeln um. In jedem Rollenfeld klickt ihr genau
+                  eine rechteckige Auswahlkarte mit Titel und Beschreibung an. Erst wenn alle sechs Rollen eine
+                  Auswahlkarte haben, ist die Runde bereit für die Auswertung.
+                </p>
+              </div>
+              <div id="rolesGrid" class="roles-grid"></div>
+            </section>
+
+            <section class="panel sequence-panel">
+              <div class="panel-head compact">
+                <h2>7. Runde auswerten</h2>
+                <p>Drückt erst jetzt den Button. Danach lest ihr unten Protokoll, Matrix und Meta-System.</p>
+              </div>
+              <div id="resolutionOrder" class="resolution-order"></div>
+              <div id="selectionSummary" class="selection-summary"></div>
+              <div id="roundFeedback" class="round-feedback">
+                Wählt für jede Rolle genau eine Auswahlkarte und löst dann die Runde aus.
+              </div>
+              <div class="button-row">
+                <button id="resolveBtn" class="primary-btn wide" type="button">7. Runde auswerten</button>
+              </div>
+            </section>
+          </section>
+
+          <aside class="side-column">
+            <section class="panel meters-panel">
+              <div class="panel-head compact">
+                <h2>Statusanzeigen</h2>
+                <p>Evakuierung, Informationslage, Gefahr und Rechtsrisiko verschieben sich von Runde zu Runde.</p>
+              </div>
+              <div id="resourceMeters" class="resource-meters"></div>
+            </section>
+
+            <section class="panel matrix-panel">
+              <div class="panel-head compact">
+                <h2>Verantwortungsmatrix</h2>
+                <p>Die Matrix sammelt Spuren aus Kartenwahl und Folgenberechnung.</p>
+              </div>
+              <div id="matrixTable" class="matrix-table"></div>
+            </section>
+
+            <section class="panel meta-panel">
+              <div class="panel-head compact">
+                <h2>Meta-System</h2>
+                <p>Nelson sammelt Anklagepunkte, Biegler Verteidigungspunkte.</p>
+              </div>
+              <div id="metaSummary" class="meta-summary"></div>
+            </section>
+
+            <section class="panel references-panel">
+              <div class="panel-head compact">
+                <h2>Denkrahmen Aus Terror</h2>
+                <p>Trolleyproblem, Lars Koch, Nelson und richterliche Leitfragen laufen hier als Denkhilfe mit.</p>
+              </div>
+              <div id="referencePanel" class="discussion-panel-body"></div>
+            </section>
+
+            <section class="panel companion-panel">
+              <div id="companionSectionAnchor"></div>
+              <div class="panel-head compact">
+                <h2>Stabiler Handy-Modus</h2>
+                <p>
+                  Keine Live-Verbindung, keine fragile Kopplung: Jedes Handy bekommt pro Runde
+                  einen frischen Rollen-QR-Code. Der empfohlene Modus erzeugt danach ein
+                  vollständiges Rollenpaket mit Abstimmung, Kurzvotum und Kartenwahl.
+                </p>
+              </div>
+              <div id="companionModePicker" class="companion-mode-picker"></div>
+              <div id="companionPanel" class="companion-grid"></div>
+            </section>
+
+            <section class="panel protocol-panel">
+              <div class="panel-head compact">
+                <h2>Protokoll</h2>
+                <p>Keine Zufallsereignisse, nur nachvollziehbare Entscheidungen.</p>
+              </div>
+              <ol id="logList" class="log-list"></ol>
+            </section>
+          </aside>
+        </main>
+
+        <section id="endScreen" class="panel end-screen hidden">
+          <div class="panel-head">
+            <h2>Einsatzbilanz</h2>
+            <p>Die Runde ist beendet. Jetzt wird die Verantwortungsverteilung als Ergebnis lesbar.</p>
+          </div>
+
+          <div id="endingHeadline" class="ending-headline"></div>
+          <div id="endingStats" class="ending-stats"></div>
+
+          <div class="closing-grid">
+            <article class="closing-card">
+              <p class="mini-label">Generierte Anklage</p>
+              <div id="indictmentText" class="closing-text"></div>
+            </article>
+            <article class="closing-card">
+              <p class="mini-label">Generierte Verteidigung</p>
+              <div id="defenseText" class="closing-text"></div>
+            </article>
+            <article class="closing-card">
+              <p class="mini-label">Trolleyproblem</p>
+              <div id="trolleyText" class="closing-text"></div>
+            </article>
+            <article class="closing-card">
+              <p class="mini-label">Lars Koch</p>
+              <div id="kochText" class="closing-text"></div>
+            </article>
+            <article class="closing-card">
+              <p class="mini-label">Gerichtspräsident: Freispruch</p>
+              <div id="judgeAcquitText" class="closing-text"></div>
+            </article>
+            <article class="closing-card">
+              <p class="mini-label">Gerichtspräsident: Verurteilung</p>
+              <div id="judgeConvictText" class="closing-text"></div>
+            </article>
+            <article class="closing-card">
+              <p class="mini-label">Verfahrenslogik</p>
+              <div id="classroomIntegrationText" class="closing-text"></div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <script src="vendor/qrcode.js"></script>
+  <script src="app.js?v=20261029-integration"></script>
+</body>
+</html>
