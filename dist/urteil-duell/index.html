@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terror Urteil Duell</title>
+  <meta
+    name="description"
+    content="Argumentationsspiel zur Schlussabstimmung in Terror: Urteilsweg mit 10 Einzelfragen und Argumente-Pingpong mit Regel-Schiedsrichter."
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell"><nav class="platform-links" aria-label="Lernplattform"><a href="../#spiele" target="_top">← Lernspiele</a> · <a href="../#lektuere/urteile" target="_top">Urteilstexte</a> · <a href="../#dilemma/weiche" target="_top">Weichensteller-Dilemma</a> · <a href="../#philosophie" target="_top">Denkpositionen</a> · <a href="../#recht" target="_top">Rechtsgrundlagen</a> · <a href="../abstimmung/" target="_top">Klassenabstimmung</a></nav><aside class="panel"><h2>Argumente prüfen – selbst urteilen</h2><p>Hier sind beide Spielmodi des Urteil-Duells vollständig integriert. Der Regelscore erkennt Textsignale, nicht die Wahrheit oder die juristische Tragfähigkeit einer Aussage. Auch angezeigte Fehlschlüsse sind Prüfhinweise. Diskutiert die Bewertung und begründet, wo ihr ihr widersprecht.</p><p>Die Punkte des Urteilswegs zeigen die Gewichtung dieses Spiels. Ein Gleichstand ist keine eindeutige Tendenz. Die automatische Einordnung ersetzt dein eigenes Urteil nicht. Beide Modi speichern auf diesem Gerät; für zwei Personen wird dasselbe Gerät abwechselnd benutzt.</p><button type="button" id="exportProtocol">Urteilsweg und Duellprotokoll herunterladen</button><p id="storageStatus" role="status"></p></aside>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Lernplattform · Schlussabstimmung aus Terror</p>
+        <h1>Terror Urteil Duell</h1>
+        <p class="lead">
+          Dieses Spiel führt nicht sofort zur Frage nach Schuld oder Unschuld. Zuerst
+          arbeitet ihr euch durch zehn konkrete Denk- und Prüfstationen. Erst am Ende
+          berechnet die App aus euren Antworten eine Urteilstendenz und erklärt Schritt für Schritt,
+          wie dieses Urteil zustande gekommen ist.
+        </p>
+      </div>
+      <aside class="hero-note">
+        <p class="note-kicker">Grundlage</p>
+        <p>
+          Das Spiel verbindet die Schlusslogik aus <em>Terror</em> mit der
+          Argumentationslehre: These, Prämisse, Schlussfolgerung, Schlussarten
+          und Fehlschlüsse.
+        </p>
+      </aside>
+    </header>
+
+    <section class="panel start-panel">
+      <div class="panel-head">
+        <h2>Was ist das hier?</h2>
+        <p>
+          Ihr arbeitet nicht einfach eine Ja-Nein-Frage ab. Ihr prüft nacheinander
+          Tatsachen, Normen, Alternativen, Gewissensentscheidungen und die
+          Tragfähigkeit der Schlussformen. Erst danach zeigt die App ihre regelbasierte Urteilstendenz.
+        </p>
+      </div>
+      <div class="mode-switch" id="modeSwitch"></div>
+    </section>
+
+    <section class="panel prep-panel">
+      <div class="panel-head">
+        <h2>Kurze Voreinheit: So denkt ihr im Spiel</h2>
+        <p>
+          Bevor ihr urteilt oder euch im Pingpong-Duell angreift, klärt ihr hier vier
+          Denkwerkzeuge: Trolleyproblem, Utilitarismus, Deontologie und Schlussformen.
+          So wird später sichtbar, <strong>wie</strong> ein Argument funktioniert und nicht
+          nur, <strong>welche Meinung</strong> dahintersteht.
+        </p>
+      </div>
+      <div id="prepUnit" class="prep-grid"></div>
+    </section>
+
+    <main class="mode-shell">
+      <section id="verdictMode" class="mode-panel">
+        <div class="panel info-panel">
+          <div class="panel-head compact">
+            <h2>Modus 1 · Urteilsweg</h2>
+            <p>
+              Zehn Einzelfragen führen vom Tatgeschehen bis zur tragfähigen Schlussregel.
+              Die Frage nach Schuld oder Unschuld wird absichtlich erst am Schluss sichtbar.
+            </p>
+          </div>
+          <div class="info-grid">
+            <article class="info-card">
+              <strong>So arbeitet ihr</strong>
+              <p>Jede Station prüft genau einen Gesichtspunkt. Wählt eine Antwort und lest darunter, welche Schlussart dahintersteht.</p>
+            </article>
+            <article class="info-card">
+              <strong>Darauf achtet die App</strong>
+              <p>Menschenwürde, kleinere-Übel-Logik, Alternativen, rechtliche Grenze, Gewissensentscheidung und Zukunftsregel.</p>
+            </article>
+            <article class="info-card">
+              <strong>Ergebnis</strong>
+              <p>Am Ende erklärt die App offen, welche Antworten eher in Richtung Verurteilung oder Freispruch gedrückt haben.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="verdict-grid">
+          <section class="panel progress-panel">
+            <div class="panel-head compact">
+              <h2>Fortschritt</h2>
+              <p>Hier seht ihr, wo ihr im Denkweg steht.</p>
+            </div>
+            <div id="verdictProgress" class="progress-list"></div>
+          </section>
+
+          <section class="panel question-panel">
+            <div id="questionCard"></div>
+          </section>
+
+          <section class="panel trace-panel">
+            <div class="panel-head compact">
+              <h2>So wächst die Schlussfolgerung</h2>
+              <p>Nach jeder Antwort wird die Argumentationsspur ergänzt.</p>
+            </div>
+            <div id="tracePanel" class="trace-panel-body"></div>
+          </section>
+        </div>
+
+        <section id="verdictResultPanel" class="panel result-panel hidden"></section>
+      </section>
+
+      <section id="duelMode" class="mode-panel hidden">
+        <div class="panel info-panel">
+          <div class="panel-head compact">
+            <h2>Modus 2 · Argumente-Pingpong</h2>
+            <p>
+              Zwei Personen spielen sieben Runden gegeneinander. Eine Person setzt ein
+              Argument, die andere reagiert. Ein lokaler Regel-Schiedsrichter wertet die
+              Runde anhand der Argumentationslehre aus.
+            </p>
+          </div>
+          <div class="info-grid">
+            <article class="info-card">
+              <strong>Was bewertet wird</strong>
+              <p>Klare These, Begründung, Beleg, passende Schlussform, Reaktion auf das Gegenargument und Fehlschlüsse.</p>
+            </article>
+            <article class="info-card">
+              <strong>Wichtig</strong>
+              <p>Wer eine Runde verliert, muss die nächste Runde mit einem neuen Angriff eröffnen. Nach sieben Runden gibt es eine Revanche.</p>
+            </article>
+            <article class="info-card">
+              <strong>Hinweis</strong>
+              <p>Der Regel-Schiedsrichter arbeitet lokal mit einer transparenten Bewertungslogik. Ihr könnt also immer nachvollziehen, warum eine Seite vorn lag.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="duel-grid">
+          <section class="panel duel-setup-panel">
+            <div class="panel-head compact">
+              <h2>Spielende festlegen</h2>
+              <p>Tragt hier die beiden Namen ein. Danach startet das Match.</p>
+            </div>
+            <div class="duel-form-grid">
+              <label class="field-label" for="playerA">Person A</label>
+              <input id="playerA" class="field-input" type="text" placeholder="z. B. Mia" />
+              <label class="field-label" for="playerB">Person B</label>
+              <input id="playerB" class="field-input" type="text" placeholder="z. B. Elias" />
+            </div>
+            <div class="button-row">
+              <button id="startDuelBtn" class="primary-btn" type="button">Match starten</button>
+              <button id="rematchBtn" class="ghost-btn" type="button">Revanche</button>
+            </div>
+          </section>
+
+          <section class="panel duel-board-panel">
+            <div id="duelBoard"></div>
+          </section>
+
+          <section class="panel judge-panel">
+            <div class="panel-head compact">
+              <h2>Regel-Schiedsrichter</h2>
+              <p>Diese Regeln prüft der Schiedsrichter in jeder Runde.</p>
+            </div>
+            <div id="judgeRubric" class="judge-rubric"></div>
+            <div id="judgeResult" class="judge-result"></div>
+          </section>
+        </div>
+
+        <section class="panel history-panel">
+          <div class="panel-head compact">
+            <h2>Rundenprotokoll</h2>
+            <p>Hier sammelt sich das Match Runde für Runde.</p>
+          </div>
+          <div id="duelHistory" class="duel-history"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <p class="platform-links">Übernommen aus <a href="https://patrickfischerksa.github.io/terror_urteil_duell/" target="_blank" rel="noopener">Terror Urteil Duell</a>, Stand 29.10.2026. Alle zehn Stationen, sieben Duellrunden und vier Vorbereitungsmodule sind enthalten.</p><script src="app.js?v=20261029-integration"></script>
+</body>
+</html>
