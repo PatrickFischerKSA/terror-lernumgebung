@@ -190,6 +190,11 @@ function initReader(){
  });
  main.addEventListener('change',e=>{const el=e.target;if(el.id==='readerPdfInput'&&el.files[0])loadReaderPdf(el.files[0],document.getElementById('rememberReaderPdf').checked);if(el.id==='readerPage')drawReaderPdf(Number(el.value));if(el.id==='readerLocalFilm'&&el.files[0]){if(filmObjectURL)URL.revokeObjectURL(filmObjectURL);filmObjectURL=URL.createObjectURL(el.files[0]);readerFilmEnabled=true;if(readerVideoCleanup){readerVideoCleanup();readerVideoCleanup=null;}document.getElementById('readerVideo')?.remove();mountReaderVideo(false);}});
  main.addEventListener('input',e=>{
+  const answer=e.target.closest('[data-original-answer]');
+  if(answer && e.target.matches('textarea')){
+   const result=answer.querySelector('[data-original-result]');
+   if(result.hasChildNodes())result.replaceChildren();
+  }
   if(e.target.id==='readerSeek'){const v=document.getElementById('readerVideo');if(v?.readyState>=1)v.currentTime=Number(e.target.value);}});
 }
 function mountReaderVideo(play){
