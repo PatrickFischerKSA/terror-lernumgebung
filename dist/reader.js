@@ -112,10 +112,11 @@ const READER_OBSERVATIONS = {
  "auftakt": [
   "Welche Informationsquelle erlaubt der Vorsitzende den Schöffen für ihr Urteil? Welche sollen sie ausblenden? Geben Sie seine Anweisung mit Seitenbeleg wieder.",
   [
-   "7–8",
+   "7",
    [
     "muessen (?:ihr )?vorwissen verwenden",
-    "publikum stimmt gar nicht mit ab"
+    "publikum stimmt gar nicht mit ab",
+    "(?:schoeffen|laienrichter) haben (?:die )?akten gelesen"
    ],
    "Die Schöffen sollen sich auf die in der Hauptverhandlung erhobenen Beweise stützen.",
    "Der Vorsitzende verlangt, dass die Schöffen ausschliesslich auf Aussagen und Beweise der Hauptverhandlung zurückgreifen. Was sie vorher über den Fall gelesen oder gehört haben, sollen sie ausblenden (PDF 7).",
@@ -137,7 +138,7 @@ const READER_OBSERVATIONS = {
  "anklage": [
   "Welche Handlung Kochs räumt Biegler ein? Warum hält er eine Verurteilung dadurch noch nicht für entschieden? Belegen Sie beide Punkte.",
   [
-   "14–16",
+   "14, 15",
    [
     "bestreitet den abschuss",
     "leugnet die toetung"
@@ -162,10 +163,11 @@ const READER_OBSERVATIONS = {
  "lauterbach": [
   "Konnte Lauterbach sich vorstellen, dass Koch schiesst? Sagt er auch eindeutig, dass er selbst geschossen hätte? Belegen Sie den Unterschied.",
   [
-   "37–39",
+   "37, 38",
    [
     "er selbst haette sicher geschossen",
-    "lauterbach war sich sicher"
+    "lauterbach war sich sicher",
+    "lauterbach haette (?:selbst )?(?:sicher|bestimmt) geschossen"
    ],
    "Lauterbach hält Kochs Abschuss für vorstellbar. Was er selbst getan hätte, lässt er offen.",
    "Lauterbach räumt ein, er habe sich vorstellen können, dass Koch schiesst (PDF 37). Auf die Frage nach seinem eigenen Verhalten sagt er, er wisse es nicht (PDF 38). Die Erwartung über Koch ist keine Aussage über seinen eigenen Entschluss.",
@@ -187,7 +189,7 @@ const READER_OBSERVATIONS = {
  "evakuierung": [
   "Warum nennt Nelson die unterlassene Stadionräumung eine Wette? Welche Zuständigkeit stellt Biegler in seinen Nachfragen klar? Belegen Sie beide Positionen.",
   [
-   "36–42",
+   "36, 40, 41",
    [
     "stadion wurde geraeumt",
     "koch war fuer die raeumung zustaendig"
@@ -210,7 +212,7 @@ const READER_OBSERVATIONS = {
  "koch": [
   "Welche beiden Verpflichtungen geraten für Koch vor dem Abschuss in Konflikt? Welche Entscheidung trifft er, und wie begründet er sie? Belegen Sie seine Sicht.",
   [
-   "47–51",
+   "47, 48, 51",
    [
     "koch schoss auf befehl",
     "koch befolgte den abschussbefehl"
@@ -233,7 +235,7 @@ const READER_OBSERVATIONS = {
  "grenzfaelle": [
   "Wie begründet Koch, dass eine Abwägung von Menschenleben ausnahmsweise zulässig sei? Mit welchem Beispiel und welcher Nachfrage prüft Nelson seine Grenze? Belegen Sie beide Positionen.",
   [
-   "55–57",
+   "56, 57",
    [
     "nelson will.*leben verrechnen",
     "koch nennt eine feste grenze"
@@ -258,7 +260,7 @@ const READER_OBSERVATIONS = {
  "meiser": [
   "Welche mögliche Alternative zum Abschuss sieht Meiser in der Nachricht ihres Mannes? Was antwortet der Vorsitzende auf ihre Frage, ob diese Alternative gelang? Belegen Sie beide Aussagen.",
   [
-   "68–71",
+   "68, 71",
    [
     "passagiere wurden sicher gerettet",
     "vorsitzende bestaetigt.*ins cockpit gelangten"
@@ -283,7 +285,7 @@ const READER_OBSERVATIONS = {
  "nelson": [
   "Warum fordert Nelson eine Verurteilung, obwohl sie Kochs Rettungsmotiv anerkennt? Nennen Sie den Grundsatz und erklären Sie seine Folge für die Passagiere.",
   [
-   "75–81",
+   "75, 79, 80",
    [
     "nelson fordert.*freispruch",
     "nelson erlaubt.*verrechnung"
@@ -308,7 +310,7 @@ const READER_OBSERVATIONS = {
  "biegler": [
   "Was meint Biegler in diesem Fall mit dem «kleineren Übel»? Welche Entscheidung verlangt er vom Gericht? Belegen Sie seine Begründung und seinen Antrag.",
   [
-   "81–84",
+   "82, 83, 84",
    [
     "biegler beantragt verurteilung",
     "biegler fordert.*schuldspruch"
@@ -333,7 +335,7 @@ const READER_OBSERVATIONS = {
  "urteile": [
   "Wie beurteilt jede Urteilsfassung Kochs Berufung auf einen übergesetzlichen Notstand? Geben Sie für Schuldspruch und Freispruch je einen Beleg an.",
   [
-   "87–93",
+   "88, 89, 92",
    [
     "beide urteile sprechen koch frei",
     "beide urteile verurteilen koch"
@@ -356,7 +358,7 @@ const READER_OBSERVATIONS = {
  "dramenform": [
   "Welche Entscheidung überträgt der Vorsitzende dem Publikum am Anfang? Wann fordert er es auf, diese Entscheidung tatsächlich zu treffen? Belegen Sie beide Stellen.",
   [
-   "7–8, 84–86",
+   "7, 85",
    [
     "publikum darf nicht abstimmen",
     "publikum hat keine stimme"
@@ -380,7 +382,7 @@ const READER_OBSERVATIONS = {
  "rede": [
   "Wie beurteilt Ferdinand von Schirach am Ende seiner Rede den Vorschlag, Freiheit für Sicherheit aufzugeben? Welche Folge sagt er voraus? Belegen Sie seine Position.",
   [
-   "102–103",
+   "103",
    [
     "schirach empfiehlt.*freiheit aufzugeben",
     "sicherheit ist ihm wichtiger"
@@ -458,7 +460,7 @@ function updateOriginalFeedback(answer){
  const errors=originalAnswerErrors(id,response);
  const normalized=TERROR_FEEDBACK.normalize(response);
  const missing=criteria?.flatMap((terms,index)=>terms.some(term=>normalized.includes(term))?[]:[index+1]);
- const coverage=criteria?`<p>${missing.length?'Prüfe Teil '+missing.join(' und ')+' erneut. Dafür fehlt eine erkennbare Aussage.':'Beide Teile sind angesprochen. Vergleiche deine Aussagen mit den Textstellen.'} Gib zu beiden Teilen einen Seitenbeleg an.</p>`:'';
+ const coverage=criteria&&!errors.length?`<p>${missing.length?'Prüfe Teil '+missing.join(' und ')+' erneut. Dafür fehlt eine erkennbare Aussage.':'Beide Teile sind angesprochen. Vergleiche deine Aussagen mit den Textstellen.'} Gib zu beiden Teilen einen Seitenbeleg an.</p>`:'';
 
  result.innerHTML=`
  ${errors.length?errors.map(error=>`<article class="feedback-error">
