@@ -116,16 +116,16 @@ function readerOriginalQuestions(m){
  if(!group)return '';
  return `<section class="section card" aria-labelledby="readerOriginalQuestionsTitle">
  <h2 id="readerOriginalQuestionsTitle">Hauptauftrag · Fragen zur Lektüre</h2>
- <ol start="${group.first}">${group.questions.map((question,index)=>`<li>${escape(question)}${readerOriginalAnswer(group.first+index)}</li>`).join('')}</ol>
+ <ul role="list" style="list-style:none;padding-inline-start:0">${group.questions.map((question,index)=>`<li>${escape(question)}${readerOriginalAnswer(group.first+index)}</li>`).join('')}</ul>
  </section>`;
 }
 function readerOriginalAnswer(number){
  const [page, criteria]=READER_ORIGINAL_FEEDBACK[number-1];
  return `<div data-original-answer="${number}">
- ${note('original-terror-'+number,'Antwort zu Frage '+number)}
+ ${note('original-terror-'+number,'Deine Antwort')}
  <button type="button" class="secondary small" data-original-check>Antwort prüfen</button>
  <div class="feedback-result" data-original-result aria-live="polite"></div>
- <details><summary>Musterlösung zu Frage ${number}</summary>
+ <details><summary>Musterlösung</summary>
  ${criteria.map(([,hint])=>`<p>${escape(hint)}</p>`).join('')}
  ${feedbackReference(page,'Zur Textstelle')}
  </details></div>`;
