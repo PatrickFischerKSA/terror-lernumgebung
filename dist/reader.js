@@ -73,15 +73,86 @@ function sceneReading(m){
  <section class="section card"><h2>Deine zusammenhängende Deutung</h2>${note('lekt-'+m.id,m.title+' · Analyse','Verbinde deine Beobachtungen. Belege die Textspur mit PDF-Seiten und die Filmspur mit Zeitmarken. Bisherige Antworten stehen weiterhin hier.')}${note('filmspur-'+m.id,m.title+' · Text und Film','Welche Inszenierungsentscheidung verändert oder verstärkt deine Lesart? Textbeleg → Filmmittel → Wirkung → alternative Deutung.')}<h3>Weiterdenken und gestalten</h3><p>${m.transfer}</p>${note('transfer-'+m.id,m.title+' · Transfer')}${completion(m.id)}</section>
  <section class="section card"><h2>Kurzcheck</h2><p>${m.check.q}</p><div class="options">${m.check.options.map((o,i)=>`<button data-module-check="${m.id}" data-option="${i}">${o}</button>`).join('')}</div><div id="moduleFeedback" role="status"></div></section><div class="reader-next">${index>0?`<a class="button secondary" href="#lektuere/${D.modules[index-1].id}">← Vorherige Station</a>`:'<span></span>'}${index<D.modules.length-1?`<a class="button" href="#lektuere/${D.modules[index+1].id}">Nächste Station →</a>`:'<a class="button" href="#journal">Zum Journal →</a>'}</div></div></div>`;
 }
+const READER_ORIGINAL_FEEDBACK = [
+ [7, [[["schöffen"], "Der Vorsitzende setzt das Publikum als Schöffen ein. Es stimmt über Lars Koch ab und soll ausschliesslich die in der Hauptverhandlung erhobenen Beweise berücksichtigen."], [["sprache"], "Die Prozessbeteiligten rekonstruieren die bereits geschehene Tat durch Sprache. Der Vorsitzende vergleicht den Gerichtssaal mit einer Bühne und fordert ein besonnenes Urteil über einen Menschen."]]],
+ [8, [[["regie"], "Die kursiven Passagen sind Regieanweisungen. Sie bestimmen unter anderem Auftritte, Bewegungen, Sprechweisen und Ausstattung. Auf der Bühne werden sie umgesetzt. Beim Lesen stellt man sich das Geschehen anhand dieser Angaben vor."]]],
+ [8, [[["richtertisch"], "In der Mitte steht der Richtertisch mit Vorsitzendem und Protokollführerin, davor der Zeugenplatz. Links sitzen Nelson und Meiser, rechts Biegler, dahinter Koch in einer Zelle. Der Wachtmeister sitzt an der Tür."], [["robe"], "Roben und Uniformen machen die institutionellen Rollen sichtbar. Koch trägt Luftwaffenuniform. Biegler trägt zunächst keine Robe. Der Vorsitzende legt seine Robe nach der Publikumsansprache an."]]],
+ [9, [[["platz"], "Der Vorsitzende eröffnet die Sitzung, stellt die Beteiligten fest und klärt Kochs Personalien. Biegler bittet darum, dass Koch neben ihm Platz nimmt. Vor der Anklage bittet er ausserdem darum, ein Fenster zu öffnen."], [["major"], "Koch ist Major der Luftwaffe und wird aus der Untersuchungshaft vorgeführt. Die Befragung liefert auch Angaben zu Familie und Beruf."]]],
+ [12, [[["164"], "Nelson wirft Koch vor, am 26. Mai 2013 um 20.21 Uhr über Oberappersdorf ein Lufthansa-Passagierflugzeug abgeschossen und alle 164 Menschen an Bord mit gemeingefährlichen Mitteln getötet zu haben."], [["mord"], "Die Staatsanwaltschaft wertet die Tat als Mord. Das ist der Vorwurf, über den das Gericht erst entscheiden muss."]]],
+ [14, [[["stadion"], "Biegler schildert das entführte Flugzeug auf Kurs zum voll besetzten Stadion. Er räumt den Abschuss ein und stellt ihm die Rettung der rund 70 000 Zuschauer gegenüber."], [["bewertung"], "Er trennt den eingeräumten äusseren Ablauf von der umstrittenen rechtlichen Bewertung und kündigt an, die Entscheidung aus der damaligen Lage zu erklären."]]],
+ [17, [[["duty controller"], "Lauterbach ist Oberstleutnant und war am betreffenden Tag ab 14 Uhr als Duty Controller im Lagezentrum im Einsatz. Seine Gedanken schildert er bei der Rekonstruktion der Meldungen und Entscheidungen unter Zeitdruck."], [["dienstgeheim"], "Als Zeuge muss er vollständig und wahrheitsgemäss aussagen. Bei Dienstgeheimnissen darf er gemäss seiner Aussagegenehmigung die Auskunft verweigern und muss das offen sagen. Koch darf als Angeklagter zur Sache schweigen."]]],
+ [19, [[["nato"], "Die NATO überwacht den deutschen Luftraum. Bei einer Entführung im deutschen Luftraum geht die Zuständigkeit an das Nationale Lage- und Führungszentrum über."], [["radar"], "Dort werden Radar- und Funkinformationen sowie Meldungen ziviler und militärischer Stellen zu einem Lagebild zusammengeführt. Bei einem verdächtigen Flug klärt die Alarmrotte die Lage aus der Luft."]]],
+ [22, [[["radtke"], "Nach der Entführungsmeldung verfolgen die Beteiligten im Lagezentrum die Lage gemeinsam. Lauterbach informiert Generalleutnant Radtke, der zunächst nach dem Stand der Alarmrotte fragt und dann die Intervention befiehlt."], [["minister"], "Die Alarmrotte meldet ihre Beobachtungen an Lauterbach. Er meldet an Radtke weiter. Für die nächste Eskalationsstufe trägt Radtke die Lage und seinen Vorschlag dem Verteidigungsminister vor."]]],
+ [25, [[["abdräng"], "Lauterbach gibt Radtkes Interventionsbefehl an die Alarmrotte weiter. Die Maschine soll abgedrängt und zur Landung gezwungen werden."], [["alarmrotte"], "Major Koch ist der verantwortliche Pilot der Alarmrotte. Er führt die Massnahmen in der Luft aus und meldet seine Beobachtungen an das Lagezentrum zurück."]]],
+ [29, [[["minister"], "Lauterbach meldet Radtke den fortgesetzten Kurs auf das Stadion. Radtke schlägt dem Verteidigungsminister den Abschuss als letzte Stufe vor. Der Minister lehnt ab."], [["nicht geschossen", "kein abschuss"], "Koch erhält die Weisung, dass nicht geschossen werden darf, und lässt sich das zweimal bestätigen. Die verfassungsrechtliche Grenze betrifft die staatliche Ermächtigung, ein Flugzeug mit unschuldigen Menschen abzuschießen. Die individuelle Strafbarkeit Kochs ist eine gesonderte Frage."]]],
+ [31, [[["sinkflug"], "Koch fragt zweimal nach dem Befehl, meldet den Sinkflug und erklärt, ohne seinen Eingriff würden Zehntausende sterben. Die Maschine ist noch etwa 25 Kilometer vom Stadion entfernt."], [["20.21", "20:21"], "Koch löst das Geschoss aus. Der Abschuss erfolgt um 20.21 Uhr. Alle 164 Menschen an Bord sterben. Lauterbach rekonstruiert den Vorgang anhand von Funk und Bildschirm."]]],
+ [33, [[["sicher", "erwart"], "Nelson fragt nach der unterlassenen Räumung und hakt nach, ob man auf Kochs Abschuss vertraute. Lauterbach sagt erst Nein und räumt dann ein, er habe sich vorstellen können, dass Koch schiessen würde. Das belegt keine Gewissheit des gesamten Bodenpersonals."], [["jung"], "Die Frage nach der Haltung des früheren Verteidigungsministers Jung führt zum übergesetzlichen Notstand. Gemeint ist ein möglicher, gesetzlich nicht geregelter Entschuldigungsgrund für eine extreme Konfliktlage."]]],
+ [35, [[["räum"], "Niemand im Lagezentrum gab den Räumungsbefehl. Lauterbach beruft sich auf Zeitmangel. Nelson hält ihm 52 Minuten zwischen dem ersten Funkspruch und dem prognostizierten Einschlag entgegen. Laut Notfallplan sollte die Räumung 15 Minuten dauern."], [["wette", "verlassen"], "Eine Wette ist es in dem Sinn, dass man das Risiko für die Zuschauer hinnahm und darauf setzte, der befürchtete Einschlag werde ausbleiben oder noch verhindert."]]],
+ [38, [[["zuständig", "verantwort"], "Biegler hinterfragt, wer für eine Räumung zuständig gewesen wäre und ob Lauterbach darüber zuverlässig Auskunft geben kann. Damit lenkt er den Blick auf die Verantwortung der Behörden und die Lage, die Koch bei seiner Entscheidung tatsächlich vorfand."]]],
+ [43, [[["1,0", "physik"], "Koch schildert eine glückliche Jugend, ein Abitur mit 1,0 und sein Interesse an Physik und Sport. Der Berufswunsch knüpft an den unerfüllten Wunsch seines Vaters an. Koch absolviert die Ausbildung zum Kampfpiloten und wird Major."], [["eindruck", "diszipliniert", "ehrgeizig"], "Ein möglicher Eindruck ist der eines leistungsorientierten und disziplinierten Menschen. Das lässt sich am Abitur und am Ausbildungsgang zeigen. Andere Eindrücke sind mit Textbelegen möglich."]]],
+ [47, [[["training", "ausbildung", "vorbereit"], "Koch beschreibt die letzten Augenblicke aus seiner Sicht als Pilot. Er konnte auf Training und eingeübte Abläufe zurückgreifen."], [["entscheidung", "zeitdruck"], "Die Entscheidung, ob er gegen die Weisung schiesst, musste er in der konkreten Lage selbst und unter Zeitdruck treffen. Technische Vorbereitung beantwortet diese Entscheidung nicht."]]],
+ [51, [[["cockpit", "entführer"], "Koch kannte die Entführungsmeldung und beobachtete den Flug von aussen. Was sich im Innern der Maschine im entscheidenden Moment abspielte, wusste er nicht sicher."], [["passagiere", "gewissheit"], "Insbesondere konnte er nicht sicher wissen, ob die Passagiere den Entführer noch hätten überwältigen können. Seine Prognose stützte sich auf die von aussen erkennbare Lage."]]],
+ [54, [[["verfassungsgericht", "urteil"], "Koch hatte sich mit dem Urteil des Bundesverfassungsgerichts und dem Abschussverbot beschäftigt. Seine Entscheidung fiel somit vor dem Hintergrund einer ihm bekannten rechtlichen Grenze."], [["abwäg", "verfassungsgrundsatz"], "Er hält die Abwägung in einer extremen Lage dennoch für geboten und stellt der abstrakten Regel die erwarteten Todesopfer eines Einschlags gegenüber."]]],
+ [56, [[["selbst", "eigenmächtig"], "Nelson wirft Koch vor, eigenmächtig darüber entschieden zu haben, wer leben und wer sterben soll. Das Bild vom gottgleichen Handeln greift diesen Anspruch an."], [["einwand", "rett"], "Der Vorwurf ist nachvollziehbar, weil die Menschen an Bord keine Wahl hatten. Zugleich kann man einwenden, dass Koch eine unmittelbar drohende Katastrophe abwenden wollte. Entscheidend ist, wie man beide Aspekte gewichtet."]]],
+ [57, [[["lebenserwart", "alt", "jung"], "Nelsons Beispiele zeigen, wohin eine Bewertung von Leben nach Alter oder verbleibender Lebenszeit führen kann."], [["würde", "gleichwert"], "Die verbleibenden Lebensjahre liefern keinen Massstab für die Würde eines Menschen. Wer dennoch nach Zahlen entscheiden will, muss begründen, warum gerade die Zahl der Betroffenen und keine andere Rechengrösse zählen soll."]]],
+ [59, [[["risiko"], "Koch behandelt den Tod als Risiko, das jeder Fluggast beim Einsteigen in Kauf nimmt."], [["einwillig", "zustimm"], "Nelsons Widerrede trennt die Übernahme eines allgemeinen Flugrisikos von der Einwilligung, absichtlich durch den Staat getötet zu werden. Ein Flugticket enthält keine solche Einwilligung."]]],
+ [61, [[["katastroph", "stadion"], "Koch meint, die Einhaltung des Abschussverbots hätte in dieser Lage zur Katastrophe im Stadion geführt."], [["prognos", "würde"], "Dagegen steht, dass der Einschlag eine Prognose war und dass der Verfassungsgrundsatz gerade in Extremlagen die Menschen an Bord schützt. Eine Stellungnahme muss beide Punkte abwägen."]]],
+ [62, [[["nachfrag", "widerspruch"], "Nelson prüft Kochs Annahmen mit kurzen Nachfragen und zugespitzten Gegenbeispielen. Sie zwingt ihn, seine Begründung auch dann zu verteidigen, wenn die Betroffenen einzeln betrachtet werden."], [["sicher", "grenze"], "So legt sie die Grenzen seiner Gewissheit und den Widerspruch zwischen seinem Rettungsziel und der Tötung Unbeteiligter offen."]]],
+ [65, [[["nebenkläger"], "Franziska Meiser ist Nebenklägerin und wird als Zeugin vernommen. Ihr Mann kam beim Abschuss ums Leben."], [["mann", "verlust"], "Sie schildert den Verlust aus ihrer persönlichen Perspektive. Ihre Aussage macht aus der Zahl der Opfer den Tod eines konkreten Menschen mit Familie und Geschichte."]]],
+ [67, [[["nachricht", "sms"], "Meiser rekonstruiert den Kontakt zu ihrem Mann und die Zeit der Ungewissheit bis zur Nachricht von seinem Tod."], [["verlust", "verstehen"], "Ihre Beteiligung am Prozess lässt sich als Versuch verstehen, das Geschehen aufzuklären und ihrem Mann Gehör zu verschaffen. Die konkreten Erinnerungen zeigen, wie gegenwärtig der Verlust für sie bleibt."]]],
+ [68, [[["eindruck", "gefasst", "berühr"], "Meiser kann durch ihre genaue Schilderung zugleich gefasst und tief betroffen wirken."], [["beispiel", "nachricht", "erinner"], "Als Beleg eignet sich, wie sie von den letzten Nachrichten und vom Warten erzählt. Eine andere Wirkung ist möglich, wenn sie an einer konkreten Stelle begründet wird."]]],
+ [75, [[["mord"], "Nelson fordert eine Verurteilung wegen Mordes. Sie unterscheidet die persönliche Anständigkeit und das Rettungsmotiv Kochs von der strafrechtlichen Beurteilung der absichtlichen Tötung."], [["würde"], "Für sie dürfen unschuldige Menschen nicht zur Rettung anderer als Mittel benutzt werden. Auch eine grosse Zahl geretteter Menschen hebt diese Grenze nicht auf."]]],
+ [77, [[["weiche", "trolley", "brücke"], "Die Beispiele mit der Weiche und dem Stoss von der Brücke prüfen, warum Menschen zwischen dem Umlenken einer Gefahr und der gezielten Benutzung eines Menschen als Rettungsmittel unterscheiden."], [["notstand", "prinzip"], "Nelson lehnt eine Entschuldigung durch einen übergesetzlichen Notstand in diesem Fall ab. Prinzipien sollen den Einzelnen gerade dort schützen, wo Empörung oder ein erwarteter Nutzen dazu verleiten, Ausnahmen zu machen."]]],
+ [79, [[["grundgesetz", "artikel 1"], "Der Satz steht in Artikel 1 Absatz 1 des Grundgesetzes. Die Menschenwürde verpflichtet den Staat zur Achtung und zum Schutz jedes Menschen."], [["objekt", "mittel"], "Für Nelson folgt daraus, dass die Passagiere auch im Notfall nicht zu blossen Objekten einer staatlichen Rettungsrechnung werden dürfen."]]],
+ [81, [[["kant", "mörder"], "Biegler antwortet mit Kants Beispiel vom Mörder, der nach dem Versteck seines Opfers fragt. Er kritisiert die Konsequenz eines ausnahmslosen Prinzips, wenn es die Rettung des Opfers verhindert."], [["strafbar", "einzelfall"], "Seine Pointe ist die Trennung zwischen dem verfassungsgerichtlichen Urteil über eine staatliche Abschussermächtigung und der Entscheidung über die persönliche Strafbarkeit Kochs. Letztere hat das Verfassungsgericht nicht getroffen."]]],
+ [83, [[["kleineres übel", "kleinere übel"], "Biegler vergleicht die Folgen des Handelns und des Unterlassens. Für ihn war der Abschuss unter den angenommenen Umständen das kleinere Übel."], [["verurteil", "zukunft"], "Eine Verurteilung würde nach seiner Argumentation jemanden bestrafen, der unter extremem Druck eine grössere Katastrophe verhindern wollte, und hätte Folgen dafür, wie Verantwortliche in vergleichbaren Lagen handeln."]]],
+ [84, [[["schöffen", "publikum"], "Der Vorsitzende schliesst die Verhandlung und übergibt die Entscheidung den Schöffen, also dem Publikum."], [["abstimm", "stimme"], "Sie müssen zwischen Verurteilung und Freispruch entscheiden. Das Abstimmungsergebnis bestimmt, welche der beiden Urteilsfassungen verkündet wird."]]],
+ [84, [[["freispruch", "verurteil"], "Beispiel für eine Verurteilung. Ich würde Koch verurteilen, weil er bewusst 164 Menschen tötete, die für die Entführung keine Verantwortung trugen."], [["einwand", "zwar", "dennoch"], "Sein Rettungsmotiv und der Zeitdruck sind gewichtige Gründe für einen Freispruch. Dennoch beruhte der erwartete Einschlag auf einer Prognose. Die Passagiere hatten Anspruch darauf, dass der Staat ihr Leben nicht gezielt opfert. Eine begründete Gegenposition kann die individuelle Entschuldigung in den Mittelpunkt stellen."]]],
+ [87, [[["lebenslang", "mord"], "Die Verurteilung wertet den Abschuss als Mord und verhängt lebenslange Freiheitsstrafe. Sie verwirft einen übergesetzlichen Entschuldigungsgrund."], [["freispruch", "entschuld"], "Die Freispruchsfassung erkennt bei gleicher Tat einen übergesetzlichen Notstand als persönlichen Entschuldigungsgrund an. Im Vergleich mit dem eigenen Urteil ist entscheidend, ob man diese Ausnahme für tragfähig hält und warum."]]],
+];
+
 function readerOriginalQuestions(m){
  const group=READER_ORIGINAL_QUESTIONS[m.id];
  if(!group)return '';
  return `<section class="section card" aria-labelledby="readerOriginalQuestionsTitle">
  <h2 id="readerOriginalQuestionsTitle">Hauptauftrag · Fragen zur Lektüre</h2>
  <p>Aus dem Arbeitsblatt «Fragen zu Terror von Ferdinand von Schirach»</p>
- <ol start="${group.first}">${group.questions.map((question,index)=>`<li>${escape(question)}${note('original-terror-'+(group.first+index),'Antwort zu Frage '+(group.first+index))}</li>`).join('')}</ol>
+ <ol start="${group.first}">${group.questions.map((question,index)=>`<li>${escape(question)}${readerOriginalAnswer(group.first+index)}</li>`).join('')}</ol>
  </section>`;
 }
+function readerOriginalAnswer(number){
+ const [page, criteria]=READER_ORIGINAL_FEEDBACK[number-1];
+ return `<div data-original-answer="${number}">
+ ${note('original-terror-'+number,'Antwort zu Frage '+number)}
+ <button type="button" class="secondary small" data-original-check>Antwort prüfen</button>
+ <div class="feedback-result" data-original-result aria-live="polite"></div>
+ <details><summary>Musterlösung zu Frage ${number}</summary>
+ ${criteria.map(([,hint])=>`<p>${escape(hint)}</p>`).join('')}
+ ${feedbackReference(page,'Zur Textstelle')}
+ </details></div>`;
+}
+function updateOriginalFeedback(answer){
+ if(!answer.isConnected)return;
+ const number=Number(answer.dataset.originalAnswer);
+ const [page, criteria]=READER_ORIGINAL_FEEDBACK[number-1];
+ const response=answer.querySelector('textarea').value;
+ const value=TERROR_FEEDBACK.normalize(response);
+ const result=answer.querySelector('[data-original-result]');
+ if(!value){result.textContent='Schreibe zuerst eine Antwort.';return;}
+ const words=value.split(' ');
+ const errors=TERROR_FEEDBACK.check(readerCurrentModule().id+'-0',response)?.errors||[];
+ const matches=criteria.map(([terms])=>terms.some(term=>{
+  const phrase=TERROR_FEEDBACK.normalize(term).split(' ');
+  return words.some((word,index)=>word.startsWith(phrase[0]) &&
+   phrase.slice(1).every((part,offset)=>words[index+offset+1]?.startsWith(part)) &&
+   !words.slice(Math.max(0,index-3),index).some(w=>/^(nicht|nie|kein(?:e|en|er|es|em)?)$/.test(w)));
+ }));
+ result.innerHTML=`<p>${matches.filter(Boolean).length} von ${criteria.length} Prüfpunkten sprachlich erkannt. Vergleiche deine Aussage mit dem Korrekturhinweis.</p>
+ ${errors.map(error=>`<p class="feedback-error"><strong>Sachlich überprüfen</strong> ${escape(error.correction)} ${feedbackReference(error.page,'Zur Textstelle')}</p>`).join('')}
+ <ul>${criteria.map(([,hint],index)=>`<li><strong>${matches[index]?'Im Text abgleichen':'Ergänzen oder genauer formulieren'}</strong><p>${escape(hint)}</p></li>`).join('')}</ul>
+ ${feedbackReference(page,'Zur Textstelle')}`;
+}
+const originalFeedbackTimers=new WeakMap();
 function readerQuestionHTML(m){const q=readerQuestion;return `<div class="question-tabs" role="group" aria-label="Analyseaufträge">${m.tasks.map((_,i)=>`<button class="${i===q?'':'secondary'} small" data-reader-question="${i}" aria-pressed="${i===q}">Auftrag ${i+1}${state.notes['leseraum-'+m.id+'-'+i]?.text?.trim()?' · ✓':''}</button>`).join('')}</div><span class="eyebrow">AUFTRAG ${q+1} / ${m.tasks.length}</span><h2 id="readerQuestionTitle" tabindex="-1">${m.tasks[q]}</h2>${note('leseraum-'+m.id+'-'+q,m.title+' · Auftrag '+(q+1),'Notiere zuerst deine Beobachtung, dann einen Beleg und deine Deutung.')}<div class="feedback-toolbar"><button type="button" class="accent small" data-feedback-check>Antwort prüfen</button><span>Automatisches Feedback nach einer kurzen Schreibpause · lokal auf deinem Gerät</span></div><div id="readerFeedback" class="reader-feedback" aria-live="polite" aria-atomic="false">${readerFeedbackHTML(m.id+'-'+q,state.notes['leseraum-'+m.id+'-'+q]?.text||'')}</div><details class="feedback-method"><summary>Wie werden meine Formulierungen erkannt?</summary><div>Der lokale Sprachabgleich berücksichtigt Synonyme, Wortformen, Umlaute, ss/ß, mehrere passende Begriffe im Satz und einzelne Tippfehler in längeren Wörtern. Er erkennt nicht jede Bedeutung oder Ironie. Ein gefundener Begriff beweist keine korrekte Argumentation. Bei abweichenden Lesarten entscheiden deine Belege; fehlende Treffer sind kein automatisches Falschurteil.</div></details><div class="reader-next"><button class="secondary small" data-reader-question="${q-1}" ${q===0?'disabled':''}>← Zurück</button><button class="small" data-reader-question="${q+1}" ${q===m.tasks.length-1?'disabled':''}>Weiter →</button></div>`;}
 function readerCurrentModule(){return D.modules.find(m=>m.id===location.hash.split('/')[1]);}
 function initReader(){
@@ -91,6 +162,12 @@ function initReader(){
  if(readerFilmEnabled&&readerScene(m.id))mountReaderVideo(false);
  if(readerEvents)return;readerEvents=true;
  main.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset,m=readerCurrentModule();if(!m)return;
+ if('originalCheck' in a){
+  const answer=b.closest('[data-original-answer]');
+  clearTimeout(originalFeedbackTimers.get(answer));
+  updateOriginalFeedback(answer);
+  return;
+ }
  if(a.readerPart!==undefined){const n=Number(a.readerPart),parts=D.scenes.find(s=>s.id===m.id)?.parts;if(parts&&n>=0&&n<parts.length){readerPart=n;render();}return;}
  if('readerPlay'in a||'readerRestart'in a){readerFilmEnabled=true;mountReaderVideo(true);}
  if(a.readerQuestion!==undefined){const n=Number(a.readerQuestion);if(n>=0&&n<m.tasks.length){readerQuestion=n;document.getElementById('readerQuestionPanel').innerHTML=readerQuestionHTML(m);document.getElementById('readerQuestionTitle').focus({preventScroll:true});}}
@@ -100,7 +177,13 @@ function initReader(){
  if('pdfForget'in a){readerPdfLoading++;readerPdfJob++;readerPdfRender?.cancel();readerPdfRender=null;readerPdf?.destroy();readerPdf=null;readerPdfName='';if(pdfURL)URL.revokeObjectURL(pdfURL);pdfURL='';writePdfCache(null).catch(()=>{});render();loadDefaultReaderPdf();toast('Eigene PDF entfernt. Die eingebundene Ausgabe wird geöffnet. Deine Notizen bleiben erhalten.');}
  });
  main.addEventListener('change',e=>{const el=e.target;if(el.id==='readerPdfInput'&&el.files[0])loadReaderPdf(el.files[0],document.getElementById('rememberReaderPdf').checked);if(el.id==='readerPage')drawReaderPdf(Number(el.value));if(el.id==='readerLocalFilm'&&el.files[0]){if(filmObjectURL)URL.revokeObjectURL(filmObjectURL);filmObjectURL=URL.createObjectURL(el.files[0]);readerFilmEnabled=true;if(readerVideoCleanup){readerVideoCleanup();readerVideoCleanup=null;}document.getElementById('readerVideo')?.remove();mountReaderVideo(false);}});
- main.addEventListener('input',e=>{if(e.target.id==='readerSeek'){const v=document.getElementById('readerVideo');if(v?.readyState>=1)v.currentTime=Number(e.target.value);}});
+ main.addEventListener('input',e=>{
+  const answer=e.target.closest('[data-original-answer]');
+  if(answer && e.target.matches('textarea')){
+   clearTimeout(originalFeedbackTimers.get(answer));
+   originalFeedbackTimers.set(answer,setTimeout(()=>updateOriginalFeedback(answer),650));
+  }
+  if(e.target.id==='readerSeek'){const v=document.getElementById('readerVideo');if(v?.readyState>=1)v.currentTime=Number(e.target.value);}});
 }
 function mountReaderVideo(play){
  const m=readerCurrentModule(),s=readerScene(m?.id);if(!s)return;const mount=document.getElementById('readerVideoMount');if(!mount)return;
