@@ -68,7 +68,7 @@ function sceneReading(m){
  <div class="reader-layout" id="readerWorkspace" data-module="${m.id}"><aside class="scene-rail" aria-label="Szenen und Textstationen"><div class="rail-heading">DEIN LESERAUM <span>12 Stationen</span></div>${D.modules.map((x,i)=>{const c=D.scenes.find(s=>s.id===x.id);return `<a href="#lektuere/${x.id}" class="scene-link ${x.id===m.id?'active':''}" ${x.id===m.id?'aria-current="step"':''}><span class="scene-number">${String(i+1).padStart(2,'0')}</span><span><strong>${c?.title||x.title}</strong><small>PDF ${x.pages}${c?' · '+fmtTime(c.start):' · Vertiefung'}${state.done.includes(x.id)?' · ✓':''}</small></span></a>`;}).join('')}</aside>
  <div class="reader-content">${readerOriginalQuestions(m)}<div class="reader-media"><section class="reader-film" aria-labelledby="readerFilmTitle"><div class="reader-panel-head"><span>FILMSPUR</span><h2 id="readerFilmTitle">${s?escape(s.title):'Text und Inszenierung'}</h2></div>${s?`${s.parts?`<div class="verdict-tabs" role="group" aria-label="Urteilsfassungen">${s.parts.map((p,i)=>`<button class="${readerPart===i?'':'secondary'} small" data-reader-part="${i}" aria-pressed="${readerPart===i}">${escape(p.title)}</button>`).join('')}</div>`:''}<div id="readerVideoMount" class="reader-video-mount"><div class="scene-slate scene-illustrated">${filmImage(m.id)}<span class="eyebrow">TERROR · IHR URTEIL</span><strong>${escape(s.title)}</strong><span>${fmtTime(s.start)}–${fmtTime(s.end)}</span><button class="accent" data-reader-play>Filmszene laden & starten</button><small>Der Player lädt den Film von Dropbox.</small></div></div><div class="reader-transport"><button class="secondary small" data-reader-restart aria-label="Szene von vorne abspielen">↺ Szene</button><input type="range" id="readerSeek" min="${s.start}" max="${s.end}" value="${s.start}" step="0.1" aria-label="Position innerhalb der Filmszene"><output id="readerClock">0:00 / ${fmtTime(s.end-s.start)}</output></div><p class="reader-status" id="readerFilmStatus" role="status">${escape(s.note||'Die Wiedergabe stoppt am Szenenende.')}</p><details><summary>Filmquelle und andere Fassung</summary><div><p>Die Kapitelmarken beziehen sich auf die bereitgestellte Fassung (93:37). Text und Film sind nicht wortgleich. Die Grenzen sind didaktische Abschnitte, keine offiziellen Kapitel.</p><p>${external(D.videos[0].url,'Film bei Dropbox öffnen')}</p><label class="field"><span>Dieselbe Filmfassung lokal öffnen</span><input id="readerLocalFilm" type="file" accept="video/*"></label><p class="notice">Andere Schnitte benötigen angepasste Marken in der <a href="#film/film">Filmwerkstatt</a>.</p></div></details>`:`<div class="scene-slate text-only"><strong>${m.id==='rede'?'Eine Rede ausserhalb des Dramas':'Die Inszenierung als Ganzes'}</strong><p>${m.id==='rede'?'Die Rede auf Charlie Hebdo steht im PDF.':'Die Filmausschnitte stehen in der Szenenleiste zur Verfügung.'}</p>${m.id==='dramenform'?'<a class="button accent" href="#lektuere/auftakt">Zum Auftakt</a>':'<a class="button accent" href="#politik">Politische Kontexte öffnen</a>'}</div>`}</section>
  <section class="reader-document" aria-labelledby="readerPdfTitle"><div class="reader-panel-head"><span>TEXTSPUR · PDF ${m.pages}</span><h2 id="readerPdfTitle">Dein Text direkt daneben</h2></div><div class="pdf-tools"><button class="secondary small" data-pdf-prev aria-label="Vorherige PDF-Seite">←</button><label>Seite <input id="readerPage" type="number" min="1" value="${parseInt(m.pages)}" aria-label="PDF-Seite"></label><span id="readerPageCount">/ 103</span><button class="secondary small" data-pdf-next aria-label="Nächste PDF-Seite">→</button><button class="secondary small" data-pdf-home>Textstelle</button><button class="secondary small" data-pdf-zoom="out" aria-label="PDF verkleinern">−</button><output id="readerZoom">${Math.round(readerPdfZoom*100)}%</output><button class="secondary small" data-pdf-zoom="in" aria-label="PDF vergrössern">+</button></div><div id="readerPdfMount" class="reader-pdf-mount"><div class="pdf-empty"><span class="pdf-symbol" aria-hidden="true">¶</span><h3>Die Textstelle wird geöffnet …</h3><p>Der Buchtext ist bereits eingebunden. Beim Szenenwechsel öffnet sich automatisch die passende Seite.</p><p><a href="${READER_TEXT_URL}#page=${parseInt(m.pages)}" target="_blank" rel="noopener">PDF direkt öffnen ↗</a></p><button class="secondary small" data-pdf-retry>Text erneut laden</button></div></div><p id="readerPdfStatus" role="status" class="reader-status">Die Seitenangaben zählen die 103 PDF-Seiten, inklusive Vorspann.</p><div class="pdf-source"><div id="readerPdfLinks"></div><details><summary>Optional: eigene PDF-Ausgabe verwenden</summary><label class="field"><span>Eigene PDF auswählen / wechseln</span><input id="readerPdfInput" type="file" accept="application/pdf,.pdf"></label><label class="notice"><input type="checkbox" id="rememberReaderPdf" checked>PDF auf diesem Gerät merken</label><p class="notice muted">Eine hier ausgewählte eigene PDF bleibt in diesem Browser und wird nicht hochgeladen. Ohne eigene Datei öffnet sich die eingebundene Ausgabe automatisch.</p></details></div></section></div>
- <div class="reader-next">${index>0?`<a class="button secondary" href="#lektuere/${D.modules[index-1].id}">← Vorherige Station</a>`:'<span></span>'}${index<D.modules.length-1?`<a class="button" href="#lektuere/${D.modules[index+1].id}">Nächste Station →</a>`:'<a class="button" href="#journal">Zum Journal →</a>'}</div></div></div>`;
+ ${readerObservation(m)}<div class="reader-next">${index>0?`<a class="button secondary" href="#lektuere/${D.modules[index-1].id}">← Vorherige Station</a>`:'<span></span>'}${index<D.modules.length-1?`<a class="button" href="#lektuere/${D.modules[index+1].id}">Nächste Station →</a>`:'<a class="button" href="#journal">Zum Journal →</a>'}</div></div></div>`;
 }
 const READER_ORIGINAL_FEEDBACK = [
  ["7–8, 12–16", ["schoeffen haben die akten gelesen", "(?:muss|muessen|soll|sollen) (?:ihr )?vorwissen (?:verwenden|beruecksichtigen)", "publikum (?:darf|stimmt|wirkt).{0,24}(?:gar )?nicht (?:mit )?(?:ab|abstimmen|mit)"], "Der Vorsitzende verlangt, Vorwissen auszublenden. Das Publikum entscheidet als Schöffen allein nach den erhobenen Beweisen.", "Das Stück beginnt mit der direkten Ansprache vor dem Vorhang. Der Vorsitzende kündigt den Prozess gegen Lars Koch an. Verhandelt wird, wie sein Abschuss des entführten Passagierflugzeugs strafrechtlich zu beurteilen ist (PDF 12–16). Die Schauspieler verkörpern Richter, Anklage, Verteidigung, Angeklagten und weitere Beteiligte; das Publikum übernimmt tatsächlich die Abstimmung. Der Vergleich mit dem Thing zeigt, wie gemeinsames Sprechen über eine Tat helfen soll, Ordnung wiederherzustellen. Das Gericht spricht rechtliche Urteile und verdammt keine Menschen als böse.", ["Der Vorsitzende setzt das Publikum als Schöffen ein. Es stimmt über Lars Koch ab und soll ausschliesslich die in der Hauptverhandlung erhobenen Beweise berücksichtigen.", "Die Prozessbeteiligten rekonstruieren die bereits geschehene Tat durch Sprache. Der Vorsitzende vergleicht den Gerichtssaal mit einer Bühne und fordert ein besonnenes Urteil über einen Menschen."]],
@@ -108,6 +108,304 @@ const READER_ORIGINAL_FEEDBACK = [
  ["87–93", ["beide urteile sprechen koch frei", "beide urteile verurteilen koch", "in keiner der fassungen erhaelt koch eine (?:freiheitsstrafe|haftstrafe)"], "Eine Fassung verurteilt Koch zu lebenslanger Freiheitsstrafe, die andere spricht ihn frei. Beide gehen vom selben Abschuss und denselben Todesopfern aus.", "Im Schuldspruch bleibt die absichtliche Tötung Mord; das Gericht erkennt keine Entschuldigung an. Im Freispruch hält das Gericht einen ungeschriebenen Entschuldigungsgrund für tragfähig und würdigt Kochs selbstloses Rettungsmotiv. Mein Urteil aus der vorherigen Aufgabe liegt näher beim Schuldspruch, weil ich die Unsicherheit der Prognose und den Schutz der Passagiere stärker gewichte. Mit dem Freispruch teile ich die Einschätzung, dass Koch aus einem ernsthaften Gewissenskonflikt handelte. Ich folge ihm bei der strafrechtlichen Entschuldigung nicht.", ["Die Verurteilung wertet den Abschuss als Mord und verhängt lebenslange Freiheitsstrafe. Sie verwirft einen übergesetzlichen Entschuldigungsgrund.", "Die Freispruchsfassung erkennt bei gleicher Tat einen übergesetzlichen Notstand als persönlichen Entschuldigungsgrund an. Im Vergleich mit dem eigenen Urteil ist entscheidend, ob man diese Ausnahme für tragfähig hält und warum."]],
 ];
 
+const READER_OBSERVATIONS = {
+ "auftakt": [
+  "Welche Informationsquelle erlaubt der Vorsitzende den Schöffen für ihr Urteil? Welche sollen sie ausblenden? Geben Sie seine Anweisung mit Seitenbeleg wieder.",
+  [
+   "7–8",
+   [
+    "muessen (?:ihr )?vorwissen verwenden",
+    "publikum stimmt gar nicht mit ab"
+   ],
+   "Die Schöffen sollen sich auf die in der Hauptverhandlung erhobenen Beweise stützen.",
+   "Der Vorsitzende verlangt, dass die Schöffen ausschliesslich auf Aussagen und Beweise der Hauptverhandlung zurückgreifen. Was sie vorher über den Fall gelesen oder gehört haben, sollen sie ausblenden (PDF 7).",
+   [],
+   [
+    [
+     "hauptverhandlung",
+     "verhandlung"
+    ],
+    [
+     "vorwissen",
+     "vorher",
+     "gelesen",
+     "gehoert"
+    ]
+   ]
+  ]
+ ],
+ "anklage": [
+  "Welche Handlung Kochs räumt Biegler ein? Warum hält er eine Verurteilung dadurch noch nicht für entschieden? Belegen Sie beide Punkte.",
+  [
+   "14–16",
+   [
+    "bestreitet den abschuss",
+    "leugnet die toetung"
+   ],
+   "Biegler räumt den Abschuss ein. Umstritten bleibt seine rechtliche Bewertung.",
+   "Biegler räumt ein, dass Koch das entführte Flugzeug abschoss. Er verweist auf die drohende Katastrophe im Stadion und Kochs Rettungsabsicht. Damit unterscheidet er die zugestandene Tat von der Frage, wie sie rechtlich zu beurteilen ist (PDF 14–16).",
+   [],
+   [
+    [
+     "abschuss",
+     "schoss",
+     "abschoss"
+    ],
+    [
+     "stadion",
+     "rettung",
+     "rettungsabsicht"
+    ]
+   ]
+  ]
+ ],
+ "lauterbach": [
+  "Konnte Lauterbach sich vorstellen, dass Koch schiesst? Sagt er auch eindeutig, dass er selbst geschossen hätte? Belegen Sie den Unterschied.",
+  [
+   "37–39",
+   [
+    "er selbst haette sicher geschossen",
+    "lauterbach war sich sicher"
+   ],
+   "Lauterbach hält Kochs Abschuss für vorstellbar. Was er selbst getan hätte, lässt er offen.",
+   "Lauterbach räumt ein, er habe sich vorstellen können, dass Koch schiesst (PDF 37). Auf die Frage nach seinem eigenen Verhalten sagt er, er wisse es nicht (PDF 38). Die Erwartung über Koch ist keine Aussage über seinen eigenen Entschluss.",
+   [],
+   [
+    [
+     "vorstellen",
+     "vorstellbar"
+    ],
+    [
+     "weiss es nicht",
+     "wisse es nicht",
+     "offen",
+     "unsicher"
+    ]
+   ]
+  ]
+ ],
+ "evakuierung": [
+  "Warum nennt Nelson die unterlassene Stadionräumung eine Wette? Welche Zuständigkeit stellt Biegler in seinen Nachfragen klar? Belegen Sie beide Positionen.",
+  [
+   "36–42",
+   [
+    "stadion wurde geraeumt",
+    "koch war fuer die raeumung zustaendig"
+   ],
+   "Die Räumung unterblieb. Zuständig war laut Lauterbach der bayerische Katastrophenschutz.",
+   "Nelson wirft den Verantwortlichen vor, sie hätten das Leben der Zuschauer auf Kochs Entscheidung gesetzt, obwohl nach ihrer Rechnung Zeit für die Räumung blieb (PDF 36–40). Biegler lässt klären, dass der bayerische Katastrophenschutz zuständig war und Koch die Räumung weder verantwortete noch selbst veranlassen konnte (PDF 41–42).",
+   [],
+   [
+    [
+     "wette",
+     "gesetzt",
+     "vertraut"
+    ],
+    [
+     "katastrophenschutz"
+    ]
+   ]
+  ]
+ ],
+ "koch": [
+  "Welche beiden Verpflichtungen geraten für Koch vor dem Abschuss in Konflikt? Welche Entscheidung trifft er, und wie begründet er sie? Belegen Sie seine Sicht.",
+  [
+   "47–51",
+   [
+    "koch schoss auf befehl",
+    "koch befolgte den abschussbefehl"
+   ],
+   "Koch hatte die Weisung, nicht zu schiessen. Er handelte dagegen.",
+   "Koch steht zwischen dem Befehl, nicht zu schiessen, und dem Schutz der Menschen im Stadion. Er weiss zugleich, dass auch die Zivilisten an Bord geschützt werden sollen. Er entscheidet sich gegen den Befehl, weil er einen Einschlag und Zehntausende Tote erwartet (PDF 47–51).",
+   [],
+   [
+    [
+     "befehl",
+     "weisung"
+    ],
+    [
+     "stadion",
+     "zuschauer"
+    ]
+   ]
+  ]
+ ],
+ "grenzfaelle": [
+  "Wie begründet Koch, dass eine Abwägung von Menschenleben ausnahmsweise zulässig sei? Mit welchem Beispiel und welcher Nachfrage prüft Nelson seine Grenze? Belegen Sie beide Positionen.",
+  [
+   "55–57",
+   [
+    "nelson will.*leben verrechnen",
+    "koch nennt eine feste grenze"
+   ],
+   "Nelson prüft Kochs Abwägung kritisch. Koch nennt keine feste Grenze.",
+   "Koch hält eine Ausnahme bei sehr grossen Zahlen für möglich. Nelson fragt, ob ein gesunder Patient zur Rettung mehrerer Menschen durch Organentnahme getötet werden dürfe, und steigert dann die Zahlenverhältnisse. Sie verlangt eine Grenze. Koch nennt keine feste Zahl und verweist auf den Einzelfall (PDF 55–57).",
+   [],
+   [
+    [
+     "zahl",
+     "zahlen",
+     "verhaeltnis"
+    ],
+    [
+     "organentnahme",
+     "organe",
+     "krankenhaus"
+    ]
+   ]
+  ]
+ ],
+ "meiser": [
+  "Welche mögliche Alternative zum Abschuss sieht Meiser in der Nachricht ihres Mannes? Was antwortet der Vorsitzende auf ihre Frage, ob diese Alternative gelang? Belegen Sie beide Aussagen.",
+  [
+   "68–71",
+   [
+    "passagiere wurden sicher gerettet",
+    "vorsitzende bestaetigt.*ins cockpit gelangten"
+   ],
+   "Die Nachricht belegt einen Versuch. Ob die Passagiere ins Cockpit gelangten, bleibt offen.",
+   "Die Nachricht berichtet vom Versuch der Passagiere, ins Cockpit zu gelangen (PDF 68). Meiser fragt, ob sie den Entführer hätten stoppen und den Abschuss damit überflüssig machen können. Der Vorsitzende sagt, man wisse nicht, ob sie ins Cockpit gelangten (PDF 71).",
+   [],
+   [
+    [
+     "versuch",
+     "versuchten"
+    ],
+    [
+     "offen",
+     "unbekannt",
+     "weiss es nicht",
+     "wisse nicht"
+    ]
+   ]
+  ]
+ ],
+ "nelson": [
+  "Warum fordert Nelson eine Verurteilung, obwohl sie Kochs Rettungsmotiv anerkennt? Nennen Sie den Grundsatz und erklären Sie seine Folge für die Passagiere.",
+  [
+   "75–81",
+   [
+    "nelson fordert.*freispruch",
+    "nelson erlaubt.*verrechnung"
+   ],
+   "Nelson fordert die Verurteilung und lehnt die Verrechnung der Menschenleben ab.",
+   "Nelson trennt das Rettungsmotiv von der strafrechtlichen Bewertung. Sie beruft sich auf die Menschenwürde. Die Passagiere behalten ihren Anspruch auf Schutz und dürfen nicht als Mittel zur Rettung der Zuschauer getötet werden. Deshalb fordert sie die Verurteilung (PDF 75–81).",
+   [],
+   [
+    [
+     "menschenwuerde",
+     "wuerde"
+    ],
+    [
+     "mittel",
+     "objekt",
+     "objekten",
+     "geopfert"
+    ]
+   ]
+  ]
+ ],
+ "biegler": [
+  "Was meint Biegler in diesem Fall mit dem «kleineren Übel»? Welche Entscheidung verlangt er vom Gericht? Belegen Sie seine Begründung und seinen Antrag.",
+  [
+   "81–84",
+   [
+    "biegler beantragt verurteilung",
+    "biegler fordert.*schuldspruch"
+   ],
+   "Biegler beantragt Freispruch. Er hält Kochs Eingreifen für das kleinere Übel.",
+   "Biegler hält Kochs Eingreifen für das kleinere Übel, weil er bei einem Einschlag mehr Tote erwartet. Er hält eine Entscheidung über Kochs persönliche Strafbarkeit trotz des Urteils zur staatlichen Abschussermächtigung für möglich. Am Ende beantragt er Freispruch (PDF 81–84).",
+   [],
+   [
+    [
+     "kleinere uebel",
+     "kleineres uebel",
+     "mehr tote",
+     "mehr menschen"
+    ],
+    [
+     "freispruch",
+     "freizusprechen"
+    ]
+   ]
+  ]
+ ],
+ "urteile": [
+  "Wie beurteilt jede Urteilsfassung Kochs Berufung auf einen übergesetzlichen Notstand? Geben Sie für Schuldspruch und Freispruch je einen Beleg an.",
+  [
+   "87–93",
+   [
+    "beide urteile sprechen koch frei",
+    "beide urteile verurteilen koch"
+   ],
+   "Der Schuldspruch lehnt die Entschuldigung ab. Der Freispruch lässt sie zu.",
+   "Im Schuldspruch erkennt das Gericht den übergesetzlichen Notstand in diesem Fall nicht als Entschuldigungsgrund an (PDF 87–90). Im Freispruch hält es eine solche Entschuldigung für möglich und gewichtet Kochs selbstloses Rettungsmotiv und seinen Gewissenskonflikt (PDF 91–93).",
+   [],
+   [
+    [
+     "schuldspruch",
+     "verurteilung"
+    ],
+    [
+     "freispruch",
+     "freigesprochen"
+    ]
+   ]
+  ]
+ ],
+ "dramenform": [
+  "Welche Entscheidung überträgt der Vorsitzende dem Publikum am Anfang? Wann fordert er es auf, diese Entscheidung tatsächlich zu treffen? Belegen Sie beide Stellen.",
+  [
+   "7–8, 84–86",
+   [
+    "publikum darf nicht abstimmen",
+    "publikum hat keine stimme"
+   ],
+   "Das Publikum übernimmt die Rolle der Schöffen und entscheidet per Abstimmung.",
+   "Am Anfang spricht der Vorsitzende das Publikum als Schöffen an und überträgt ihm die Entscheidung über Koch (PDF 7–8). Am Ende der Hauptverhandlung, nach den Plädoyers und Kochs letztem Wort, sollen die Schöffen zwischen Verurteilung und Freispruch abstimmen (PDF 84–86).",
+   [],
+   [
+    [
+     "schoeffen",
+     "laienrichter"
+    ],
+    [
+     "plaedoyers",
+     "letztem wort",
+     "ende"
+    ]
+   ]
+  ]
+ ],
+ "rede": [
+  "Wie beurteilt Ferdinand von Schirach am Ende seiner Rede den Vorschlag, Freiheit für Sicherheit aufzugeben? Welche Folge sagt er voraus? Belegen Sie seine Position.",
+  [
+   "102–103",
+   [
+    "schirach empfiehlt.*freiheit aufzugeben",
+    "sicherheit ist ihm wichtiger"
+   ],
+   "Schirach warnt, dass man durch die Preisgabe von Freiheit am Ende Freiheit und Sicherheit verliert.",
+   "Schirach lehnt es ab, Freiheit gegen Sicherheit einzutauschen. Am Schluss seiner Rede sagt er voraus, dass man dadurch am Ende sowohl Freiheit als auch Sicherheit verliert. Er fordert Charlie Hebdo auf, seine Arbeit fortzusetzen (PDF 102–103).",
+   [],
+   [
+    [
+     "freiheit"
+    ],
+    [
+     "sicherheit",
+     "beides"
+    ]
+   ]
+  ]
+ ]
+};
+
+function readerObservation(m){
+ const [question,rubric]=READER_OBSERVATIONS[m.id];
+ return `<section class="section card" aria-labelledby="readerObservationTitle"><h2 id="readerObservationTitle">Beobachtungsfrage</h2><p>${escape(question)}</p>${readerOriginalAnswer(m.id,rubric)}</section>`;
+}
+
 function readerOriginalQuestions(m){
  const group=READER_ORIGINAL_QUESTIONS[m.id];
  if(!group)return '';
@@ -119,10 +417,11 @@ function readerOriginalQuestions(m){
 function originalTextReferences(pages){
  return pages.split(', ').map(range=>feedbackReference(parseInt(range,10),'Textbeleg · '+range)).join(' ');
 }
-function readerOriginalAnswer(number){
- const [pages,,,model]=READER_ORIGINAL_FEEDBACK[number-1];
- return `<div data-original-answer="${number}">
- ${note('original-terror-'+number,'Deine Antwort')}
+function readerOriginalAnswer(id,rubric=READER_ORIGINAL_FEEDBACK[id-1]){
+ const [pages,,,model]=rubric;
+ const noteId=READER_OBSERVATIONS[id]?'observation-terror-'+id:'original-terror-'+id;
+ return `<div data-original-answer="${id}">
+ ${note(noteId,'Deine Antwort')}
  <button type="button" class="secondary small" data-original-check>Antwort prüfen</button>
  <div class="feedback-result" data-original-result aria-live="polite"></div>
  <details><summary>Musterlösung</summary>
@@ -130,8 +429,8 @@ function readerOriginalAnswer(number){
  ${originalTextReferences(pages)}
  </details></div>`;
 }
-function originalAnswerErrors(number,response){
- const [pages,patterns,correction]=READER_ORIGINAL_FEEDBACK[number-1];
+function originalAnswerErrors(id,response){
+ const [pages,patterns,correction]=READER_OBSERVATIONS[id]?.[1]||READER_ORIGINAL_FEEDBACK[id-1];
  const errors=TERROR_FEEDBACK.check(readerCurrentModule().id+'-0',response)?.errors||[];
  const sentences=response.split(/(?<![0-9])[.!?]+|[.!?]+(?![0-9])|[;\n]+/);
  for(const sentence of sentences){
@@ -151,20 +450,25 @@ function originalAnswerErrors(number,response){
 }
 function updateOriginalFeedback(answer){
  if(!answer.isConnected)return;
- const number=Number(answer.dataset.originalAnswer);
- const [pages,,,,hints]=READER_ORIGINAL_FEEDBACK[number-1];
+ const id=answer.dataset.originalAnswer;
+ const [pages,,,,hints,criteria]=READER_OBSERVATIONS[id]?.[1]||READER_ORIGINAL_FEEDBACK[id-1];
  const response=answer.querySelector('textarea').value.trim();
  const result=answer.querySelector('[data-original-result]');
  if(!response){result.textContent='Schreibe zuerst eine Antwort.';return;}
- const errors=originalAnswerErrors(number,response);
+ const errors=originalAnswerErrors(id,response);
+ const normalized=TERROR_FEEDBACK.normalize(response);
+ const missing=criteria?.flatMap((terms,index)=>terms.some(term=>normalized.includes(term))?[]:[index+1]);
+ const coverage=criteria?`<p>${missing.length?'Prüfe Teil '+missing.join(' und ')+' erneut. Dafür fehlt eine erkennbare Aussage.':'Beide Teile sind angesprochen. Vergleiche deine Aussagen mit den Textstellen.'} Gib zu beiden Teilen einen Seitenbeleg an.</p>`:'';
+
  result.innerHTML=`
  ${errors.length?errors.map(error=>`<article class="feedback-error">
  <p><strong>Möglicher Sachfehler</strong> <q>${escape(error.excerpt)}</q></p>
  <p>${escape(error.correction)}</p>${feedbackReference(error.page,'Zur Textstelle')}
  </article>`).join(''):'<p>Das Sofortfeedback hat keinen eindeutigen Sachfehler erkannt. Prüfe deine Antwort anhand der Textstellen.</p>'}
- <details><summary>Prüfpunkte für deine Antwort</summary>
+ ${coverage}
+ ${hints.length?`<details><summary>Prüfpunkte für deine Antwort</summary>
  <ul>${hints.map(hint=>`<li>${escape(hint)}</li>`).join('')}</ul>
- ${originalTextReferences(pages)}</details>`;
+ ${originalTextReferences(pages)}</details>` : originalTextReferences(pages)}`;
 }
 function readerQuestionHTML(m){const q=readerQuestion;return `<div class="question-tabs" role="group" aria-label="Analyseaufträge">${m.tasks.map((_,i)=>`<button class="${i===q?'':'secondary'} small" data-reader-question="${i}" aria-pressed="${i===q}">Auftrag ${i+1}${state.notes['leseraum-'+m.id+'-'+i]?.text?.trim()?' · ✓':''}</button>`).join('')}</div><span class="eyebrow">AUFTRAG ${q+1} / ${m.tasks.length}</span><h2 id="readerQuestionTitle" tabindex="-1">${m.tasks[q]}</h2>${note('leseraum-'+m.id+'-'+q,m.title+' · Auftrag '+(q+1),'Notiere zuerst deine Beobachtung, dann einen Beleg und deine Deutung.')}<div class="feedback-toolbar"><button type="button" class="accent small" data-feedback-check>Antwort prüfen</button><span>Automatisches Feedback nach einer kurzen Schreibpause · lokal auf deinem Gerät</span></div><div id="readerFeedback" class="reader-feedback" aria-live="polite" aria-atomic="false">${readerFeedbackHTML(m.id+'-'+q,state.notes['leseraum-'+m.id+'-'+q]?.text||'')}</div><details class="feedback-method"><summary>Wie werden meine Formulierungen erkannt?</summary><div>Der lokale Sprachabgleich berücksichtigt Synonyme, Wortformen, Umlaute, ss/ß, mehrere passende Begriffe im Satz und einzelne Tippfehler in längeren Wörtern. Er erkennt nicht jede Bedeutung oder Ironie. Ein gefundener Begriff beweist keine korrekte Argumentation. Bei abweichenden Lesarten entscheiden deine Belege; fehlende Treffer sind kein automatisches Falschurteil.</div></details><div class="reader-next"><button class="secondary small" data-reader-question="${q-1}" ${q===0?'disabled':''}>← Zurück</button><button class="small" data-reader-question="${q+1}" ${q===m.tasks.length-1?'disabled':''}>Weiter →</button></div>`;}
 function readerCurrentModule(){return D.modules.find(m=>m.id===location.hash.split('/')[1]);}
