@@ -150,6 +150,101 @@ lexicon:{
  for(const [key,value] of Object.entries(extra))F.lexicon[key]+='|'+value;
 })(window.TERROR_FEEDBACK);
 
+window.TERROR_FEEDBACK.mistakes.push(...[
+  {
+    "id": "detail-rotte",
+    "pattern": "alarmrotte (?:besteht aus|hat|umfasst) (?:einem|einen|drei|vier|1|3|4) (?:flugzeug|kampfjet|eurofighter)",
+    "correction": "Lauterbach erklärt: Eine Alarmrotte besteht aus zwei Eurofightern. Im Fall fliegen Koch und Weinberger.",
+    "page": 23,
+    "anchor": "Definition der Alarmrotte"
+  },
+  {
+    "id": "detail-sidewinder",
+    "pattern": "sidewinder (?:ist|war) (?:eine |die |ein )?(?:bordkanone|maschinenkanone|radargelenkte rakete)",
+    "correction": "Die Sidewinder ist im Stück ein Luft-Luft-Lenkflugkörper mit Infrarotsuchkopf. Der Warnfeuerstoss erfolgt dagegen aus der Bordkanone.",
+    "page": 33,
+    "anchor": "Infrarotsuchkopf; Bordkanone auf PDF 27"
+  },
+  {
+    "id": "detail-warning",
+    "pattern": "warnschuss (?:wird|wurde|erfolgt|erfolgte) (?:mit|aus) (?:der |einer )?sidewinder",
+    "correction": "Koch gibt den Warnfeuerstoss aus der Bordkanone ab. Die Sidewinder wird erst beim späteren Abschuss ausgelöst.",
+    "page": 27,
+    "anchor": "Warning burst aus der Bordkanone"
+  },
+  {
+    "id": "detail-minister",
+    "pattern": "radtke ist (?:der )?(?:verteidigungsminister|minister)",
+    "correction": "Radtke ist der Inspekteur der Luftwaffe, ein General. Er unterbreitet dem Verteidigungsminister einen Vorschlag; beide sind unterschiedliche Personen und Funktionen.",
+    "page": 26,
+    "anchor": "Vorschlag des Generals und Entscheidung des Ministers"
+  },
+  {
+    "id": "detail-fern",
+    "pattern": "lauterbach kann (?:die |eine )?(?:waffe|sidewinder) (?:per funk |aus der ferne )?(?:sperren|blockieren)",
+    "correction": "Lauterbach verneint die Möglichkeit, das Auslösen aus dem Lagezentrum über Funk zu sperren. Technische Kontrolle liegt beim Piloten; daraus entsteht keine rechtliche Erlaubnis.",
+    "page": 34,
+    "anchor": "Keine Fernsperre des Waffensystems"
+  },
+  {
+    "id": "detail-position",
+    "pattern": "koch (?:fliegt|flog) (?:unmittelbar |direkt )?vor dem abschuss vor (?:dem airbus|der maschine)",
+    "correction": "Koch sagt, er habe sich zurückfallen lassen und sei etwas hinter sowie leicht über der Zivilmaschine geflogen. Vorher hatte er sie seitlich begleitet.",
+    "page": 49,
+    "anchor": "Position unmittelbar vor dem Schuss"
+  },
+  {
+    "id": "detail-court-role",
+    "pattern": "koch (?:ist|wird) (?:ein |als )?zeuge",
+    "correction": "Koch bleibt Angeklagter, auch wenn er für die Befragung auf dem Zeugenstuhl Platz nimmt. Der Vorsitzende begründet den Platzwechsel mit der Akustik.",
+    "page": 43,
+    "anchor": "Angeklagter auf dem Zeugenstuhl"
+  },
+  {
+    "id": "detail-evacuation",
+    "pattern": "koch (?:ist|war) fuer (?:die )?raeumung (?:des stadions )?(?:zustaendig|verantwortlich)",
+    "correction": "Bieglers Nachfragen grenzen die Zuständigkeit ab: Lauterbach nennt den bayerischen Katastrophenschutz; Koch war nicht für die Räumung verantwortlich.",
+    "page": 41,
+    "anchor": "Zuständigkeit des Katastrophenschutzes"
+  },
+  {
+    "id": "detail-radar",
+    "pattern": "radar (?:zeigt|beweist) (?:was|alles was) (?:im cockpit|in der kabine) (?:geschieht|passiert)",
+    "correction": "Das Lagebild enthält technische und übermittelte Informationen. Es ist kein direkter Blick auf die Handlungen im Cockpit oder in der Kabine.",
+    "page": 20,
+    "anchor": "Informationsquellen des Lagebilds"
+  },
+  {
+    "id": "detail-phone",
+    "pattern": "handy (?:wird|wurde) (?:als strafe|zur bestrafung) (?:einbehalten|beschlagnahmt)",
+    "correction": "Das Handy bleibt als Beweismittel beim Verfahren. Für Meiser bewahrt es zugleich die letzte Nachricht ihres Mannes; es geht nicht um eine Bestrafung Meisers.",
+    "page": 73,
+    "anchor": "Begründung für das Einbehalten des Telefons"
+  },
+  {
+    "id": "detail-father",
+    "pattern": "(?:sein vater|kochs vater|der vater) (?:war|ist) (?:ein )?kampfpilot",
+    "correction": "Koch sagt, sein Vater habe Kampfpilot werden wollen, es aber nicht geschafft. Später war der Vater Stabsoffizier in der Presseabteilung.",
+    "page": 44,
+    "anchor": "Unerfüllter Berufswunsch des Vaters; PDF 43 zum Beruf"
+  },
+  {
+    "id": "detail-warning-permission",
+    "pattern": "warnschuss (?:bedeutet|ist|erteilt) (?:eine |die )?abschusserlaubnis",
+    "correction": "Warnfeuerstoss und Abschuss sind unterschiedliche Massnahmen. Lauterbach bestätigt später zweimal, dass kein engage-Befehl erteilt wurde.",
+    "page": 31,
+    "anchor": "Abschussbefehl wurde nicht erteilt"
+  }
+]);
+
+// Register detail questions before compiling the synonym vocabulary.
+(function(F){
+ for(const item of window.TERROR_DETAIL_QUESTIONS||[]){
+  const criteria=item.criteria.map((c,i)=>{const key='detail_'+item.id+'_'+i;F.lexicon[key]=c.terms;return {label:c.label,groups:[key],reason:c.reason,page:c.page};});
+  F.rubrics[item.id]={criteria,answer:item.answer,refs:item.refs,creative:false};
+ }
+})(window.TERROR_FEEDBACK);
+
 (function(F){
  const norm=s=>String(s??'').toLowerCase().normalize('NFC').replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[’‘`]/g,"'").replace(/[‐‑–—-]/g,' ').replace(/[^a-z0-9*\s]/g,' ').replace(/\s+/g,' ').trim();
  const distanceOne=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;if(a===b)return true;let i=0,j=0,n=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++n>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++;}}return n+(i<a.length||j<b.length?1:0)<=1;};
@@ -177,13 +272,24 @@ lexicon:{
 
 function feedbackReference(page,label='Textstelle öffnen'){return `<button type="button" class="feedback-reference" data-feedback-page="${page}" title="${escape(label)}">PDF S. ${page} · ${escape(label)} ↗</button>`;}
 function readerFeedbackHTML(id,text){const result=TERROR_FEEDBACK.check(id,text);if(!result)return '';const {rubric:r}=result;
- if(result.status==='empty')return '<p class="feedback-idle">Schreibe deine Antwort. Nach einer kurzen Schreibpause erhältst du direkt Hinweise. Mit «Antwort prüfen» kannst du jederzeit prüfen.</p>';
+ if(result.status==='empty')return `<p class="feedback-idle">Schreibe deine Antwort. Nach einer kurzen Schreibpause erhältst du direkt Hinweise. Mit «Antwort prüfen» kannst du jederzeit prüfen.</p><details><summary>Musterlösung und Textbelege ansehen</summary><p>${escape(r.answer)}</p><div class="feedback-references">${r.refs.map(([p,l])=>feedbackReference(p,l)).join('')}</div></details>`;
  const titles={revise:'Sachliche Aussage überprüfen',covered:'Die erwarteten Aspekte sind sprachlich erkennbar',partial:'Einige Aspekte sind erkennbar – ergänze gezielt',unrecognized:'Noch kein sicherer sprachlicher Abgleich'};
  return `<div class="feedback-result ${result.status}"><h3>${titles[result.status]}</h3><p class="notice">${result.found} von ${result.total} Suchaspekten erkannt. Das ist eine Überarbeitungshilfe, keine Note und kein Beweis für eine vollständig richtige Interpretation.</p>${result.errors.map(e=>`<article class="feedback-error"><strong>Möglicher sachlicher Fehler</strong><p>Deine Formulierung: <q>${escape(e.excerpt)}</q></p><p><b>Korrektur und Begründung:</b> ${escape(e.correction)}</p>${feedbackReference(e.page,e.anchor)}</article>`).join('')}<ul class="feedback-criteria">${result.criteria.map(c=>`<li><b>${c.match?'✓ Erkannt: ':'○ Noch nicht sicher erkannt: '}${escape(c.label)}</b>${c.match?`<p class="notice">In deiner Antwort: <q>${escape(c.match.excerpt)}</q>${c.match.fuzzy?' · Ähnliche Schreibweise berücksichtigt.':''}</p>`:`<p>${escape(c.reason)}</p>${feedbackReference(c.page||r.refs[0][0],'Passage zu diesem Aspekt')}`}</li>`).join('')}</ul><details ${result.errors.length||result.status==='unrecognized'?'open':''}><summary>${r.creative?'Möglichen Lösungsweg mit Begründung vergleichen':'Referenzantwort mit Begründung vergleichen'}</summary><div><p>${escape(r.answer)}</p><div class="feedback-references">${r.refs.map(([p,l])=>feedbackReference(p,l)).join('')}</div></div></details><p class="notice">${r.creative?'Bei diesem offenen Auftrag sind andere textgestützte Lösungen möglich. ':''}Nicht erkannt bedeutet nicht automatisch falsch. Prüfe abweichende Formulierungen an den Fundstellen. Zitate und als falsch zurückgewiesene Behauptungen werden vorsichtig behandelt.</p></div>`;
 }
 let feedbackTimer;
 function updateReaderFeedback(){const m=readerCurrentModule(),input=document.querySelector('#readerQuestionPanel textarea'),mount=document.getElementById('readerFeedback');if(!m||!input||!mount)return;mount.innerHTML=readerFeedbackHTML(m.id+'-'+readerQuestion,input.value);}
 function initFeedbackEvents(){
+ const detailTimers=new WeakMap();
+ const updateDetail=box=>{if(box?.isConnected)box.querySelector('[data-detail-result]').innerHTML=readerFeedbackHTML(box.dataset.detailId,box.querySelector('textarea').value);};
+ main.addEventListener('input',e=>{const box=e.target.closest('[data-detail-id]');if(!box||!e.target.matches('textarea'))return;clearTimeout(detailTimers.get(box));detailTimers.set(box,setTimeout(()=>updateDetail(box),650));});
+ main.addEventListener('click',e=>{const button=e.target.closest('[data-detail-check]');if(!button)return;const box=button.closest('[data-detail-id]');clearTimeout(detailTimers.get(box));updateDetail(box);});
  main.addEventListener('input',e=>{if(!e.target.dataset.note?.startsWith('leseraum-'))return;clearTimeout(feedbackTimer);feedbackTimer=setTimeout(updateReaderFeedback,650);});
  main.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if('feedbackCheck'in b.dataset){clearTimeout(feedbackTimer);updateReaderFeedback();}if(b.dataset.feedbackPage){const page=Number(b.dataset.feedbackPage);if(readerPdf){drawReaderPdf(page);document.getElementById('readerPdfTitle')?.scrollIntoView({block:'center',behavior:'smooth'});}else{toast('Wähle zuerst deine PDF im Leseraum. Die Referenz zählt die Seiten deiner 103-seitigen Datei.');document.getElementById('readerPdfInput')?.scrollIntoView({block:'center',behavior:'smooth'});}}});
+}
+
+// Additional scene questions have their own persistent answer fields.
+function readerDetailQuestions(m){
+ const questions=(window.TERROR_DETAIL_QUESTIONS||[]).filter(q=>q.module===m.id);
+ if(!questions.length)return '';
+ return `<section class="section card" aria-labelledby="detailQuestionsTitle"><span class="eyebrow">GENAU LESEN · ${questions.length} DETAILFRAGEN</span><h2 id="detailQuestionsTitle">Personen, Handlungen und Hintergründe verstehen</h2><p>Beantworte die Fragen mit dem Text oder der Filmszene. Die Musterlösungen beziehen sich auf die eingebundene Buchausgabe; Unterschiede im Film kannst du ausdrücklich benennen. Jede Antwort wird auf diesem Gerät gespeichert.</p><p class="notice">Sofortfeedback nach einer Schreibpause. Der Sprachabgleich erkennt Suchaspekte und typische Verwechslungen, ersetzt aber keine inhaltliche Prüfung. Alle Belege zählen die PDF-Seiten inklusive Vorspann.</p>${questions.map((q,i)=>`<details class="detail-question" ${i===0?'open':''}><summary>Detailfrage ${i+1}: ${escape(q.question)}</summary><div data-detail-id="${q.id}">${note('detail-terror-'+q.id,m.title+' · Detailfrage '+(i+1),'Antworte in eigenen Worten. Nenne die Person oder Handlung und erkläre den Zusammenhang.')}<button type="button" class="accent small" data-detail-check>Antwort prüfen</button><div class="reader-feedback" data-detail-result aria-live="polite">${readerFeedbackHTML(q.id,state.notes['detail-terror-'+q.id]?.text||'')}</div></div></details>`).join('')}</section>`;
 }

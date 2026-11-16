@@ -1,8 +1,7 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 const c={};c.window=c;vm.createContext(c);vm.runInContext(fs.readFileSync('dist/data.js','utf8'),c);vm.runInContext(fs.readFileSync('dist/feedback.js','utf8'),c);const F=c.window.TERROR_FEEDBACK,D=c.window.TERROR;
-assert.equal(Object.keys(F.rubrics).length,36);
-for(const m of D.modules)for(let i=0;i<m.tasks.length;i++){
- const id=m.id+'-'+i,r=F.rubrics[id];assert(r,id);assert(r.answer.length>150,id);assert(r.refs.length,id);
+assert.equal(Object.keys(F.rubrics).length,86);
+for(const [id,r] of Object.entries(F.rubrics)){assert(r,id);assert(r.answer.length>150,id);assert(r.refs.length,id);
  for(const cr of r.criteria){for(const key of cr.groups)assert(F.lexicon[key],id+': '+key);assert(cr.reason&&cr.page>=1&&cr.page<=103,id);}
  for(const [p,label]of r.refs)assert(Number.isInteger(p)&&p>=1&&p<=103&&label,id);
  assert.equal(F.check(id,'').status,'empty',id);assert.equal(F.check(id,'Ich mag Pizza und gehe morgen spazieren.').found,0,id);
@@ -26,4 +25,21 @@ for(const text of ['Die SMS beweist nicht die sichere Rettung.','Das Stadion wur
 assert.equal(F.normalize('Würde, ÄUSSERUNG, Größe und Äußerung'),F.normalize('Wuerde, AEUSSERUNG, Groesse und Aeusserung'));
 assert(F.check('nelson-2','Die Menschnwuerde ist eine universelle Grenze.').criteria.some(c=>c.match?.fuzzy));
 assert.equal(F.check('meiser-1','Die SMS berichtet keinen Versuch.').criteria[0].match,null);
-console.log('Feedback: 36 rubrics, all reference answers, synonym paraphrases, errors, negations, quotations, spelling and PDF references passed.');
+console.log('Feedback: 86 rubrics, all reference answers, synonym paraphrases, errors, negations, quotations, spelling and PDF references passed.');
+// New questions: independent paraphrases, misconceptions and negated corrections.
+assert.equal(c.TERROR_DETAIL_QUESTIONS.length,50);
+for(const m of D.modules)assert(c.TERROR_DETAIL_QUESTIONS.filter(q=>q.module===m.id).length>=4,m.id);
+const detail=(module,part)=>c.TERROR_DETAIL_QUESTIONS.find(q=>q.module===module&&q.question.includes(part)).id;
+for(const [module,part,text] of [
+ ['lauterbach','Alarmrotte','Das sind zwei Eurofighter. Koch fliegt mit Weinberger. Zuerst sollen sie Sichtkontakt aufnehmen.'],
+ ['koch','relativ','Zuerst fliegt er neben dem Airbus. Danach lässt er sich zurückfallen und befindet sich etwas hinter ihm und leicht höher.'],
+ ['meiser','Handy zurück','Sie möchte die SMS als Erinnerung. Das Telefon ist noch ein Beweismittel. Erst nach Abschluss des Verfahrens erhält sie es zurück.'],
+ ['evakuierung','Zeitangaben','Es standen zweiundfünfzig Minuten zur Verfügung. Die Räumung braucht laut Plan fünfzehn Minuten. Deshalb stellt Nelson die Zeitnot infrage.'],
+ ['rede','Gewaltmonopol','Die Bürger verzichten auf Selbstjustiz. Der Staat übernimmt die Strafen. Dafür garantiert er ordentliche Verfahren.']
+])assert.equal(F.check(detail(module,part),text).found,3,text);
+for(const [text,id] of [
+ ['Die Sidewinder ist eine Bordkanone.','detail-sidewinder'],['Der Warnschuss wurde mit der Sidewinder abgegeben.','detail-warning'],['Radtke ist der Verteidigungsminister.','detail-minister'],['Lauterbach kann die Waffe per Funk sperren.','detail-fern'],['Koch war für die Räumung des Stadions zuständig.','detail-evacuation'],['Koch ist Zeuge.','detail-court-role']
+]){let r=F.check(detail('lauterbach','Alarmrotte'),text);assert(r.errors.some(e=>e.id===id),text);assert.equal(r.status,'revise');assert(r.errors.every(e=>e.page&&e.correction&&e.anchor));}
+for(const text of ['Die Sidewinder ist keine Bordkanone.','Radtke ist nicht der Verteidigungsminister.','Lauterbach kann die Waffe nicht per Funk sperren.'])assert.equal(F.check(detail('lauterbach','Alarmrotte'),text).errors.length,0,text);
+assert.equal(F.check(detail('lauterbach','Alarmrotte'),'Eine Alarmrotte besteht nicht aus zwei Flugzeugen.').criteria[0].match,null);
+console.log('50 Detailfragen: alle Stationen, unabhängige Paraphrasen, sachliche Korrekturen und Negationen geprüft.');

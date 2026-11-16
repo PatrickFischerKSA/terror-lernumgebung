@@ -121,3 +121,1722 @@ TERROR.scenes=[
   {title:'Urteilsfassung: Verurteilung',start:5314.8,end:5568.5,page:87,note:'Alternative Urteilsfassung der bereitgestellten Filmdatei. Textvergleich: PDF-Seiten 87–90.'}
  ]}
 ];
+
+// Zusätzliche, textgestützte Detailfragen; bestehende Aufgaben-IDs bleiben stabil.
+window.TERROR_DETAIL_QUESTIONS=[
+  {
+    "module": "auftakt",
+    "question": "Welche Aufgabe erhält das Publikum zu Beginn? Worauf soll es sein Urteil stützen – und was soll es zunächst vergessen?",
+    "answer": "Der Vorsitzende spricht die Zuschauenden als Schöffen, also Laienrichter, an. Sie sollen am Ende urteilen und ausschliesslich die Aussagen und Beweise der Hauptverhandlung berücksichtigen. Vorher Gelesenes oder Gehörtes sollen sie zurückstellen. Das ist eine Aufforderung zur unvoreingenommenen Prüfung innerhalb der Theateranordnung.",
+    "refs": [
+      [
+        7,
+        "Publikum als Schöffen und Grundlage des Urteils"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Rolle des Publikums",
+        "terms": "schoeff*|laienrichter*",
+        "reason": "Das Publikum erhält die Rolle von Schöffen: Menschen ohne juristischen Beruf, die miturteilen.",
+        "page": 7
+      },
+      {
+        "label": "Grundlage des Urteils",
+        "terms": "beweis*|hauptverhandlung|aussagen",
+        "reason": "Massgeblich sollen die Aussagen und Beweise in der Verhandlung sein.",
+        "page": 7
+      },
+      {
+        "label": "Vorwissen zurückstellen",
+        "terms": "vergessen|zurueckstellen|vorwissen|vorher|gelesen|gehoert",
+        "reason": "Der Vorsitzende fordert, vorherige Informationen über den Fall zurückzustellen.",
+        "page": 7
+      }
+    ]
+  },
+  {
+    "module": "auftakt",
+    "question": "Wo sitzt Koch zunächst, und was verändert Biegler an seiner Sitzposition? Beschreibe zuerst den Vorgang und dann eine mögliche Wirkung.",
+    "answer": "Koch sitzt zunächst in einer Zelle hinter dem Verteidiger. Auf Bieglers Bitte erlaubt der Vorsitzende, dass Koch neben seinem Anwalt Platz nimmt; der Wachtmeister öffnet die Zelle. Die neue Sitzordnung kann Koch stärker als beteiligten Menschen und Gesprächspartner zeigen. Diese Wirkung ist eine Deutung, keine ausdrücklich genannte Absicht Bieglers.",
+    "refs": [
+      [
+        8,
+        "Zelle und Sitzordnung"
+      ],
+      [
+        9,
+        "Bitte des Verteidigers und Platzwechsel"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Ausgangsposition",
+        "terms": "zelle|hinter dem verteidiger",
+        "reason": "Koch sitzt zunächst in einer Zelle hinter Biegler.",
+        "page": 8
+      },
+      {
+        "label": "Platzwechsel",
+        "terms": "neben|platzwechsel",
+        "reason": "Biegler beantragt einen Platz neben sich; der Vorsitzende stimmt zu.",
+        "page": 9
+      },
+      {
+        "label": "Mögliche Wirkung",
+        "terms": "mensch*|naehe|gespraechspartner|beteiligt*",
+        "reason": "Deute, wie räumliche Nähe die Wahrnehmung verändern kann; kennzeichne die Deutung als Möglichkeit.",
+        "page": 9
+      }
+    ]
+  },
+  {
+    "module": "auftakt",
+    "question": "Welche Informationen über Kochs Familie und Dienststellung werden aufgenommen? Weshalb beweisen diese Angaben noch nichts über die Berechtigung des Abschusses?",
+    "answer": "Koch ist Major der Luftwaffe, verheiratet und Vater des zweijährigen Boris. Er befindet sich in Untersuchungshaft und ist vom Dienst freigestellt. Die Angaben stellen seine Person und Lebenssituation vor. Familienbindungen oder ein Dienstgrad beweisen aber weder Schuld noch Unschuld; dafür muss die konkrete Tat geprüft werden.",
+    "refs": [
+      [
+        9,
+        "Angeklagter und Dienstgrad"
+      ],
+      [
+        10,
+        "Familie, Haft und Freistellung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Dienststellung",
+        "terms": "major|luftwaffe",
+        "reason": "Koch ist Major der Luftwaffe und vom Dienst freigestellt.",
+        "page": 10
+      },
+      {
+        "label": "Familie",
+        "terms": "boris|sohn|zweijaehrig*|verheiratet",
+        "reason": "Er ist verheiratet und hat den zweijährigen Sohn Boris.",
+        "page": 10
+      },
+      {
+        "label": "Grenze des Schlusses",
+        "terms": "beweisen|beweist|schuld|unschuld|tat",
+        "reason": "Biografische Angaben ersetzen keine Prüfung der Tat.",
+        "page": 10
+      }
+    ]
+  },
+  {
+    "module": "auftakt",
+    "question": "Wie verhält sich Biegler bei der Eröffnung? Nenne zwei konkrete Auffälligkeiten und erkläre vorsichtig ihre mögliche Wirkung.",
+    "answer": "Biegler kommt verspätet und trägt zunächst keine Robe. Später bittet er um ein offenes Fenster und reagiert mit einer spöttischen Bemerkung auf die Aufforderung, die Robe anzuziehen. Das kann ihn als eigensinnig und distanziert gegenüber dem Zeremoniell erscheinen lassen. Der Text belegt das Verhalten, aber keine sichere innere Absicht.",
+    "refs": [
+      [
+        8,
+        "Verspätung und Kleidung"
+      ],
+      [
+        11,
+        "Fenster und Robenbemerkung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Verspätung",
+        "terms": "verspaetet|zu spaet|verspaetung",
+        "reason": "Die Verhandlung wartet zunächst auf Biegler.",
+        "page": 8
+      },
+      {
+        "label": "Verhalten im Saal",
+        "terms": "robe|fenster|spitzbuben",
+        "reason": "Nenne etwa die fehlende Robe, den Fensterwunsch oder den Spott.",
+        "page": 11
+      },
+      {
+        "label": "Vorsichtige Deutung",
+        "terms": "kann|koennte|erscheint|moeglich*",
+        "reason": "Eine mögliche Wirkung ist noch kein Nachweis seiner Absicht.",
+        "page": 11
+      }
+    ]
+  },
+  {
+    "module": "anklage",
+    "question": "Welches Flugzeug wird in der Anklage genannt, welche Strecke flog es, und was genau wird Koch vorgeworfen?",
+    "answer": "Die Anklage nennt den Lufthansa-Flug LH 2047 von Berlin nach München mit einem Airbus A320-100/200. Koch soll die Maschine am 26. Mai 2013 mit einem Luft-Luft-Lenkgeschoss abgeschossen und dadurch 164 Menschen getötet haben. Die Staatsanwältin ordnet die Tat als Mord ein. Tatbeschreibung und rechtliche Einordnung sind dabei zu unterscheiden.",
+    "refs": [
+      [
+        12,
+        "Anklagesatz mit Flug, Flugzeugtyp und Tatvorwurf"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Flugzeug und Flug",
+        "terms": "a320|lh 2047",
+        "reason": "Genannt werden ein Airbus A320-100/200 und LH 2047.",
+        "page": 12
+      },
+      {
+        "label": "Strecke",
+        "terms": "berlin|muenchen",
+        "reason": "Die Strecke führt von Berlin nach München; nenne beide Orte.",
+        "page": 12
+      },
+      {
+        "label": "Tatvorwurf",
+        "terms": "164|mord|getoetet|abschuss",
+        "reason": "Der Vorwurf lautet auf Tötung von 164 Menschen durch Abschuss; Nelson bewertet dies als Mord.",
+        "page": 12
+      }
+    ]
+  },
+  {
+    "module": "anklage",
+    "question": "Darf Koch im Prozess schweigen? Wer spricht zunächst für ihn, und weshalb will der Vorsitzende trotz Geständnis weiterfragen?",
+    "answer": "Der Vorsitzende belehrt Koch, dass er schweigen darf und sein Schweigen nicht gegen ihn verwendet werden darf. Biegler gibt zunächst eine Erklärung für ihn ab. Der Vorsitzende will Motivation und Tatablauf klären. Dafür reicht das pauschale Geständnis nicht; er möchte Koch selbst befragen.",
+    "refs": [
+      [
+        12,
+        "Belehrung über das Schweigen"
+      ],
+      [
+        13,
+        "Biegler übernimmt"
+      ],
+      [
+        15,
+        "Motivation und Tatablauf"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Schweigerecht",
+        "terms": "schweigen|schweigerecht",
+        "reason": "Koch muss keine Aussage machen; Schweigen darf nicht gegen ihn verwendet werden.",
+        "page": 12
+      },
+      {
+        "label": "Sprecher",
+        "terms": "biegler|verteidiger",
+        "reason": "Zunächst spricht sein Verteidiger Biegler.",
+        "page": 13
+      },
+      {
+        "label": "Offene Fragen",
+        "terms": "motivation|motiv*|tatablauf",
+        "reason": "Das Gericht fragt nach Motiven und Ablauf, nicht bloss danach, wer geschossen hat.",
+        "page": 15
+      }
+    ]
+  },
+  {
+    "module": "anklage",
+    "question": "Welche Ereignisse nennt Biegler als Hintergrund des Luftsicherheitsgesetzes? Wie stellt er den anschliessenden Konflikt mit dem Verfassungsgericht dar?",
+    "answer": "Biegler erinnert an die Anschläge vom 11. September 2001 und an die Bedrohung eines Frankfurter Hochhauses durch ein gekapertes Sportflugzeug. Er schildert das Gesetz von 2005 als staatliche Schutzreaktion. Danach habe das Bundesverfassungsgericht die Abschussermächtigung gegenüber Unbeteiligten verworfen. Hier wird Bieglers Darstellung des politischen und rechtlichen Hintergrunds rekonstruiert, nicht eine eigene Gesetzesprüfung vorgenommen.",
+    "refs": [
+      [
+        13,
+        "Anschläge, Frankfurt und Gesetz"
+      ],
+      [
+        14,
+        "Verfassungsgericht und Lebensschutz"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Historische Beispiele",
+        "terms": "2001|11 september|frankfurt",
+        "reason": "Nenne die Anschläge von 2001 und den Frankfurter Vorfall mit dem Sportflugzeug.",
+        "page": 13
+      },
+      {
+        "label": "Gesetz als Schutzreaktion",
+        "terms": "2005|luftsicherheitsgesetz|schutzreaktion",
+        "reason": "Biegler beschreibt das Gesetz von 2005 als Reaktion auf die Bedrohung.",
+        "page": 13
+      },
+      {
+        "label": "Grenze durch das Gericht",
+        "terms": "verfassungsgericht|verfassungswidrig|verworfen",
+        "reason": "Das Gericht stellt nach seiner Darstellung Grenzen für die Tötung Unbeteiligter auf.",
+        "page": 14
+      }
+    ]
+  },
+  {
+    "module": "anklage",
+    "question": "Was gesteht Biegler für Koch ein und was bestreitet er? Warum ist sein «Aber» für die Verteidigung entscheidend?",
+    "answer": "Biegler räumt den Abschuss und die Tötung der Menschen ausdrücklich ein. Er bestreitet die Bewertung als Mord und fordert einen Freispruch. Sein Aber verschiebt die Diskussion von der Täterschaft zur rechtlichen und moralischen Beurteilung. Ein Eingeständnis des Tatgeschehens ist daher noch keine Zustimmung zum Schuldvorwurf.",
+    "refs": [
+      [
+        14,
+        "Eingeräumte Tötung"
+      ],
+      [
+        15,
+        "Tatsachen und rechtliche Schlüsse"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Eingeräumte Tat",
+        "terms": "abschuss|toetung|getoetet",
+        "reason": "Die Verteidigung bestreitet die Tötung durch Koch nicht.",
+        "page": 14
+      },
+      {
+        "label": "Bestrittene Bewertung",
+        "terms": "mord|bewertung|schuldvorwurf",
+        "reason": "Biegler wendet sich gegen die rechtlichen Schlüsse der Anklage.",
+        "page": 15
+      },
+      {
+        "label": "Ziel",
+        "terms": "freispruch|freisprechen",
+        "reason": "Er will trotz eingeräumter Tat einen Freispruch erreichen.",
+        "page": 15
+      }
+    ]
+  },
+  {
+    "module": "lauterbach",
+    "question": "Wer ist Christian Lauterbach, wo arbeitet er am Tattag und welche Informationen kann er von dort aus erhalten?",
+    "answer": "Lauterbach ist Oberstleutnant und arbeitet als Duty Controller im Nationalen Lage- und Führungszentrum in Uedem. Dort werden Radar, Funk sowie Informationen ziviler Flugsicherung und weiterer Behörden zu einem Lagebild zusammengeführt. Er sitzt nicht im Cockpit und erlebt das Geschehen über diese Informationswege.",
+    "refs": [
+      [
+        18,
+        "Dienstgrad"
+      ],
+      [
+        19,
+        "Duty Controller"
+      ],
+      [
+        20,
+        "Uedem und Lagebild"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Funktion",
+        "terms": "oberstleutnant|duty controller",
+        "reason": "Er ist Oberstleutnant und als Duty Controller eingesetzt.",
+        "page": 18
+      },
+      {
+        "label": "Ort",
+        "terms": "uedem|lage und fuehrungszentrum",
+        "reason": "Sein Arbeitsplatz ist das Nationale Lage- und Führungszentrum in Uedem.",
+        "page": 20
+      },
+      {
+        "label": "Informationswege",
+        "terms": "radar|funk|flugsicherung|lagebild",
+        "reason": "Radar, Funk und Behördeninformationen ergeben ein Lagebild; das ist kein direkter Blick ins Cockpit.",
+        "page": 20
+      }
+    ]
+  },
+  {
+    "module": "lauterbach",
+    "question": "Was bedeutet «Renegade» in Lauterbachs Erklärung? Warum beweist ein abgebrochener Funkkontakt allein noch keine Entführung?",
+    "answer": "Renegade bezeichnet hier den Einsatz eines zivilen Verkehrsflugzeugs für einen terroristischen Angriff. Kursabweichungen, ein ausgeschaltetes Erkennungssystem oder fehlender Funkkontakt sind zunächst Auffälligkeiten. Lauterbach berichtet, dass solche Fälle täglich auftreten und fast nie Entführungen sind. Die Hinweise müssen deshalb überprüft werden.",
+    "refs": [
+      [
+        21,
+        "Renegade und häufige Auffälligkeiten"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Bedeutung",
+        "terms": "terroristisch*|terrorangriff|angriff",
+        "reason": "Renegade meint hier die Verwendung eines Zivilflugzeugs für einen terroristischen Angriff.",
+        "page": 21
+      },
+      {
+        "label": "Auffälligkeit",
+        "terms": "funkkontakt|kursabweich*|erkennungssystem",
+        "reason": "Nenne ein Warnzeichen wie Funkverlust oder Kursabweichung.",
+        "page": 21
+      },
+      {
+        "label": "Prüfbedarf",
+        "terms": "ueberpruef*|fast nie|auffaellig*|hinweis*",
+        "reason": "Ein Warnzeichen ist ein Anlass zur Prüfung, noch kein sicherer Nachweis.",
+        "page": 21
+      }
+    ]
+  },
+  {
+    "module": "lauterbach",
+    "question": "Was ist eine Alarmrotte, und wer fliegt sie in diesem Fall? Was soll sie zunächst erreichen?",
+    "answer": "Die Alarmrotte besteht aus zwei Eurofightern. In diesem Fall fliegen Major Koch und Oberleutnant Weinberger. Lauterbach beauftragt sie zunächst, Sichtkontakt zur entführten Maschine aufzunehmen. Beobachten und Kontakt herstellen sind andere Aufgaben als ein Abschuss.",
+    "refs": [
+      [
+        23,
+        "Auftrag und zwei Eurofighter"
+      ],
+      [
+        24,
+        "Koch und Weinberger"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Zusammensetzung",
+        "terms": "zwei|2|paar",
+        "reason": "Eine Alarmrotte besteht aus zwei Kampfflugzeugen des Typs Eurofighter.",
+        "page": 23
+      },
+      {
+        "label": "Piloten",
+        "terms": "weinberger",
+        "reason": "Neben Koch fliegt Oberleutnant Weinberger.",
+        "page": 24
+      },
+      {
+        "label": "Erster Auftrag",
+        "terms": "sichtkontakt|kontakt aufnehmen",
+        "reason": "Zunächst sollen sie Sichtkontakt aufnehmen.",
+        "page": 23
+      }
+    ]
+  },
+  {
+    "module": "lauterbach",
+    "question": "Wie verläuft die im Stück geschilderte Befehlskette? Welche Aufgabe hat Radtke, welche der Verteidigungsminister und welche Lauterbach?",
+    "answer": "Lauterbach meldet die Lage an Generalleutnant Radtke, den Inspekteur der Luftwaffe. Radtke informiert den Verteidigungsminister und unterbreitet Vorschläge; zugleich ist er mit dem Generalinspekteur verbunden. Der Minister entscheidet nach der Schilderung über die vorgeschlagene Massnahme. Lauterbach übermittelt die Befehle an Koch und die Alarmrotte. Fachliche Beratung und politische Entscheidung sind hier unterschiedliche Rollen.",
+    "refs": [
+      [
+        23,
+        "Lauterbach meldet an Radtke"
+      ],
+      [
+        26,
+        "Minister, Vorschlag und Generalinspekteur"
+      ],
+      [
+        27,
+        "Übermittlung an die Piloten"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Militärischer Vorschlag",
+        "terms": "radtke|inspekteur",
+        "reason": "Radtke erhält die Meldungen und macht dem Minister einen Vorschlag.",
+        "page": 26
+      },
+      {
+        "label": "Politische Entscheidung",
+        "terms": "minister|politisch*",
+        "reason": "Der Verteidigungsminister entscheidet; der höchste Luftwaffengeneral ist nicht die letzte Instanz.",
+        "page": 26
+      },
+      {
+        "label": "Übermittlung",
+        "terms": "lauterbach|uebermittel*|weitergeb*",
+        "reason": "Lauterbach gibt die Befehle an die Alarmrotte weiter.",
+        "page": 27
+      }
+    ]
+  },
+  {
+    "module": "lauterbach",
+    "question": "Unterscheide «Intervention», «Warning burst» und «engage». Welche beiden Waffensysteme kommen dabei im Text vor?",
+    "answer": "Intervention bezeichnet das Abdrängen und Erzwingen einer Landung. Warning burst ist der Warnfeuerstoss aus der Bordkanone. Engage bezeichnet den Abschussbefehl, der laut Lauterbach nicht erteilt wurde. Den späteren Abschuss führt Koch mit einer Sidewinder aus. Bordkanone und Lenkflugkörper sind verschiedene Waffensysteme seines Eurofighters; ein Warnschuss ist keine Abschusserlaubnis.",
+    "refs": [
+      [
+        25,
+        "Intervention"
+      ],
+      [
+        27,
+        "Bordkanone und Warning burst"
+      ],
+      [
+        31,
+        "Kein engage"
+      ],
+      [
+        32,
+        "Sidewinder"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Intervention",
+        "terms": "abdraeng*|landung",
+        "reason": "Intervention bedeutet hier Abdrängen und zur Landung zwingen.",
+        "page": 25
+      },
+      {
+        "label": "Warning burst",
+        "terms": "bordkanone|warnfeuerstoss|warnschuss",
+        "reason": "Der Warnfeuerstoss wird mit der Bordkanone abgegeben.",
+        "page": 27
+      },
+      {
+        "label": "Abschuss",
+        "terms": "sidewinder|lenkflugkoerper",
+        "reason": "Die Sidewinder ist der beim Abschuss verwendete Lenkflugkörper; engage wurde nicht befohlen.",
+        "page": 31
+      }
+    ]
+  },
+  {
+    "module": "lauterbach",
+    "question": "Woran orientiert sich die Sidewinder laut Zeuge, und kann das Lagezentrum ihre Auslösung verhindern? Trenne technische Möglichkeit und Erlaubnis.",
+    "answer": "Lauterbach beschreibt einen Infrarotsuchkopf, der Wärmequellen erfasst; im geschilderten Fall wird das rechte Triebwerk getroffen. Eine Fernsperre über Funk aus dem Lagezentrum ist laut seiner Aussage nicht möglich. Koch kann die Waffe technisch selbst auslösen. Technische Verfügungsmacht und rechtliche Abschusserlaubnis sind unterschiedliche Dinge; die Möglichkeit zu schiessen berechtigt für sich genommen nicht zum Abschuss.",
+    "refs": [
+      [
+        33,
+        "Suchkopf und rechtes Triebwerk"
+      ],
+      [
+        34,
+        "Keine Fernsperre"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Suchprinzip",
+        "terms": "infrarot*|waerme*",
+        "reason": "Lauterbach nennt einen Infrarotsuchkopf und Wärmequellen.",
+        "page": 33
+      },
+      {
+        "label": "Technische Kontrolle",
+        "terms": "fernsperre|funksperre|selbst|sperren",
+        "reason": "Das Lagezentrum kann das Auslösen laut Aussage nicht per Funk sperren.",
+        "page": 34
+      },
+      {
+        "label": "Keine Gleichsetzung",
+        "terms": "erlaubnis|rechtlich*|befugnis",
+        "reason": "Technisch schiessen zu können ist nicht dasselbe wie schiessen zu dürfen.",
+        "page": 34
+      }
+    ]
+  },
+  {
+    "module": "evakuierung",
+    "question": "Mit welchen Zeitangaben prüft Nelson Lauterbachs Erklärung, für eine Räumung habe die Zeit gefehlt?",
+    "answer": "Nelson vergleicht den ersten Funkspruch um 19.32 Uhr mit dem berechneten Einschlag um 20.24 Uhr: Das ergibt 52 Minuten. Der von ihr angeführte Notfallplan sieht 15 Minuten für eine Räumung vor. Damit stellt sie die behauptete Zeitnot infrage. Ein Planwert ist jedoch nicht gleichbedeutend mit einem bereits nachgewiesenen störungsfreien Ablauf.",
+    "refs": [
+      [
+        36,
+        "52 Minuten und 15 Minuten im Notfallplan"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Verfügbares Zeitfenster",
+        "terms": "52|zweiundfuenfzig",
+        "reason": "Zwischen 19.32 und 20.24 Uhr liegen 52 Minuten.",
+        "page": 36
+      },
+      {
+        "label": "Planwert",
+        "terms": "15|fuenfzehn",
+        "reason": "Der Notfallplan nennt 15 Minuten für die Räumung.",
+        "page": 36
+      },
+      {
+        "label": "Argumentative Funktion",
+        "terms": "zeitnot|infrage|pruef*|widerleg*",
+        "reason": "Nelson prüft damit den Einwand, es habe an Zeit gefehlt.",
+        "page": 36
+      }
+    ]
+  },
+  {
+    "module": "evakuierung",
+    "question": "Wie verändert sich Lauterbachs Antwort darauf, ob man mit einem Abschuss durch Koch gerechnet hatte? Beschreibe die Entwicklung statt ihn nur zu bewerten.",
+    "answer": "Lauterbach verneint zunächst, man habe auf Kochs Abschuss vertraut. Im weiteren Nachfragen räumt er ein, sich Kochs Schuss vorstellen zu können. Schliesslich sagt er, vermutlich hätten die meisten Kameraden und auch er selbst so gehandelt. Die Entwicklung macht einen Erwartungsdruck sichtbar; sie belegt nicht ohne Weiteres eine bewusste gemeinsame Absprache.",
+    "refs": [
+      [
+        37,
+        "Verneinung und erstes Einräumen"
+      ],
+      [
+        39,
+        "Kameraden und eigene mögliche Entscheidung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Anfang",
+        "terms": "verneint|nein|zunaechst",
+        "reason": "Er antwortet zuerst verneinend.",
+        "page": 37
+      },
+      {
+        "label": "Veränderung",
+        "terms": "einraeum*|raeumt|vorstellen|schliesslich",
+        "reason": "Dann räumt er ein, mit Kochs Schuss gerechnet haben zu können.",
+        "page": 37
+      },
+      {
+        "label": "Eigene Position",
+        "terms": "selbst|kamerad*|auch er",
+        "reason": "Er hält entsprechendes Handeln der Kameraden und sein eigenes für wahrscheinlich.",
+        "page": 39
+      }
+    ]
+  },
+  {
+    "module": "evakuierung",
+    "question": "Warum führt Nelson Äusserungen des früheren Ministers Jung an? Was können solche politischen Äusserungen erklären – und was ersetzen sie nicht?",
+    "answer": "Nelson erinnert an Jungs im Stück zitierte Bereitschaft, sich auf einen übergesetzlichen Notstand zu berufen, und an Aussagen zur Auswahl abschussbereiter Piloten. Damit fragt sie nach dem politischen und militärischen Erwartungsdruck. Eine solche Äusserung kann Erwartungen erklären. Rechtsgrundlage und konkreter Einsatzbefehl sind jedoch eigene Voraussetzungen; die Äusserung ersetzt sie nicht.",
+    "refs": [
+      [
+        38,
+        "Jung und übergesetzlicher Notstand"
+      ],
+      [
+        39,
+        "Pilotenauswahl und Diskussion in der Truppe"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Politischer Bezug",
+        "terms": "jung|minister|jungs",
+        "reason": "Nelson führt Aussagen des früheren Ministers Jung an.",
+        "page": 38
+      },
+      {
+        "label": "Wirkung auf Erwartungen",
+        "terms": "erwart*|druck|abschussbereit*|auswahl",
+        "reason": "Es geht um den Erwartungsdruck und die Auswahl der Piloten.",
+        "page": 39
+      },
+      {
+        "label": "Grenze",
+        "terms": "rechtsgrundlage|befehl|gesetz",
+        "reason": "Eine politische Äusserung ersetzt keine Rechtsgrundlage und keinen konkreten Einsatzbefehl.",
+        "page": 38
+      }
+    ]
+  },
+  {
+    "module": "evakuierung",
+    "question": "Wer war laut Bieglers Nachfragen für die Räumung zuständig? Welches Ziel verfolgt er mit der Abgrenzung zu Koch?",
+    "answer": "Lauterbach nennt den bayerischen Katastrophenschutz als zuständige Stelle für die Räumung. Koch war dafür nicht verantwortlich und konnte das volle Stadion aus seinem Cockpit nicht selbst leeren. Biegler will den Angeklagten vom Versagen anderer Stellen abgrenzen. Ob der Abschuss zulässig oder entschuldbar war, bleibt damit trotzdem eine eigene Frage.",
+    "refs": [
+      [
+        41,
+        "Katastrophenschutz und Kochs Zuständigkeit"
+      ],
+      [
+        42,
+        "Bieglers abschliessende Abgrenzung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Zuständige Stelle",
+        "terms": "katastrophenschutz",
+        "reason": "Genannt wird der bayerische Katastrophenschutz.",
+        "page": 41
+      },
+      {
+        "label": "Kochs Handlungsspielraum",
+        "terms": "cockpit|raeumung|leeren|zustaendig",
+        "reason": "Koch hatte weder den Räumungsauftrag noch die unmittelbare Möglichkeit, das Stadion zu leeren.",
+        "page": 41
+      },
+      {
+        "label": "Verteidigungsziel",
+        "terms": "abgrenz*|entlast*|andere*",
+        "reason": "Biegler trennt Kochs Verantwortung von der anderer Stellen.",
+        "page": 42
+      }
+    ]
+  },
+  {
+    "module": "koch",
+    "question": "Wie begründet Koch seinen Berufswunsch? Welche Rolle spielt der Vater, und was darfst du daraus nicht als sichere Ursache ableiten?",
+    "answer": "Koch beschreibt das Fliegen, die Geschwindigkeit und die Präzision der Maschinen als Faszination seit seiner Kindheit. Sein Vater wollte ebenfalls Kampfpilot werden, schaffte es aber nicht. Koch betont den eigenen Wunsch. Ein familiärer Einfluss ist denkbar, doch der Text beweist nicht, dass der Vater ihn zu diesem Beruf gezwungen hat.",
+    "refs": [
+      [
+        44,
+        "Frage nach dem Vater"
+      ],
+      [
+        45,
+        "Eigener Wunsch und technische Faszination"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Faszination",
+        "terms": "fliegen|schnelligkeit|praezision|technik",
+        "reason": "Er nennt Fliegen, Schnelligkeit und Präzision.",
+        "page": 45
+      },
+      {
+        "label": "Vater",
+        "terms": "vater",
+        "reason": "Auch der Vater hatte Kampfpilot werden wollen.",
+        "page": 44
+      },
+      {
+        "label": "Eigener Wunsch",
+        "terms": "eigen*|selbst|kindheit",
+        "reason": "Koch stellt die Berufswahl als eigenen langjährigen Wunsch dar.",
+        "page": 45
+      }
+    ]
+  },
+  {
+    "module": "koch",
+    "question": "Wo fliegt Koch vor dem Abschuss relativ zum Airbus? Unterscheide die Begleitung und die unmittelbar vor dem Schuss beschriebene Position.",
+    "answer": "Zunächst begleiten Koch und sein Kamerad die Passagiermaschine seitlich und versuchen Funk- und Sichtkontakt. Unmittelbar vor dem Abschuss lässt Koch sich zurückfallen. Er beschreibt die Position dann als etwas hinter und leicht über der Zivilmaschine. Die Passage legt keine bestimmte linke oder rechte Begleitseite fest.",
+    "refs": [
+      [
+        47,
+        "Neben der Maschine und Kontaktversuche"
+      ],
+      [
+        49,
+        "Hinter und leicht über der Zivilmaschine"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Begleitung",
+        "terms": "neben|seitlich",
+        "reason": "Zunächst fliegen sie neben der Maschine.",
+        "page": 47
+      },
+      {
+        "label": "Position vor dem Schuss",
+        "terms": "hinter|zurueckfallen",
+        "reason": "Koch lässt sich etwas hinter den Airbus fallen.",
+        "page": 49
+      },
+      {
+        "label": "Höhenlage",
+        "terms": "ueber|hoeher",
+        "reason": "Er beschreibt die Position als leicht über dem Airbus.",
+        "page": 49
+      }
+    ]
+  },
+  {
+    "module": "koch",
+    "question": "Welche Kontaktversuche nennt Koch und wie oft fragt er wegen des Abschussbefehls nach? Welche Antwort ist ihm nach seiner Aussage bekannt?",
+    "answer": "Koch berichtet von wiederholten Versuchen über Funk und Sichtkontakt, die ohne Erfolg bleiben. Er fragt zweimal im Führungszentrum nach, ob doch ein Abschussbefehl gegeben werde. Ihm ist der Befehl bekannt, nicht zu schiessen. Seine spätere Entscheidung beschreibt er daher als bewussten Verstoss gegen einen Befehl.",
+    "refs": [
+      [
+        47,
+        "Kontaktversuche und zweimalige Nachfrage"
+      ],
+      [
+        51,
+        "Eingestandener Befehlsverstoss"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Kontaktwege",
+        "terms": "funk|sichtkontakt",
+        "reason": "Er nennt Funk und Sichtkontakt; beide führen nicht zum gewünschten Kontakt.",
+        "page": 47
+      },
+      {
+        "label": "Zwei Nachfragen",
+        "terms": "zweimal|zwei mal|2 mal",
+        "reason": "Er fragt zweimal nach einem Abschussbefehl.",
+        "page": 47
+      },
+      {
+        "label": "Bekannter Befehl",
+        "terms": "nicht zu schiessen|nicht schiessen|nichtabschuss|verstoss|befehlsverstoss",
+        "reason": "Er kennt das Abschussverbot und räumt seinen Verstoss ein.",
+        "page": 51
+      }
+    ]
+  },
+  {
+    "module": "koch",
+    "question": "Wusste Koch, dass Passagiere ins Cockpit einzudringen versuchten? Was erfährt das Gericht später, und weshalb ist dieser Unterschied wichtig?",
+    "answer": "Koch sagt, er habe den Versuch der Passagiere nicht gesehen. Der Vorsitzende verweist dagegen auf die spätere Auswertung der Blackbox, die einen Versuch beim Zeitpunkt der Explosion belegt. Das zeigt eine mögliche Selbstrettungshandlung, aber keinen gesicherten Erfolg. Späteres Prozesswissen darf nicht ohne Beleg als damaliges Wissen Kochs behandelt werden.",
+    "refs": [
+      [
+        51,
+        "Blackbox und Kochs fehlende Beobachtung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Kochs Wahrnehmung",
+        "terms": "nicht gesehen|nicht beobachtet|habe es nicht gesehen",
+        "reason": "Er sagt, er habe den Versuch nicht gesehen.",
+        "page": 51
+      },
+      {
+        "label": "Spätere Quelle",
+        "terms": "blackbox|flugschreiber",
+        "reason": "Der Vorsitzende nennt die Blackbox-Auswertung.",
+        "page": 51
+      },
+      {
+        "label": "Reichweite",
+        "terms": "versuch|erfolg|prozesswissen",
+        "reason": "Belegt ist ein Versuch; Erfolg und Kochs damalige Kenntnis sind davon zu unterscheiden.",
+        "page": 51
+      }
+    ]
+  },
+  {
+    "module": "grenzfaelle",
+    "question": "Wie versucht Koch, aus dem Kauf eines Flugtickets eine Zustimmung zum Risiko abzuleiten? Welche Gegenfragen stellt Nelson?",
+    "answer": "Koch argumentiert, Passagiere müssten seit den Anschlägen mit Entführungen rechnen und hätten sich dem Risiko ausgesetzt. Nelson fragt, ob dies wirklich eine Zustimmung zur eigenen Tötung bedeute, wie das bei Kindern sein solle und ob nicht auch Stadionbesucher Risiken eingingen. Sie prüft so, ob Kochs Schluss konsequent und tragfähig ist. Risikowissen und Einwilligung in eine Tötung sind unterschiedliche Aussagen.",
+    "refs": [
+      [
+        58,
+        "Flugticket und Risiko"
+      ],
+      [
+        59,
+        "Kinder und Stadionbesucher"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Kochs Ausgangspunkt",
+        "terms": "ticket|risiko|entfuehr*",
+        "reason": "Er verweist auf das erkennbare Risiko beim Fliegen.",
+        "page": 58
+      },
+      {
+        "label": "Gegenbeispiele",
+        "terms": "kinder*|stadionbesuch*",
+        "reason": "Nelson fragt nach Kindern und nach den Risiken der Stadionbesucher.",
+        "page": 59
+      },
+      {
+        "label": "Unterscheidung",
+        "terms": "einwilligung|zustimmung|unterschied*",
+        "reason": "Ein Risiko zu kennen ist nicht dasselbe, wie in die Tötung einzuwilligen.",
+        "page": 59
+      }
+    ]
+  },
+  {
+    "module": "grenzfaelle",
+    "question": "Warum bezeichnet Koch die Passagiere als Teil einer Waffe? Was genau kritisiert Nelson an dieser Beschreibung?",
+    "answer": "Koch betrachtet das entführte Flugzeug als Waffe des Terroristen und ordnet die Passagiere diesem Gefahrenbild zu. Damit begründet er, warum er die Maschine bekämpfen müsse. Nelson hält ihm entgegen, dass er die Menschen so zu Sachen beziehungsweise Gegenständen mache. Ihr Einwand betrifft den fortbestehenden Wert und die Rechte der einzelnen Personen.",
+    "refs": [
+      [
+        60,
+        "Waffenbild und Einwand der Vergegenständlichung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Kochs Gefahrenbild",
+        "terms": "waffe|terrorist*",
+        "reason": "Koch beschreibt das Flugzeug samt Passagieren als Waffe des Terroristen.",
+        "page": 60
+      },
+      {
+        "label": "Nelsons Kritik",
+        "terms": "sachen|gegenstaend*|objekt*",
+        "reason": "Nelson kritisiert die Behandlung der Passagiere als Sachen.",
+        "page": 60
+      },
+      {
+        "label": "Was erhalten bleibt",
+        "terms": "mensch*|recht*|wuerde",
+        "reason": "Ihre Frage zielt auf ihr fortbestehendes Menschsein und ihre Rechte.",
+        "page": 60
+      }
+    ]
+  },
+  {
+    "module": "grenzfaelle",
+    "question": "Was will Koch mit seinem Soldateneid begründen? Welche Unterschiede nennt Nelson zwischen dem Risiko eines Soldaten und dem Töten von Passagieren?",
+    "answer": "Koch leitet aus seinem Eid ab, dass der Staat Opfer für das Gemeinwesen verlangt und Leben gegeneinander abwägt. Nelson unterscheidet: Ein Soldat wird im Kampf von einer feindlichen Macht bedroht, während hier Koch selbst Unbeteiligte tötet. Zudem habe er sich freiwillig für den Soldatenberuf entschieden. Eigenes Risiko und das Opfern anderer sind für sie nicht gleichzusetzen.",
+    "refs": [
+      [
+        61,
+        "Eid und Opferargument"
+      ],
+      [
+        62,
+        "Fremdtötung und freiwillige Berufswahl"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Kochs Argument",
+        "terms": "eid|opfer|gemeinwesen",
+        "reason": "Koch verweist auf den Eid und mögliche Opfer für die Gemeinschaft.",
+        "page": 61
+      },
+      {
+        "label": "Wer wird von wem getötet?",
+        "terms": "feind*|andere|unbeteiligt*",
+        "reason": "Nelson unterscheidet feindliche Bedrohung des Soldaten und Kochs Tötung anderer.",
+        "page": 62
+      },
+      {
+        "label": "Berufswahl",
+        "terms": "freiwillig|berufswahl",
+        "reason": "Sie nennt seine freiwillige Entscheidung für den Soldatendienst.",
+        "page": 62
+      }
+    ]
+  },
+  {
+    "module": "grenzfaelle",
+    "question": "Was fragt Nelson über Kochs Frau und Sohn? Wie reagieren Koch, Biegler und der Vorsitzende, und welches Argument wird dadurch geprüft?",
+    "answer": "Nelson fragt, ob Koch auch geschossen hätte, wenn seine Frau und sein Sohn an Bord gewesen wären. Koch stockt und will sich der Frage nicht stellen; Biegler protestiert. Der Vorsitzende hält die Frage für geeignet, die Belastbarkeit von Kochs Erklärungen zu prüfen. Geprüft wird, ob sein allgemeiner Anspruch auch bei eigener Betroffenheit trägt; daraus folgt noch kein vollständiges Strafurteil.",
+    "refs": [
+      [
+        64,
+        "Familienfrage und drei Reaktionen"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Gedankenexperiment",
+        "terms": "frau|sohn|familie",
+        "reason": "Nelson versetzt Kochs eigene Familie in die Passagiermaschine.",
+        "page": 64
+      },
+      {
+        "label": "Reaktionen",
+        "terms": "stockt|protest*|biegler|nicht stellen",
+        "reason": "Koch stockt beziehungsweise verweigert die innere Auseinandersetzung, Biegler protestiert.",
+        "page": 64
+      },
+      {
+        "label": "Prüfzweck",
+        "terms": "belastbar*|allgemein*|betroffen*",
+        "reason": "Der Vorsitzende erklärt, dass die Tragfähigkeit von Kochs Argument geprüft wird.",
+        "page": 64
+      }
+    ]
+  },
+  {
+    "module": "meiser",
+    "question": "Welche beiden Rollen hat Franziska Meiser im Prozess, und in welcher persönlichen Beziehung steht sie zu einem Opfer?",
+    "answer": "Meiser ist Nebenklägerin und wird zugleich als Zeugin vernommen. Ihr Ehemann war Passagier der abgeschossenen Lufthansa-Maschine und wurde getötet. Als Zeugin berichtet sie über ihre Erlebnisse und die Nachricht ihres Mannes. Ihre persönliche Betroffenheit macht sie nicht zur Angeklagten und ersetzt auch nicht die Prüfung ihrer Aussagen.",
+    "refs": [
+      [
+        65,
+        "Nebenklägerin und Zeugin"
+      ],
+      [
+        66,
+        "Ehemann als Opfer"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Prozessrollen",
+        "terms": "nebenklaegerin",
+        "reason": "Sie ist Nebenklägerin, also als Angehörige auf der Seite der Anklage beteiligt.",
+        "page": 65
+      },
+      {
+        "label": "Aussagefunktion",
+        "terms": "zeugin",
+        "reason": "Sie wird zusätzlich als Zeugin zu ihren Wahrnehmungen befragt.",
+        "page": 65
+      },
+      {
+        "label": "Persönliche Beziehung",
+        "terms": "ehemann|mann",
+        "reason": "Ihr Ehemann gehört zu den getöteten Passagieren.",
+        "page": 66
+      }
+    ]
+  },
+  {
+    "module": "meiser",
+    "question": "Warum korrigiert Meiser die Formulierung, ihr Mann sei «zu Tode gekommen»? Was verändert ihre eigene Wortwahl?",
+    "answer": "Meiser besteht darauf, dass ihr Mann getötet wurde. Die allgemeine Wendung des Vorsitzenden lässt zunächst offen, wie und durch wen der Tod verursacht wurde. Ihre Korrektur benennt eine Handlung und verlangt Aufmerksamkeit für Verantwortung. Das ist eine präzise sprachliche Beobachtung; wie anklagend sie klingt, hängt auch von der Darstellung ab.",
+    "refs": [
+      [
+        66,
+        "Korrektur der Todesbeschreibung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Korrektur",
+        "terms": "getoetet|toetung",
+        "reason": "Meiser benennt ausdrücklich eine Tötung.",
+        "page": 66
+      },
+      {
+        "label": "Unterschied",
+        "terms": "verursach*|handlung|verantwort*",
+        "reason": "Ihre Formulierung macht Verursachung und Verantwortung sichtbar.",
+        "page": 66
+      },
+      {
+        "label": "Wirkung",
+        "terms": "anklag*|aufmerksamkeit|wirkung",
+        "reason": "Erkläre die mögliche anklagende Wirkung, statt ihr pauschal Irrationalität zuzuschreiben.",
+        "page": 66
+      }
+    ]
+  },
+  {
+    "module": "meiser",
+    "question": "Wann schickt Meisers Mann die SMS, was kündigt er an, und warum fragt der Vorsitzende nach der Uhrzeit?",
+    "answer": "Die Nachricht wird für 19.48 Uhr und 12 Sekunden angegeben. Der Mann berichtet von der Entführung und vom Versuch, ins Cockpit zu gelangen. Die genaue Uhrzeit hilft, die Nachricht in den Ablauf einzuordnen; der Vorsitzende verweist auf die Synchronisierung des Handys mit einem Zeitserver. Die Nachricht belegt den angekündigten Versuch, nicht dessen Erfolg.",
+    "refs": [
+      [
+        68,
+        "SMS, Zeitangabe und Zeitserver"
+      ],
+      [
+        69,
+        "Erklärung der korrekten Uhrzeit"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Zeit",
+        "terms": "19 48|19 uhr 48",
+        "reason": "Die genannte Zeit ist 19.48 Uhr und 12 Sekunden.",
+        "page": 68
+      },
+      {
+        "label": "Inhalt",
+        "terms": "cockpit|pilotenkanzel",
+        "reason": "Die Passagiere versuchen, ins Cockpit zu kommen.",
+        "page": 68
+      },
+      {
+        "label": "Zweck der Zeitprüfung",
+        "terms": "ablauf|einordn*|zeitserver|synchron*",
+        "reason": "Die korrekte Zeit erlaubt die Einordnung in den Ereignisablauf.",
+        "page": 69
+      }
+    ]
+  },
+  {
+    "module": "meiser",
+    "question": "Warum möchte Meiser ihr Handy zurück, und warum gibt der Vorsitzende es ihr noch nicht? Welche zwei Bedeutungen hat derselbe Gegenstand?",
+    "answer": "Meiser möchte die letzte SMS ihres Mannes wieder bei sich haben. Für sie hat das Handy eine persönliche Bedeutung als Verbindung und Erinnerung an ihn. Für das Gericht ist es noch ein Beweismittel und soll erst nach Abschluss des Verfahrens zurückgegeben werden. Der Konflikt zeigt den Unterschied zwischen persönlichem Verlust und den Anforderungen der Beweisaufnahme.",
+    "refs": [
+      [
+        72,
+        "Bitte um Handy und SMS"
+      ],
+      [
+        73,
+        "Beweismittel bis Verfahrensabschluss"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Persönliches Anliegen",
+        "terms": "sms|erinner*|verbindung",
+        "reason": "Sie möchte die Nachricht ihres Mannes bei sich haben.",
+        "page": 72
+      },
+      {
+        "label": "Gerichtliche Funktion",
+        "terms": "beweismittel|beweis*",
+        "reason": "Das Gericht benötigt das Telefon noch als Beweismittel.",
+        "page": 73
+      },
+      {
+        "label": "Rückgabezeitpunkt",
+        "terms": "abschluss|verfahren|spaeter",
+        "reason": "Die Rückgabe wird für nach dem Verfahrensabschluss angekündigt.",
+        "page": 73
+      }
+    ]
+  },
+  {
+    "module": "nelson",
+    "question": "Welches Urteil beantragt Nelson? Warum lässt sich ihre Position nicht einfach als Gleichgültigkeit gegenüber den Menschen im Stadion beschreiben?",
+    "answer": "Nelson beantragt die Verurteilung Kochs. Sie begründet dies mit Grenzen staatlichen Tötens und dem Schutz der Würde jedes einzelnen Menschen. Ihre Position erklärt die Stadionbesucher nicht für unwichtig; sie bestreitet vielmehr, dass deren grössere Zahl eine Erlaubnis zur Tötung Unbeteiligter begründet.",
+    "refs": [
+      [
+        79,
+        "Gleiche Würde und Objektverbot"
+      ],
+      [
+        81,
+        "Antrag auf Verurteilung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Antrag",
+        "terms": "verurteilung|verurteil*|schuldig",
+        "reason": "Nelson beantragt eine Verurteilung.",
+        "page": 81
+      },
+      {
+        "label": "Begründung",
+        "terms": "wuerde|menschenwuerde|grenze*",
+        "reason": "Sie argumentiert mit Menschenwürde und Grenzen staatlichen Handelns.",
+        "page": 79
+      },
+      {
+        "label": "Bezug auf Zahlen",
+        "terms": "zahl|groessere|mehrheit|verrechnung",
+        "reason": "Eine grössere Zahl ersetzt nach ihrer Argumentation keine Tötungserlaubnis.",
+        "page": 79
+      }
+    ]
+  },
+  {
+    "module": "nelson",
+    "question": "Was bedeutet in Nelsons Argumentation, einen Menschen zum blossen Objekt zu machen? Erkläre es am Fall der Passagiere.",
+    "answer": "Die Passagiere würden als Mittel eingesetzt, um andere Menschen zu retten: Über ihr Leben wird wie über einen verfügbaren Gegenstand entschieden. Nelson hält dagegen, dass jeder Mensch einen eigenen Wert besitzt und als Person geachtet werden muss. Deshalb wendet sie sich gegen eine rein zahlenmässige Verrechnung der Opfer.",
+    "refs": [
+      [
+        79,
+        "Menschen als Subjekte statt Gegenstände"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Mittel für fremden Zweck",
+        "terms": "mittel|retten|rettung",
+        "reason": "Die Passagiere werden für die Rettung anderer geopfert.",
+        "page": 79
+      },
+      {
+        "label": "Eigenwert",
+        "terms": "eigen*|person|subjekt*|wuerde",
+        "reason": "Nelson betont ihren Wert als einzelne Personen.",
+        "page": 79
+      },
+      {
+        "label": "Abgelehnte Rechnung",
+        "terms": "zahl*|verrechnung|aufrechnung",
+        "reason": "Sie lehnt die Verrechnung von Menschenleben ab.",
+        "page": 79
+      }
+    ]
+  },
+  {
+    "module": "nelson",
+    "question": "Welche noch möglichen Rettungswege führt Nelson gegen Kochs Gewissheit an? Warum sind Möglichkeiten weder sichere Rettungen noch bedeutungslos?",
+    "answer": "Nelson fragt nach einem Eindringen der Passagiere ins Cockpit und danach, ob der Pilot das Flugzeug noch hätte hochziehen können. Sie greift damit die Behauptung an, der Tod sei unausweichlich gewesen. Die Möglichkeiten beweisen keine sichere Rettung. Sie zeigen aber, dass Gewissheit über den weiteren Verlauf eigens begründet werden müsste.",
+    "refs": [
+      [
+        80,
+        "Passagiere, Pilot und offene Rettungswege"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Passagiere",
+        "terms": "cockpit|eindringen",
+        "reason": "Sie nennt die mögliche Überwindung des Entführers durch Passagiere.",
+        "page": 80
+      },
+      {
+        "label": "Pilot",
+        "terms": "hochzieh*|pilot",
+        "reason": "Sie fragt auch nach einem möglichen Hochziehen der Maschine.",
+        "page": 80
+      },
+      {
+        "label": "Ungewissheit",
+        "terms": "moeglich*|gewissheit|sicher*",
+        "reason": "Möglichkeit und sichere Vorhersage sind zu unterscheiden.",
+        "page": 80
+      }
+    ]
+  },
+  {
+    "module": "nelson",
+    "question": "Weshalb fordert Nelson verlässliche Prinzipien gerade im Ausnahmefall? Welche Gefahr sieht sie in einer Entscheidung nach spontaner moralischer Gewissheit?",
+    "answer": "Nelson hält spontane Überzeugung allein für keine verlässliche Grundlage. Verfassungsprinzipien sollen auch in bedrohlichen Ausnahmesituationen Grenzen setzen. Andernfalls könnte der Schutz einzelner Menschen davon abhängen, welche Rechnung gerade überzeugend wirkt. Ihre Forderung richtet sich auf die Verlässlichkeit des Rechtsstaats, nicht auf Gefühllosigkeit.",
+    "refs": [
+      [
+        78,
+        "Prinzipien und moralische Gewissheit"
+      ],
+      [
+        80,
+        "Grenzen unter Bedrohung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Ausgangspunkt",
+        "terms": "spontan*|ueberzeugung|gewissheit",
+        "reason": "Eine spontane Überzeugung kann täuschen und reicht als Massstab nicht aus.",
+        "page": 78
+      },
+      {
+        "label": "Massstab",
+        "terms": "verfassung*|prinzip*",
+        "reason": "Nelson beruft sich auf verbindliche Verfassungsprinzipien.",
+        "page": 78
+      },
+      {
+        "label": "Schutzzweck",
+        "terms": "schutz|einzel*|rechtsstaat*|verlaesslich*",
+        "reason": "Erkläre deren Schutzfunktion für Einzelne und den Rechtsstaat.",
+        "page": 80
+      }
+    ]
+  },
+  {
+    "module": "biegler",
+    "question": "Warum erzählt Biegler von einem Freund, einem Mörder und einer Lüge? Welche Zustimmung möchte er dadurch vorbereiten?",
+    "answer": "Biegler verwendet das Kant zugeschriebene Lügenbeispiel, um starre Prinzipientreue problematisch erscheinen zu lassen. Wer einen Freund vor einem Mörder versteckt, möchte ihn durch eine Lüge schützen. Dieses intuitive Einverständnis soll seine Forderung nach einer Ausnahme für Koch stützen. Ob die Übertragung trägt, ist gesondert zu prüfen.",
+    "refs": [
+      [
+        81,
+        "Kant und Lügenbeispiel"
+      ],
+      [
+        82,
+        "Bezug auf Koch"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Beispiel",
+        "terms": "freund|moerder|luege",
+        "reason": "Das Beispiel fragt nach einer Lüge zum Schutz eines Freundes vor einem Mörder.",
+        "page": 81
+      },
+      {
+        "label": "Angriff auf Prinzipientreue",
+        "terms": "prinzip*|starr*",
+        "reason": "Biegler problematisiert starre Prinzipientreue.",
+        "page": 81
+      },
+      {
+        "label": "Ziel",
+        "terms": "ausnahme|koch|freispruch",
+        "reason": "Er bereitet Zustimmung zu einer Ausnahme zugunsten Kochs vor.",
+        "page": 82
+      }
+    ]
+  },
+  {
+    "module": "biegler",
+    "question": "Weshalb betont Biegler, dass das Verfassungsgericht nicht über Kochs persönliche Strafbarkeit entschieden habe? Welche Prüfung fordert er damit ein?",
+    "answer": "Biegler trennt die Kontrolle einer gesetzlichen staatlichen Abschussermächtigung von der strafrechtlichen Beurteilung eines einzelnen Menschen. Er fordert, Kochs konkrete Entscheidung und persönliche Schuld eigens zu prüfen. Die Unterscheidung zeigt eine offene Prüfaufgabe; sie bedeutet noch nicht, dass Koch automatisch freigesprochen werden müsste.",
+    "refs": [
+      [
+        82,
+        "Gesetzesprüfung und Einzelfall"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Erste Ebene",
+        "terms": "gesetz*|ermaechtigung|verfassungsgericht",
+        "reason": "Die erste Ebene betrifft die staatliche gesetzliche Ermächtigung.",
+        "page": 82
+      },
+      {
+        "label": "Zweite Ebene",
+        "terms": "persoenlich*|schuld|strafbarkeit|einzelfall",
+        "reason": "Die zweite Ebene betrifft Kochs persönliche Strafbarkeit.",
+        "page": 82
+      },
+      {
+        "label": "Offener Schluss",
+        "terms": "pruef*|automatisch|offen",
+        "reason": "Die Trennung ersetzt die Einzelfallprüfung nicht.",
+        "page": 82
+      }
+    ]
+  },
+  {
+    "module": "biegler",
+    "question": "Welche Wirkung kann Bieglers gemeinschaftliches «Wir» haben? Warum muss seine Behauptung einer Kriegslage im Unterricht als Argument geprüft werden?",
+    "answer": "Das Wir kann Publikum, Verteidiger und bedrohte Gesellschaft zu einer Gemeinschaft verbinden. Die Kriegsbehauptung steigert den Eindruck einer aussergewöhnlichen Bedrohung und kann eine Ausnahme plausibel erscheinen lassen. Es handelt sich zunächst um Bieglers rhetorische Rahmung. Aus ihr allein folgt weder ein bewiesener Rechtswechsel noch die Meinung des Autors.",
+    "refs": [
+      [
+        84,
+        "Gemeinschaft und Kriegsrahmung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Gemeinschaft",
+        "terms": "gemeinschaft|zusammen|publikum",
+        "reason": "Das Wir kann Zugehörigkeit und Solidarität herstellen.",
+        "page": 84
+      },
+      {
+        "label": "Bedrohungsrahmen",
+        "terms": "krieg*|bedroh*|aussergewoehnlich*",
+        "reason": "Die Kriegsrahmung verstärkt die Ausnahmesituation.",
+        "page": 84
+      },
+      {
+        "label": "Prüfbedürftiger Status",
+        "terms": "rhetor*|rahmung|behauptung|argument",
+        "reason": "Eine Figurenbehauptung ist kein automatischer Nachweis einer anderen Rechtslage.",
+        "page": 84
+      }
+    ]
+  },
+  {
+    "module": "biegler",
+    "question": "Welche Rettungsabsicht schreibt Biegler Koch zu und welches Urteil will er erreichen? Wo liegt ein zentraler Streitpunkt mit Nelson?",
+    "answer": "Biegler verteidigt Koch als jemanden, der die vielen Menschen im Stadion retten wollte, und verlangt seinen Freispruch. Nelson bestreitet nicht einfach diese Rettungsabsicht, sondern die Folgerung, deshalb dürften Unbeteiligte getötet werden. Der Streit betrifft also auch die Grenzen zulässigen Handelns und die Bewertung der Ausnahme, nicht bloss gute oder böse Motive.",
+    "refs": [
+      [
+        82,
+        "Verteidigung der Einzelfallentscheidung"
+      ],
+      [
+        84,
+        "Schluss der Verteidigung"
+      ],
+      [
+        79,
+        "Gegenposition Nelsons"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Motiv",
+        "terms": "retten|rettungsabsicht|stadion",
+        "reason": "Biegler betont die Rettung der Stadionbesucher.",
+        "page": 82
+      },
+      {
+        "label": "Ziel",
+        "terms": "freispruch|freisprech*",
+        "reason": "Er will einen Freispruch erreichen.",
+        "page": 84
+      },
+      {
+        "label": "Streitpunkt",
+        "terms": "grenze*|ausnahme|unbeteiligt*",
+        "reason": "Eine gute Absicht beantwortet noch nicht die Frage nach erlaubten Mitteln.",
+        "page": 79
+      }
+    ]
+  },
+  {
+    "module": "urteile",
+    "question": "Welche unmittelbaren Folgen haben die beiden Urteile für Koch? Unterscheide Schuldspruch und Freispruch konkret.",
+    "answer": "In der Verurteilungsfassung wird Koch wegen Mordes in 164 Fällen verurteilt; der Haftbefehl bleibt bestehen. In der Freispruchsfassung wird der Haftbefehl aufgehoben und seine unverzügliche Entlassung angeordnet. Beide Texte behandeln dieselbe eingeräumte Tat, gelangen aber zu unterschiedlichen strafrechtlichen Ergebnissen.",
+    "refs": [
+      [
+        87,
+        "Schuldspruch und Fortdauer des Haftbefehls"
+      ],
+      [
+        91,
+        "Freispruch und Aufhebung des Haftbefehls"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Verurteilung",
+        "terms": "mord|haftbefehl|verurteilt",
+        "reason": "Koch wird wegen Mordes in 164 Fällen verurteilt; der Haftbefehl bleibt bestehen.",
+        "page": 87
+      },
+      {
+        "label": "Freispruch",
+        "terms": "entlass*|haftbefehl",
+        "reason": "Der Haftbefehl wird aufgehoben und Koch soll sofort entlassen werden.",
+        "page": 91
+      },
+      {
+        "label": "Gemeinsame Grundlage",
+        "terms": "tat|abschuss|gleich*",
+        "reason": "Die Fassungen betreffen dieselbe Tat; der Unterschied liegt in der Bewertung.",
+        "page": 92
+      }
+    ]
+  },
+  {
+    "module": "urteile",
+    "question": "Was bedeutet «übergesetzlich» im Freispruchstext, und auf welche Eigenschaft von Kochs Motiv stützt sich die Begründung?",
+    "answer": "Der Freispruchstext bezeichnet den übergesetzlichen Notstand als einen nicht in den genannten Gesetzen geregelten Entschuldigungsgrund. Die Begründung betont, Koch habe selbstlos fremde Menschen retten wollen, statt nur sich oder Angehörige zu schützen. Das ist die Argumentation dieser literarischen Urteilsfassung und keine allgemein garantierte Straffreiheit.",
+    "refs": [
+      [
+        92,
+        "Nicht gesetzlich geregelte Entschuldigung und Selbstlosigkeit"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Begriff",
+        "terms": "uebergesetzlich*|entschuldigungsgrund|nicht gesetzlich|nicht im gesetz",
+        "reason": "Übergesetzlich bedeutet hier: nicht gesetzlich geregelter möglicher Entschuldigungsgrund.",
+        "page": 92
+      },
+      {
+        "label": "Motiv",
+        "terms": "selbstlos|fremde|andere",
+        "reason": "Das Urteil betont die Rettung fremder Menschen.",
+        "page": 92
+      },
+      {
+        "label": "Reichweite",
+        "terms": "urteilsfassung|literarisch*|begruendung|argumentation",
+        "reason": "Ordne die Aussage dieser Urteilsbegründung zu; behaupte keine allgemeine Freigabe.",
+        "page": 92
+      }
+    ]
+  },
+  {
+    "module": "urteile",
+    "question": "Bestreitet der Schuldspruch, dass Koch gewissenhaft nachgedacht hat? Warum verurteilt er ihn dennoch?",
+    "answer": "Der Schuldspruch erkennt an, dass Koch sich unter Anspannung seiner Gewissenskräfte um eine richtige Entscheidung bemüht hat. Dennoch hält er die Tötung der wehrlosen Passagiere und die Missachtung ihrer Rechte für nicht hinnehmbar. Er betont zudem die Gefahr, dass eine solche Ausnahme zum Vorbild wird. Ernsthaftes Bemühen genügt in dieser Fassung nicht zur Entschuldigung.",
+    "refs": [
+      [
+        90,
+        "Gewissensbemühen, Rechte und Zukunftswirkung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Anerkanntes Bemühen",
+        "terms": "gewissen*|bemueh*",
+        "reason": "Das Urteil erkennt Kochs ernsthaftes Gewissensbemühen an.",
+        "page": 90
+      },
+      {
+        "label": "Grenze",
+        "terms": "rechte|passagier*|wuerde",
+        "reason": "Es hält am Schutz der Rechte der wehrlosen Passagiere fest.",
+        "page": 90
+      },
+      {
+        "label": "Zukunftswirkung",
+        "terms": "vorbild|schule|ausnahme|gefahr",
+        "reason": "Die Begründung warnt davor, das Handeln zum Vorbild werden zu lassen.",
+        "page": 90
+      }
+    ]
+  },
+  {
+    "module": "urteile",
+    "question": "Wie behandelt die Freispruchsbegründung die mögliche Selbstrettung der Passagiere? Weshalb darfst du daraus nicht folgern, dass ihr Scheitern bewiesen ist?",
+    "answer": "Die Freispruchsbegründung verlangt Beweise für die von Nelson genannten Rettungsmöglichkeiten. Sie hält diese Möglichkeiten für unbewiesen und will nicht mit Wundern kalkulieren. Damit gewichtet sie Unsicherheit zugunsten ihrer Entscheidung. Aus fehlendem Beweis einer Rettung folgt jedoch nicht der Beweis, dass jede Rettung unmöglich war. Gerade diese unterschiedliche Gewichtung ist ein Gegenstand des Vergleichs beider Enden.",
+    "refs": [
+      [
+        92,
+        "Rettungsmöglichkeiten und Beweisfrage"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Urteilsargument",
+        "terms": "beweisbar|beweisen|wunder|beweise|unbewiesen",
+        "reason": "Die Fassung weist die Rettungsmöglichkeiten als nicht bewiesen zurück.",
+        "page": 92
+      },
+      {
+        "label": "Unterscheidung",
+        "terms": "unmoeglich|scheitern|fehlend*",
+        "reason": "Nicht bewiesener Erfolg ist kein bewiesenes Scheitern.",
+        "page": 92
+      },
+      {
+        "label": "Vergleichsfrage",
+        "terms": "unsicherheit|gewicht*|vergleich*",
+        "reason": "Vergleiche, wie die Fassungen mit Unsicherheit umgehen.",
+        "page": 92
+      }
+    ]
+  },
+  {
+    "module": "dramenform",
+    "question": "Welche Handlung wird auf der Bühne tatsächlich gezeigt, und wie gelangt das Publikum an Informationen über den Flug?",
+    "answer": "Gezeigt wird die Gerichtsverhandlung nach dem Abschuss. Über den Flug erfährt das Publikum durch Anklage, Zeugenaussagen, Kochs Darstellung und die Erörterung von Beweismitteln. Das frühere Geschehen wird sprachlich rekonstruiert. Ein nachgestellter Flug in einer Verfilmung wäre eine zusätzliche filmische Gestaltung.",
+    "refs": [
+      [
+        8,
+        "Gerichtssaal als Bühnenraum"
+      ],
+      [
+        12,
+        "Anklage als Rückblick"
+      ],
+      [
+        51,
+        "Beweismittel im Gespräch"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Bühnenhandlung",
+        "terms": "gerichtsverhandlung|verhandlung",
+        "reason": "Die Bühnenhandlung besteht in der Verhandlung.",
+        "page": 8
+      },
+      {
+        "label": "Informationsquellen",
+        "terms": "zeugenaussag*|anklage|beweismittel",
+        "reason": "Nenne Aussagen und Beweismittel als Informationswege.",
+        "page": 12
+      },
+      {
+        "label": "Zeitstruktur",
+        "terms": "rueckblick|rekonstr*|frueher|vergangen*",
+        "reason": "Der bereits geschehene Flug wird rückblickend erschlossen.",
+        "page": 51
+      }
+    ]
+  },
+  {
+    "module": "dramenform",
+    "question": "Wodurch unterscheiden sich Haupttext und Nebentext? Erkläre den Unterschied an einem gesprochenen Satz und einer Regieanweisung aus dem Auftakt.",
+    "answer": "Der Haupttext enthält die gesprochenen Äusserungen der Figuren, etwa die Begrüssung durch den Vorsitzenden. Der Nebentext gibt Hinweise für die Aufführung, etwa dass der Vorhang geschlossen ist oder der Vorsitzende die Robe beim Gehen anzieht. Beide tragen Bedeutung; eine Regieanweisung ist aber keine von der Figur gesprochene Behauptung.",
+    "refs": [
+      [
+        7,
+        "Begrüssung und Anfangsanweisung"
+      ],
+      [
+        8,
+        "Anlegen der Robe"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Haupttext",
+        "terms": "gesprochen*|aeusserung*|figurenrede",
+        "reason": "Haupttext ist die Rede der Figuren.",
+        "page": 7
+      },
+      {
+        "label": "Nebentext",
+        "terms": "regieanweis*|auffuehrung|buehnenanweis*",
+        "reason": "Nebentext enthält Spiel- und Gestaltungshinweise.",
+        "page": 7
+      },
+      {
+        "label": "Beispiel",
+        "terms": "robe|vorhang|begruessung",
+        "reason": "Nenne eine konkrete Anweisung und einen gesprochenen Satz als Beispiele.",
+        "page": 8
+      }
+    ]
+  },
+  {
+    "module": "dramenform",
+    "question": "Wozu dient die Pause zwischen Beweisaufnahme und Schlussvorträgen? Was beginnt im zweiten Akt?",
+    "answer": "Nach Abschluss der Beweisaufnahme bittet Nelson um Vorbereitungszeit; der Vorsitzende unterbricht die Sitzung. Im zweiten Akt werden die Beteiligten zurückgerufen, und Nelson beginnt ihren Schlussvortrag. Dramaturgisch markiert die Pause den Übergang vom Erheben und Befragen zum Zusammenführen und Bewerten der Informationen.",
+    "refs": [
+      [
+        73,
+        "Abschluss der Beweisaufnahme"
+      ],
+      [
+        74,
+        "Unterbrechung"
+      ],
+      [
+        75,
+        "Beginn der Schlussvorträge"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Anlass",
+        "terms": "vorbereitung|nelson|beweisaufnahme",
+        "reason": "Nelson benötigt nach der Beweisaufnahme Vorbereitungszeit.",
+        "page": 73
+      },
+      {
+        "label": "Fortsetzung",
+        "terms": "schlussvortrag|plaedoyer",
+        "reason": "Der zweite Akt beginnt mit dem Schlussvortrag der Staatsanwältin.",
+        "page": 75
+      },
+      {
+        "label": "Funktion",
+        "terms": "uebergang|bewerten|zusammenfuehr*",
+        "reason": "Die Pause trennt Informationsgewinnung und abschliessende Bewertung.",
+        "page": 75
+      }
+    ]
+  },
+  {
+    "module": "dramenform",
+    "question": "Welche Entscheidung darf das Publikum treffen, und welche Teile der Versuchsanordnung kann es dadurch nicht nachträglich verändern?",
+    "answer": "Das Publikum soll zwischen Verurteilung und Freispruch entscheiden. Die Tat, die ausgewählten Zeugenaussagen und die beiden ausgearbeiteten Schlussfassungen sind im Stück bereits vorgegeben. Die Beteiligung ist deshalb wirksam innerhalb einer begrenzten Auswahl. Sie eröffnet nicht automatisch die Möglichkeit, weitere Zeugen oder Beweise in die geschriebene Handlung einzufügen.",
+    "refs": [
+      [
+        7,
+        "Urteilsauftrag"
+      ],
+      [
+        87,
+        "Verurteilungsfassung"
+      ],
+      [
+        91,
+        "Freispruchsfassung"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Optionen",
+        "terms": "freispruch|verurteilung",
+        "reason": "Die Abstimmung betrifft Verurteilung oder Freispruch.",
+        "page": 7
+      },
+      {
+        "label": "Vorgegebenes",
+        "terms": "vorgegeben|zeugenaussag*|schlussfassung*",
+        "reason": "Fall und Auswahl der Informationen sind im Text vorgegeben.",
+        "page": 87
+      },
+      {
+        "label": "Grenze der Beteiligung",
+        "terms": "begrenzt*|auswahl|weitere zeugen",
+        "reason": "Erkläre die Grenzen der Beteiligung statt sie ganz zu verneinen.",
+        "page": 91
+      }
+    ]
+  },
+  {
+    "module": "rede",
+    "question": "Wem gilt die Rede am Ende des Bandes und aus welchem Anlass wird sie gehalten? Warum gehört sie nicht zur Verhandlung gegen Koch?",
+    "answer": "Die Rede gilt Charlie Hebdo zur Verleihung des M100-Sanssouci Medienpreises; sie spricht unter anderem Monsieur Biard an. Ihre Überschrift und Anrede kennzeichnen eine öffentliche Preisrede. Sie steht nach dem Drama und hat eine andere Sprechsituation als die erfundene Gerichtsverhandlung.",
+    "refs": [
+      [
+        95,
+        "Titel, Anlass und Anrede"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Geehrte",
+        "terms": "charlie hebdo|biard",
+        "reason": "Die Rede richtet sich an Charlie Hebdo, insbesondere Biard.",
+        "page": 95
+      },
+      {
+        "label": "Anlass",
+        "terms": "medienpreis|preisverleih*|m100",
+        "reason": "Anlass ist der M100-Sanssouci Medienpreis.",
+        "page": 95
+      },
+      {
+        "label": "Textsorte",
+        "terms": "preisrede|rede|sprech*",
+        "reason": "Es handelt sich um eine eigenständige öffentliche Rede.",
+        "page": 95
+      }
+    ]
+  },
+  {
+    "module": "rede",
+    "question": "Was erklärt die Rede mit dem Begriff «Gewaltmonopol des Staates»? Welche Gegenleistung sollen Menschen für ihren Verzicht auf eigene Gewalt erhalten?",
+    "answer": "Die Rede erläutert einen Austausch: Bürger verzichten auf eigene Gewalt und Selbstjustiz; dafür garantiert der Staat anerkannte, ordentliche Verfahren. Strafen sollen durch staatliche Verfahren erfolgen. Der Begriff bezeichnet damit nicht die Erlaubnis zu beliebiger Gewalt, sondern eine an Recht und Verfahren gebundene Ordnung.",
+    "refs": [
+      [
+        100,
+        "Gewaltmonopol und ordentliche Verfahren"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Verzicht",
+        "terms": "verzicht*|selbstjustiz",
+        "reason": "Menschen verzichten auf eigene Gewalt beziehungsweise Selbstjustiz.",
+        "page": 100
+      },
+      {
+        "label": "Staatliche Aufgabe",
+        "terms": "staat|straf*",
+        "reason": "Der Staat übernimmt das Strafen in geregelten Verfahren.",
+        "page": 100
+      },
+      {
+        "label": "Gegenleistung",
+        "terms": "verfahren|recht*",
+        "reason": "Die Gegenleistung besteht in ordentlichen, anerkannten Verfahren.",
+        "page": 100
+      }
+    ]
+  },
+  {
+    "module": "rede",
+    "question": "Welche indirekte Wirkung des Terrorismus beschreibt die Rede? Nenne zwei politische Reaktionen, vor denen sie warnt.",
+    "answer": "Die Rede warnt, dass die Gesellschaft ihre demokratischen Werte in der Reaktion auf Terror selbst beschädigen könnte. Genannt werden etwa Zulauf zu Populisten, härtere Gesetze und zusätzliche Macht für Geheimdienste. Die Gefahr liegt in dieser Argumentation auch in der eigenen Reaktion, nicht nur im unmittelbaren Anschlag.",
+    "refs": [
+      [
+        101,
+        "Indirekte Wirkung und politische Reaktionen"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Indirekte Gefahr",
+        "terms": "selbst|werte|demokratisch*",
+        "reason": "Die Gesellschaft kann ihre eigenen demokratischen Werte beschädigen.",
+        "page": 101
+      },
+      {
+        "label": "Erste Reaktion",
+        "terms": "populist*|haertere gesetze",
+        "reason": "Nenne etwa Zulauf zu Populisten oder härtere Gesetze.",
+        "page": 101
+      },
+      {
+        "label": "Zweite Reaktion",
+        "terms": "geheimdienst*|ueberwachung|macht",
+        "reason": "Nenne etwa mehr Macht für Geheimdienste oder zusätzliche Überwachung.",
+        "page": 101
+      }
+    ]
+  },
+  {
+    "module": "rede",
+    "question": "Welche Antwort auf Terror befürwortet die Rede anhand Norwegens? Wie lässt sich das mit dem Drama vergleichen, ohne eine Figur zum Sprachrohr des Autors zu erklären?",
+    "answer": "Die Rede hebt als norwegische Antwort mehr Demokratie, Offenheit und Menschlichkeit hervor und fordert eine Reaktion mit den Mitteln des Rechts. Mit dem Drama lässt sich die Frage nach Rechtsgrenzen unter Bedrohung vergleichen. Die Rede bezieht jedoch ausdrücklich Position, während im Drama mehrere Figuren widersprechende Argumente vertreten. Ein Vergleich ersetzt deshalb nicht die Analyse der einzelnen Figuren.",
+    "refs": [
+      [
+        100,
+        "Mittel des Rechts"
+      ],
+      [
+        102,
+        "Norwegen und demokratische Werte"
+      ]
+    ],
+    "criteria": [
+      {
+        "label": "Antwort",
+        "terms": "demokratie|offenheit|menschlichkeit",
+        "reason": "Genannt werden mehr Demokratie, Offenheit und Menschlichkeit.",
+        "page": 102
+      },
+      {
+        "label": "Mittel",
+        "terms": "recht*|verfassung*",
+        "reason": "Die Rede fordert rechtsstaatliche Mittel.",
+        "page": 100
+      },
+      {
+        "label": "Unterschied der Textsorten",
+        "terms": "mehrere|figuren|mehrstimm*",
+        "reason": "Das Drama entfaltet mehrere Stimmen; die Rede ist eine ausdrückliche Stellungnahme.",
+        "page": 102
+      }
+    ]
+  }
+];
+for(const [i,item] of window.TERROR_DETAIL_QUESTIONS.entries())item.id=item.module+"-detail-"+i;
