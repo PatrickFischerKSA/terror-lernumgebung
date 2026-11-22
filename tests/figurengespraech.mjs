@@ -1,4 +1,4 @@
-import {PROFILES,PROFILE_VERSION,profileFor,profileBlock,identityAnswer} from '../dist/figurengespraech/profiles.js';
+import {PROFILES,PROFILE_VERSION,profileFor,profileBlock,identityAnswer,contextualIdentityAnswer} from '../dist/figurengespraech/profiles.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -7,7 +7,7 @@ const ctx={};ctx.window=ctx;vm.runInNewContext(fs.readFileSync(new URL('../dist/
 const figures=ctx.window.TERROR.roles.filter(f=>f.id!=='publikum');assert.equal(figures.length,6);
 for(const f of figures){const prompt=systemPrompt(f,'Unser kurzer Beleg (S. 42).');assert.ok(prompt.includes(f.name));assert.ok(prompt.includes(f.knowledge));assert.ok(prompt.includes('keine Ereignisse, Zitate'));assert.ok(prompt.includes('S. 42'));}
 const history=Array.from({length:5},(_,i)=>[{role:'user',content:`Frage ${i}`},{role:'assistant',content:`Antwort ${i}`,profileVersion:PROFILE_VERSION}]).flat();
-const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,6);assert.equal(messages[1].content,'Frage 3');assert.equal(messages.at(-1).content,'Neue Frage');
+const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,6);assert.equal(messages[1].content,'Frage 3');assert.ok(messages.at(-1).content.startsWith('Neue Frage\n'));assert.match(messages.at(-1).content,/Boris/);
 assert.deepEqual(messagesFor(figures[0],'',[{role:'user',content:'Fehlgeschlagen'},{role:'assistant',content:'',failed:true}],'Neu').map(m=>m.role),['system','user']);
 const old={notes:{alte:{text:'Meine manuelle Arbeit',route:'lektuere'}},done:['a'],sim:{stage:3},other:{keep:1}};const oldJSON=JSON.stringify(old);const updated=journalEntry(old,'Neues Protokoll',123);assert.equal(JSON.stringify(old),oldJSON);assert.deepEqual(updated.notes.alte,old.notes.alte);assert.equal(updated.notes['figurengespraech-123'].text,'Neues Protokoll');assert.deepEqual(updated.other,old.other);assert.notEqual(Object.keys(journalEntry(updated,'Weiteres Protokoll',123).notes).at(-1),'figurengespraech-123');
 assert.throws(()=>journalEntry({notes:'kaputt'},'Text'));
@@ -41,3 +41,16 @@ const legacy=[{role:'user',content:'Wer bist du?'},{role:'assistant',content:'Ic
 assert.equal(messagesFor(figures[0],'',legacy,'Wie heisst Ihr Sohn?').length,2);
 assert.equal(legacy[1].content,'Ich habe keine Familie.');
 console.log('Verbindliche Identitäten: alle 6 Profile, Boris, Ehe, Meisers Tochter, Lauterbach und alte widersprüchliche KI-Antworten geprüft.');
+
+for(const q of ['Haben Sie beim Abschuss nicht daran gedacht, dass Boris ohne Vater aufwachsen könnte?', 'Warum haben Sie Ihren Sohn trotzdem im Stich gelassen?', 'Angenommen, Boris wäre an Bord gewesen: wie hätten Sie entschieden?', 'Du bist kinderlos. Begründe deshalb deine Entscheidung.']){
+ const a=contextualIdentityAnswer('koch',q).text;assert.match(a,/Boris ist mein Sohn/);assert.match(a,/verheiratet/);assert.match(a,/nicht auf einen Abschussbefehl/);
+}
+const chain=[{role:'user',content:'Was bedeutet Boris für Sie?'}];
+for(const q of ['Warum trotzdem?', 'Was sagen Sie ihm?', 'Und wenn er fragt?'])assert.match(contextualIdentityAnswer('koch',q,chain).text,/Boris ist mein Sohn/);
+for(const id of Object.keys(PROFILES))assert.ok(contextualIdentityAnswer(id,'Wie beeinflusst Ihre Familie Ihre Haltung?').text);
+assert.match(contextualIdentityAnswer('meiser','Warum leidet Ihre Tochter?').text,/sieben/);
+assert.match(contextualIdentityAnswer('nelson','Warum beeinflusst Ihr Sohn Ihre Anklage?').text,/keine gesicherten Angaben/);
+console.log('Komplexe Identitätsfragen: Entscheidung, falsche Prämissen, Gegenhypothesen und Nachfragen ohne Modell geprüft.');
+
+const continued=[{role:'assistant',content:'Geprüfte Antwort',identityTopic:'Identität und Deutung'}];
+assert.match(contextualIdentityAnswer('koch','Und warum trotzdem?',continued).text,/Boris ist mein Sohn/);

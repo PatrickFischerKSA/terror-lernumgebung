@@ -1,4 +1,4 @@
-import {profileBlock,PROFILE_VERSION} from './profiles.js?v=20261122-identitaet1';
+import {profileBlock,profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-identitaet2';
 export const ROUNDS = [
  ['Zuerst die konkrete Antwort', 'Jedes Paar liest eine kurze KI-Aussage und die genaue Frage vor. Die anderen geben die Aussage zunächst fair in eigenen Worten wieder. Was ist überhaupt die Behauptung?', 'Moderation: «Noch keine Bewertung. Welche Aussage wollen wir gemeinsam prüfen?»'],
  ['Was steht wirklich im Stück?', 'Ordnet die Aussage ein: belegt, plausible Deutung, Widerspruch oder offen. Schlagt Szene und Seite nach. Eine zweite Person prüft den Beleg. Erklärt den Zusammenhang, statt nur eine Seitenzahl zu nennen.', 'Bei Uneinigkeit: «Welcher Wortlaut stützt eure Lesart? Zeigt er die Behauptung tatsächlich – oder deutet ihr ihn so?»'],
@@ -25,7 +25,7 @@ export function messagesFor(figure, passage, history, question) {
   if(user.role==='user' && reply.role==='assistant' && reply.content.trim() && !reply.failed && reply.profileVersion===PROFILE_VERSION) valid.push(user,reply);
  }
  // Two complete recent exchanges keep the small 4K browser model usable.
- return [{role:'system',content:systemPrompt(figure,passage)}, ...valid.slice(-4).map(m=>({role:m.role,content:m.content.slice(0,1000)})), {role:'user',content:question.trim()}];
+ return [{role:'system',content:systemPrompt(figure,passage)}, ...valid.slice(-4).map(m=>({role:m.role,content:m.content.slice(0,1000)})), {role:'user',content:`${question.trim()}\n\nVerbindliche Erinnerung (keine neue Frage): ${profileFor(figure.id).intro} ${profileFor(figure.id).limits}\nBeantworte die Frage aus genau dieser Identität. Eine Nachfrage ändert weder Familie noch Rolle. Koch hat selbst geschossen, nicht auf einen Abschussbefehl hin.`}];
 }
 export function externalPrompt(figure, passage, question) {
  return `${systemPrompt(figure,passage)}

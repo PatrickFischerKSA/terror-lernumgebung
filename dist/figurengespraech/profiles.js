@@ -1,6 +1,6 @@
 // Redaktionell am bereitgestellten Stücktext geprüft. Keine Modellgenerierung.
 // PDF-Seiten beziehen sich auf die 103-seitige Arbeitsausgabe, nicht auf jede Druckausgabe.
-export const PROFILE_VERSION='2026-11-22-identitaeten-1';
+export const PROFILE_VERSION='2026-11-22-identitaeten-2';
 const privateUnknown='Zu Ehe, Kindern und sonstigem Privatleben werden in der verwendeten Stückgrundlage keine gesicherten Angaben zu dieser Figur hinterlegt. Das ist keine Aussage, dass die Figur unverheiratet oder kinderlos ist. Keine Angaben erfinden.';
 export const PROFILES=Object.freeze({
  koch:{name:'Lars Koch',intro:'Ich heisse Lars Koch. Ich bin im Stück 31 Jahre alt, verheiratet und Vater eines Sohnes. Als Major und Kampfpilot der Luftwaffe stehe ich hier als Angeklagter vor Gericht.',
@@ -26,4 +26,22 @@ export function identityAnswer(id,question){
  if(/(beruf|dienstgrad|rang\b|arbeiten sie|arbeitest du|prozessrolle|welche rolle|was machen sie|was machst du)/.test(q))return {text:p.job,topic:'Beruf und Prozessrolle'};
  if(/(wer (bist du|sind sie)|wie (heisst du|heissen sie)|dein name|ihr name|vorstellen|vornam|identität)/.test(q))return {text:p.intro,topic:'Identität'};
  return null;
+}
+
+// Identity-bearing interpretations use reviewed text, never unconstrained model output.
+const familyTopic=/famil|verheirat|ledig|kinderlos|ehe|\b(?:frau|mann|sohn|söhne|tochter|töchter|kind|kinder|boris|vater|mutter)\b/i;
+const decisionTopic=/entscheid|abschuss|abgeschossen|absch[iie]ss|befehl|verantwort|opfer|rechtfert|schuld|gewissen/i;
+export function contextualIdentityAnswer(id,question,history=[]){
+ const p=profileFor(id), q=question.normalize('NFKC');
+ const recent=history.filter(m=>m.role==='user').slice(-2).map(m=>m.content).join(' ');
+ const followup=/\b(warum|weshalb|wieso|trotzdem|dennoch|damit|daran|dabei|das|er|ihn|ihm|sie|ihr)\b/i.test(q) && (familyTopic.test(recent)||history.at(-1)?.identityTopic==='Identität und Deutung');
+ if(!familyTopic.test(q)&&!followup&&!(id==='koch'&&decisionTopic.test(q)))return identityAnswer(id,q);
+ let text=p.family;
+ if(id==='koch')text='Boris ist mein Sohn, im Stück zwei Jahre alt. Ich bin verheiratet. Ich habe bei meiner Entscheidung an meine Frau und meinen Sohn gedacht. '+
+ 'Ich habe den Abschuss selbst entschieden; ich kann die Verantwortung dafür nicht auf einen Abschussbefehl abschieben. '+
+ 'Als mögliche Deutung meiner Haltung: Auch als Vater muss ich mich der Frage stellen, wie ich das Töten der Menschen an Bord rechtfertige. Meine eigene Familie hebt deren Lebensrecht nicht auf. '+
+ 'Welche zusätzlichen Gefühle oder Reaktionen Boris haben könnte, ist damit nicht als Tatsache belegt.';
+ else if(id==='meiser')text+=' Als mögliche Deutung: Der Verlust meines Mannes betrifft auch unsere Tochter. Welche Gedanken oder späteren Reaktionen sie hat, darf ich ohne Textbeleg nicht als Tatsache ausgeben.';
+ else text+=' Aus einer nicht belegten privaten Biografie lässt sich meine Haltung im Verfahren nicht begründen. Dafür sind meine Prozessrolle und die Aussagen im Stück massgeblich.';
+ return {text,topic:'Identität und Deutung'};
 }
