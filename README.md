@@ -165,7 +165,7 @@ Cockpit-Spracheingabe: optionaler Browser-Spracherkennungsmodus für Funk und En
 
 ## Figurengespräche · KI-Werkstatt
 
-Unter `figurengespraech/` führt eine Partneraufgabe nach der Lektüre zu Gesprächen mit sechs Figuren. WebLLM 0.2.88 läuft nach einem bewussten Modelldownload mit WebGPU direkt im Browser (Qwen 2.5, standardmässig 1,5B oder optional 0,5B, F16/F32 je nach Gerät). Es gibt keinen KI-Server, API-Schlüssel oder automatischen Export an externe KI-Dienste. Die Modellberechnung läuft in einem Web Worker. Fehlende Hardware wird ausdrücklich angezeigt; die externe Kopiervorlage bleibt nutzbar.
+Unter `figurengespraech/` führt eine Partneraufgabe nach der Lektüre zu Gesprächen mit sechs Figuren. WebLLM 0.2.88 läuft nach einem bewussten Modelldownload mit WebGPU direkt im Browser (Qwen 3 mit 4B, optional Qwen 2.5 mit 1,5B, F16/F32 je nach Gerät). Es gibt keinen KI-Server, API-Schlüssel oder automatischen Export an externe KI-Dienste. Die Modellberechnung läuft in einem Web Worker. Fehlende Hardware wird ausdrücklich angezeigt; die externe Kopiervorlage bleibt nutzbar.
 
 Die ausgewählte Rollenkarte und ein kurzer eigener Textbeleg bilden den Kontext; der Chat nutzt die letzten zwei Wechsel. Antworten sind als erzeugte Interpretationen gekennzeichnet. Das vollständige Protokoll, Prüfnotizen, externe Vergleiche und die sieben moderierten Diskussionsrunden werden separat lokal gespeichert (`terror-figurengespraech-v1`). Markdown-Export und ein ausdrücklich ausgelöster, neuer Eintrag im bestehenden Hauptjournal erhalten vorhandene Notizen.
 

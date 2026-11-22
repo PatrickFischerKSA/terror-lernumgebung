@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {ROUNDS,messagesFor,systemPrompt,externalPrompt,journalEntry} from '../dist/figurengespraech/core.js';
+import {ROUNDS,messagesFor,systemPrompt,externalPrompt,journalEntry,visibleReply} from '../dist/figurengespraech/core.js';
 const ctx={};ctx.window=ctx;vm.runInNewContext(fs.readFileSync(new URL('../dist/data.js',import.meta.url),'utf8'),ctx);
 const figures=ctx.window.TERROR.roles.filter(f=>f.id!=='publikum');assert.equal(figures.length,6);
 for(const f of figures){const prompt=systemPrompt(f,'Unser kurzer Beleg (S. 42).');assert.ok(prompt.includes(f.name));assert.ok(prompt.includes(f.knowledge));assert.ok(prompt.includes('keine Ereignisse, Zitate'));assert.ok(prompt.includes('S. 42'));}
@@ -24,3 +24,5 @@ nodes.mic.onclick();assert.equal(currentRecognizer.lang,'de-CH');assert.equal(sp
 const interim=Object.assign([{transcript:'Warum'}],{isFinal:false});const final=Object.assign([{transcript:'Warum handelten Sie?'}],{isFinal:true});
 currentRecognizer.onresult({results:[interim]});currentRecognizer.onresult({results:[final]});currentRecognizer.onresult({results:[final]});assert.equal(nodes.question.value,'Unsere Frage: Warum handelten Sie?');nodes['mic-stop'].onclick();assert.equal(speechContext.listening,false);assert.ok(nodes['speech-status'].textContent.includes('Entwurf'));assert.ok(!speechCode.includes('completions'));
 console.log('Spracheingabe: Entwurf, kein Doppeltext, Stoppen und kein automatischer Versand geprüft.');
+
+assert.equal(visibleReply('<think>Interne Überlegung</think>\nAntwort.'),'Antwort.');assert.equal(visibleReply('<think>Noch nicht abgeschlossen'),'');
