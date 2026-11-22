@@ -1,4 +1,4 @@
-import {PROFILES,PROFILE_VERSION,profileFor,profileBlock,identityAnswer,contextualIdentityAnswer} from '../dist/figurengespraech/profiles.js';
+import {PROFILES,PROFILE_VERSION,profileFor,profileBlock,identityAnswer} from '../dist/figurengespraech/profiles.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -6,8 +6,8 @@ import {ROUNDS,messagesFor,systemPrompt,externalPrompt,journalEntry,visibleReply
 const ctx={};ctx.window=ctx;vm.runInNewContext(fs.readFileSync(new URL('../dist/data.js',import.meta.url),'utf8'),ctx);
 const figures=ctx.window.TERROR.roles.filter(f=>f.id!=='publikum');assert.equal(figures.length,6);
 for(const f of figures){const prompt=systemPrompt(f,'Unser kurzer Beleg (S. 42).');assert.ok(prompt.includes(f.name));assert.ok(prompt.includes(f.knowledge));assert.ok(prompt.includes('keine Ereignisse, Zitate'));assert.ok(prompt.includes('S. 42'));}
-const history=Array.from({length:5},(_,i)=>[{role:'user',content:`Frage ${i}`},{role:'assistant',content:`Antwort ${i}`,profileVersion:PROFILE_VERSION}]).flat();
-const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,6);assert.equal(messages[1].content,'Frage 3');assert.ok(messages.at(-1).content.startsWith('Neue Frage\n'));assert.match(messages.at(-1).content,/Boris/);
+const history=Array.from({length:5},(_,i)=>[{role:'user',content:`Frage ${i}`},{role:'assistant',content:`Antwort ${i}`,profileVersion:PROFILE_VERSION,validated:true}]).flat();
+const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,8);assert.equal(messages[1].content,'Frage 2');assert.ok(messages.at(-1).content.startsWith('Neue Frage\n'));assert.match(messages.at(-1).content,/Boris/);
 assert.deepEqual(messagesFor(figures[0],'',[{role:'user',content:'Fehlgeschlagen'},{role:'assistant',content:'',failed:true}],'Neu').map(m=>m.role),['system','user']);
 const old={notes:{alte:{text:'Meine manuelle Arbeit',route:'lektuere'}},done:['a'],sim:{stage:3},other:{keep:1}};const oldJSON=JSON.stringify(old);const updated=journalEntry(old,'Neues Protokoll',123);assert.equal(JSON.stringify(old),oldJSON);assert.deepEqual(updated.notes.alte,old.notes.alte);assert.equal(updated.notes['figurengespraech-123'].text,'Neues Protokoll');assert.deepEqual(updated.other,old.other);assert.notEqual(Object.keys(journalEntry(updated,'Weiteres Protokoll',123).notes).at(-1),'figurengespraech-123');
 assert.throws(()=>journalEntry({notes:'kaputt'},'Text'));
@@ -42,34 +42,33 @@ assert.equal(messagesFor(figures[0],'',legacy,'Wie heisst Ihr Sohn?').length,2);
 assert.equal(legacy[1].content,'Ich habe keine Familie.');
 console.log('Verbindliche Identitäten: alle 6 Profile, Boris, Ehe, Meisers Tochter, Lauterbach und alte widersprüchliche KI-Antworten geprüft.');
 
-// Mehrstufige, tatsächlich fortgeschriebene Gespräche: Identität, Beleg, Einwand, Themenwechsel.
-const scenarios={
- nelson:[['Warum halten Sie die Rettung des Stadions nicht für eine Rechtfertigung?',/Staat|Töten/],['Aber ist der drohende Tod im Stadion kein Einwand?',/Katastrophe|Stadion/],['Wo steht Ihre Begründung im Text?',/Plädoyer|Befragung/],['Warum sind Sie nicht Kochs Verteidigerin?',/Biegler|Verteidigung/]],
- biegler:[['Warum verteidigen Sie Koch, obwohl er den Abschuss zugibt?',/Entscheidungslage|Freispruch/],['Aber was ist Nelsons stärkster Einwand?',/aufgerechnet/],['Wo kann ich das belegen?',/Erklärung|Plädoyer/],['Sind Sie selbst Pilot und haben das gesehen?',/nicht der Pilot/]],
- meiser:[['Was wussten Sie durch die SMS Ihres Mannes?',/SMS|Nachricht/],['War der Erfolg damit sicher?',/keine Gewissheit|offene Frage|beweist nicht/],['Wo steht das im Text?',/SMS|Aussage/],['Was bedeutet der Verlust für Ihre Tochter?',/Tochter|Vaters/]],
- lauterbach:[['Was haben Sie selbst im Passagierflugzeug gesehen?',/nicht im Passagierflugzeug/],['Warum ist das eine Grenze Ihres Wissens?',/keine eigene Wahrnehmung/],['Wo ist das belegt?',/Vernehmung|Information/],['Warum verschweigen Sie Dienstgeheimnisse?',/Aussage|dienstlich/]],
- vorsitz:[['Steht der Freispruch als einziges Ende fest?',/alternative|Urteilsfassungen/],['Warum wird das Publikum einbezogen?',/Publikumsansprache|Zuschauenden/],['Wo kann ich beide Fassungen vergleichen?',/Urteilsfassungen/],['Sind Sie als Vorsitzender zugleich Ankläger?',/Nelson|Ankläger|Verteidiger/]]
-};
-for(const [id,questions] of Object.entries(scenarios)){
- const chat=[];const replies=[];
- for(const [q,expected] of questions){const a=contextualIdentityAnswer(id,q,chat);assert.ok(a,`${id}: ${q}`);assert.match(a.text,expected,`${id}: ${q}`);replies.push(a.text);chat.push({role:'user',content:q},{role:'assistant',content:a.text,identityTopic:a.topic,profileVersion:PROFILE_VERSION});}
- assert.equal(new Set(replies).size,questions.length,`${id}: keine wiederholte Profilantwort`);
- const before=JSON.stringify(chat);const privateAnswer=contextualIdentityAnswer(id,'Wie beeinflusst Ihr Sohn Boris Ihre Haltung?',chat);assert.ok(privateAnswer);assert.equal(JSON.stringify(chat),before);
- assert.match(privateAnswer.text,/Kochs Sohn/);
-}
-const kochChat=[];
-for(const q of ['Haben Sie beim Abschuss an Boris gedacht?', 'Warum trotzdem?', 'Und wenn er an Bord gewesen wäre?', 'Wo steht das im Text?']){
- const a=contextualIdentityAnswer('koch',q,kochChat);assert.match(a.text,/Boris ist mein Sohn/);assert.match(a.text,/verheiratet/);kochChat.push({role:'user',content:q},{role:'assistant',content:a.text,identityTopic:a.topic});
-}
-assert.equal(new Set(kochChat.filter(m=>m.role==='assistant').map(m=>m.content)).size,4);
-assert.equal(contextualIdentityAnswer('nelson','Frau Nelson, was essen Sie zum Frühstück?'),null);
-assert.equal(contextualIdentityAnswer('meiser','Was ist die Hauptstadt von Frankreich?'),null);
-assert.equal(contextualIdentityAnswer('koch',''),null);
-console.log('Alle sechs Figuren: vierstufige Gespräche, konkrete Begründung/Einwand/Beleg, Themenwechsel, Familienverwechslung und unterschiedliche Antworten geprüft.');
 
-const roleHistory=[{role:'assistant',identityTopic:'recht',content:'Argument zur Anklage'}];
-assert.equal(contextualIdentityAnswer('nelson','Warum ist Paris die Hauptstadt von Frankreich?',roleHistory),null);
-assert.match(contextualIdentityAnswer('nelson','Wo wohnen Sie?',roleHistory).text,/Wohnort/);
+const {generateGroundedReply,identityConflicts,parseCheck,ReplyRejected}=await import('../dist/figurengespraech/generation.js');
+const goodKoch='Boris ist mein Sohn. Dass ich Vater bin, hebt die Verantwortung für meine Entscheidung nicht auf. Ich wollte die Menschen im Stadion retten; ob die Passagiere sich hätten retten können, wusste ich nicht sicher.';
+const answer=text=>({choices:[{message:{content:text},finish_reason:'stop'}]});
+function fakeEngine(outputs){const calls=[];return {calls,interruptGenerate(){this.interrupted=true;},chat:{completions:{create:async request=>{calls.push(request);assert.ok(outputs.length,'Unerwarteter Modellaufruf');return answer(outputs.shift());}}}};}
+const f=figures.find(f=>f.id==='koch');
+const engine=fakeEngine([goodKoch,JSON.stringify({verdict:'pass',reason:''})]);
+const r=await generateGroundedReply({engine,figure:f,passage:'',history:[],question:'Ist Boris nach Ihrer Entscheidung weniger wichtig?'});
+assert.equal(r.text,goodKoch);assert.equal(r.validated,true);assert.equal(engine.calls.length,2);assert.equal(engine.calls[0].stream,false);assert.ok(engine.calls[1].response_format.schema);
+assert.match(engine.calls[0].messages[0].content,/Boris/);assert.match(engine.calls[1].messages[0].content,/fictional character/);
+const corrected=fakeEngine(['Ich bin kinderlos.',goodKoch,'{"verdict":"pass","reason":""}']);
+assert.equal((await generateGroundedReply({engine:corrected,figure:f,passage:'',history:[],question:'Warum trotz Boris?'})).attempts,2);
+assert.match(corrected.calls[1].messages.at(-1).content,/Korrekturauftrag/);
+const blocked=fakeEngine(['Ich bin kinderlos.','Ich habe keine Kinder.']);
+await assert.rejects(()=>generateGroundedReply({engine:blocked,figure:f,passage:'',history:[],question:'Warum?'}),ReplyRejected);
+const semantic=fakeEngine(['Mein erfundener Erlebnisbericht.','{"verdict":"revise","reason":"Erlebnis nicht belegt"}',goodKoch,'{"verdict":"pass","reason":""}']);
+assert.equal((await generateGroundedReply({engine:semantic,figure:f,passage:'',history:[],question:'Warum?'})).attempts,2);
+const malformed=fakeEngine([goodKoch,'kein JSON']);await assert.rejects(()=>generateGroundedReply({engine:malformed,figure:f,passage:'',history:[],question:'Warum?'}),ReplyRejected);
+for(const [id,bad] of [['koch','Ich bin kein Vater.'],['nelson','Mein Mandant ist Koch.'],['biegler','Ich bin Staatsanwalt.'],['meiser','Boris ist mein Sohn.'],['lauterbach','Ich war der Pilot.'],['vorsitz','Ich vertrete die Anklage.']])assert.ok(identityConflicts(id,bad).length,id);
+assert.equal(identityConflicts('koch',goodKoch).length,0);
+const saved=[{role:'user',content:'Wer ist Boris?'},{role:'assistant',content:goodKoch,validated:true,profileVersion:PROFILE_VERSION}];
+const snapshot=JSON.stringify(saved);const next=messagesFor(f,'',saved,'Was würden Sie ihm sagen?');assert.ok(next.some(m=>m.content===goodKoch));assert.equal(JSON.stringify(saved),snapshot);
+assert.equal(messagesFor(f,'',[{role:'user',content:'Falsch'},{role:'assistant',content:'Ich bin kinderlos.',profileVersion:PROFILE_VERSION}],'Neu').length,2);
+const abort=new AbortController();abort.abort();const cancelled=fakeEngine([]);await assert.rejects(()=>generateGroundedReply({engine:cancelled,figure:f,passage:'',history:[],question:'Warum?',signal:abort.signal}),{name:'AbortError'});assert.equal(cancelled.calls.length,0);
+assert.ok(!js.includes('contextualIdentityAnswer'));assert.ok(!js.includes('identityAnswer('));assert.ok(js.includes('generateGroundedReply'));
+console.log('Freie lokale Generierung: separate Prüfung, Korrektur, blockierte Widersprüche aller sechs Figuren, keine Bausteine, geschützter Verlauf und Abbruch geprüft.');
 
-assert.match(contextualIdentityAnswer('lauterbach','Warum schweigen Sie über Dienstgeheimnisse?').text,/Aussagebefugnis/);
-assert.match(contextualIdentityAnswer('biegler','Sind Sie als Kochs Verteidiger selbst Pilot?').text,/nicht der Pilot/);
+assert.equal(identityConflicts('koch','Ich weiss nicht, wie Boris später reagieren würde.').length,0);
+assert.ok(identityConflicts('koch','Boris kenne ich nicht.').length);
+assert.equal(identityConflicts('nelson','Koch ist nicht mein Mandant.').length,0);
