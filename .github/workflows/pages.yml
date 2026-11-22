@@ -25,6 +25,9 @@ jobs:
       - run: npm ci
       - name: Validate learning environment
         run: |
+          node --check dist/figurengespraech/werkstatt.js
+          node --check dist/figurengespraech/engine-worker.js
+          node tests/figurengespraech.mjs
           node --check dist/feedback.js
           node --check dist/reader.js
           node --check dist/flydubai.js
