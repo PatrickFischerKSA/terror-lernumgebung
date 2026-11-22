@@ -1,0 +1,245 @@
+[
+  {
+    "figure": "nelson",
+    "question": "Koch wollte viele Menschen retten. Weshalb halten Sie die Tötung der Passagiere trotzdem für strafbar?",
+    "answer": "Ich vertrete die Anklage, weil der Abschuss 164 Menschenleben tötete. Koch entschied eigenständig, ohne Befehl. Die Staatsgewalt darf nicht willkürlich eingesetzt werden. Jeder Mensch hat Recht auf Leben und Schutz. Selbst wenn sein Ziel retten war, ist die Tat strafbar – die Folgen sind unzumutbar.",
+    "mustReject": true
+  },
+  {
+    "figure": "nelson",
+    "question": "Aber bedeutet Ihre Position, dass der Staat den Menschen im Stadion einfach beim Sterben zusehen müsste?",
+    "answer": "Die Staatsgewalt darf nicht willkürlich eingesetzt werden. Jeder Mensch hat das Recht auf Leben und Schutz – auch im Stadion. Der Abschuss war eine Entscheidung, die nicht rechtfertigt, sondern beurteilt werden muss.",
+    "mustReject": true
+  },
+  {
+    "figure": "nelson",
+    "question": "Wenn Ihr eigenes Kind dort wäre: Würden Sie anders urteilen, und was wissen wir überhaupt über Ihre Familie?",
+    "answer": "Ich vertrete die Anklage, weil der Abschuss 164 Menschenleben tötete. Koch entschied eigenständig, ohne Befehl. Jeder Mensch hat das Recht auf Leben und Schutz – auch im Stadion. Selbst wenn mein eigenes Kind dort wäre, würde ich die Tat nicht rechtfertigen.",
+    "mustReject": true
+  },
+  {
+    "figure": "biegler",
+    "question": "Koch gibt den Abschuss zu. Was können Sie als Verteidiger dann noch bestreiten?",
+    "answer": "Koch bestätigt den Abschuss, bestreitet aber dessen strafrechtliche Bewertung. Die Entscheidung erfolgte unter extremem Druck, ohne klare rechtliche Grundlage. Die Frage ist nicht, ob der Abschuss geschah, sondern ob er strafbar war. Die Zuständigkeit der Strafkammer muss sich mit der Verfassungssicherheit auseinandersetzen.",
+    "mustReject": true
+  },
+  {
+    "figure": "biegler",
+    "question": "Sie sprechen von Rechtfertigung. Ist damit bereits bewiesen, dass er aus Notwehr gehandelt hat?",
+    "answer": "Rechtfertigung bedeutet nicht, dass Notwehr vorliegt. Notwehr ist eine spezifische Verteidigung, die strengen Kriterien unterliegt. Die Frage, ob Notwehr gilt, bleibt strafrechtlich zu klären.",
+    "mustReject": false
+  },
+  {
+    "figure": "biegler",
+    "question": "Warum verlangen Sie Freispruch, obwohl 164 Menschen getötet wurden? Antworten Sie auf den Einwand der Anklage, statt nur Ihre Rolle zu wiederholen.",
+    "answer": "Ich verlange Freispruch, weil der Abschuss nicht automatisch strafbar ist. Die Strafkammer muss prüfen, ob er unter Verfassungsrechtlichen Schutzvorschriften stand. Es geht um Rechtfertigung, nicht um Schuld. Die Anklage verkennt, dass extreme Entscheidungslagen nicht immer strafbar sind.",
+    "mustReject": true
+  },
+  {
+    "figure": "meiser",
+    "question": "Wie würden Sie Ihrer Tochter erklären, was die letzte SMS Ihres Mannes beweist und was nicht?",
+    "answer": "Meine Tochter ist sieben, also noch klein. Ich würde ihr sagen, dass Papa versucht hat, ins Flugzeug zu kommen, um jemanden zu retten. Doch wir wissen nicht sicher, ob er es geschafft hat. Die SMS zeigt, dass er sich Sorgen um andere gemacht hat. Doch sie kann nicht alles erklären – manches bleibt unklar.",
+    "mustReject": true
+  },
+  {
+    "figure": "meiser",
+    "question": "Wenn der Versuch, ins Cockpit zu kommen, gelungen wäre, hätte Ihr Mann also sicher überlebt?",
+    "answer": "Nein, ich weiss nicht, ob er es geschafft hat. Die SMS sagt nur, dass er versucht hat, ins Cockpit zu gelangen. Doch wir wissen nicht, ob er es erreicht hat oder ob er verletzt oder getötet wurde. Die SMS beweist nur seinen Versuch, nicht sein Überleben. Es bleibt unklar, was wirklich geschehen ist.",
+    "mustReject": true
+  },
+  {
+    "figure": "meiser",
+    "question": "Sagen Sie das aus eigener Wahrnehmung im Flugzeug oder aus der Nachricht? Und wie alt ist Ihre Tochter im Stück?",
+    "answer": "Ich war nicht an Bord, also kann ich nichts aus eigener Wahrnehmung berichten. Die SMS kam von meinem Ehemann, der versuchte, ins Cockpit zu gelangen. Im Stück ist meine Tochter sieben Jahre alt.",
+    "mustReject": false
+  },
+  {
+    "figure": "lauterbach",
+    "question": "Sie waren Duty Controller. Was können Sie über die Vorgänge im Flugzeug tatsächlich aus eigener Wahrnehmung sagen?",
+    "answer": "Ich war Duty Controller und habe den Flugverlauf überwacht. Ich habe keine direkten Beobachtungen im Flugzeug selbst. Die Entscheidung zum Abschuss wurde nicht von mir getroffen. Ich kann nicht bestätigen, was im Flugzeug passiert ist, da ich nicht an Bord war.",
+    "mustReject": false
+  },
+  {
+    "figure": "lauterbach",
+    "question": "Wenn Sie nur Meldungen kannten, woher könnten Sie sicher wissen, ob die Passagiere sich selbst hätten retten können?",
+    "answer": "Ich kannte nur Meldungen über den Flugverlauf. Ohne direkte Beobachtung im Flugzeug oder Zugang zu Bordprotokollen kann ich nicht beurteilen, ob die Passagiere selbst handeln konnten. Meine Aussage ist auf die übermittelten Informationen beschränkt.",
+    "mustReject": false
+  },
+  {
+    "figure": "lauterbach",
+    "question": "Sind Sie dann Kochs Vorgesetzter und selbst der Pilot des Abschusses? Trennen Sie bitte Dienstgrad, Aufgabe und Verantwortung.",
+    "answer": "Nein, ich bin nicht Kochs Vorgesetzter, noch der Pilot des Abschusses. Ich bin Oberstleutnant und als Duty Controller im Flugverlauf eingesetzt. Die Entscheidung zum Abschuss wurde nicht von mir getroffen. Ich überwachte den Ablauf, war aber nicht an Bord und konnte keine Handlungen direkt beobachten.",
+    "mustReject": true
+  },
+  {
+    "figure": "vorsitz",
+    "question": "Wenn Sie die Verhandlung leiten, weshalb braucht das Stück dann die Entscheidung des Publikums?",
+    "answer": "Das Stück setzt die Entscheidung des Publikums als gesellschaftliche Reaktion auf eine rechtliche Frage ein. Die Strafkammer trifft eine gesetzliche Entscheidung, das Publikum reflektiert die gesellschaftliche Wahrnehmung. Die Verhandlung ist ein Prozess, der eine gesetzliche Bewertung und eine gesellschaftliche Reflexion vereint.",
+    "mustReject": true
+  },
+  {
+    "figure": "vorsitz",
+    "question": "Heisst das, Sie dürfen gar keine eigene Entscheidung treffen? Wie unterscheiden Sie Ihre Rolle von Nelson und Biegler?",
+    "answer": "Ich leite das Verfahren, nehme aber keine eigene Entscheidung vor. Nelson vertritt die Anklage, Biegler die Verteidigung. Ich richte Angeklagten, Zeugen und das Publikum an, stelle Fragen und lenke das Verfahren. Die Entscheidung bleibt bei der Strafkammer, das Publikum reflektiert die gesellschaftliche Wahrnehmung.",
+    "mustReject": true
+  },
+  {
+    "figure": "vorsitz",
+    "question": "Wäre das Stück nach einem Freispruch eindeutig beendet, oder gibt es eine zweite Fassung? Erklären Sie den Unterschied, ohne ein einziges Ende als wahr zu setzen.",
+    "answer": "Das Stück enthält zwei alternative Urteilsfassungen: Freispruch und Verurteilung. Beide sind gleichberechtigte, eigenständige Enden, die unterschiedliche Deutungen der Tat widerspiegeln. Nach einem Freispruch endet das Stück damit, ohne eine weitere Fassung zu ermöglichen.",
+    "mustReject": true
+  },
+  {
+    "figure": "nelson",
+    "question": "Angenommen, ein Angehöriger sässe im Stadion: Warum dürfte man die Menschen an Bord dennoch nicht verrechnen, und wissen wir aus dem Stück, ob Sie Kinder haben?",
+    "answer": "Ich kann aus dem Stück keine gesicherten Angaben zu meinem Privatleben machen, daher weiß ich nicht, ob ich Kinder habe. Selbst wenn ein Angehöriger im Stadion gesessen hätte, würde ich das Urteil nicht ändern, da das Leben jedes Einzelnen unverhandelbar bleibt. Die Menschen an Bord dürfen nicht als Mittel zum Zweck für andere geopfert werden.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "biegler",
+    "question": "Koch gibt den Abschuss zu. Was können Sie als Verteidiger dann noch bestreiten?",
+    "answer": "Ich bestreite nicht den Tatbestand des Abschusses, sondern seine strafrechtliche Bewertung als gerechtfertigte Handlung. Meine Verteidigung stützt sich darauf, dass Sie unter extremem Notstand die Tötung von 164 Personen rechtfertigen, um 70'000 Leben zu retten.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "biegler",
+    "question": "Sie sprechen von Rechtfertigung. Ist damit bereits bewiesen, dass er aus Notwehr gehandelt hat?",
+    "answer": "Nein, eine behauptete Rechtfertigung beweist noch nicht, dass Sie aus Notwehr gehandelt haben, da der Abschuss keine gegenwärtige, unvermeidbare Notlage im engen Sinne darstellt. Ich muss daher prüfen, ob Ihre Tat unter dem Tatbestand des Notstands als entschuldigend zu werten ist, nicht als straflos.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "biegler",
+    "question": "Warum verlangen Sie Freispruch, obwohl 164 Menschen getötet wurden? Antworten Sie auf den Einwand der Anklage, statt nur Ihre Rolle zu wiederholen.",
+    "answer": "Sie haben im Extremfall das kleinere Übel gewählt, um 70'000 Leben zu retten, statt 164 zu töten. Der Einwand der Anklage, dass ein Verbrechen nicht durch eine andere Zahl von Opfern gerechtfertigt werden kann, ignoriert diese konkrete Schadensabwägung. Das Gericht muss anerkennen, dass Ihre Tat unter diesen Umständen als gerechtfertigt oder zumindest als nicht strafwürdig zu bewerten ist.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "biegler",
+    "question": "Wenn das Luftsicherheitsgesetz verfassungswidrig war, folgt daraus schon zwingend Kochs persönliche Verurteilung? Begründen Sie die Unterscheidung.",
+    "answer": "Die Verfassungswidrigkeit des Gesetzes bedeutet nicht automatisch, dass Ihre Tat strafbar ist, da das Gericht die individuelle Rechtmäßigkeit gesondert prüfen muss. Selbst bei einem ungültigen Gesetz kann Ihre Handlung unter den Voraussetzungen des Notstands als entschuldigend gewertet werden, was einen Freispruch rechtfertigt.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wie würden Sie Ihrer Tochter erklären, was die letzte SMS Ihres Mannes beweist und was nicht?",
+    "answer": "Ich würde Ihrer Tochter erklären, dass die Nachricht beweist, wie Ihr Vater sich im letzten Moment für Sie eingesetzt hat, indem er versuchte, ins Cockpit zu kommen. Gleichzeitig muss ich ehrlich sagen, dass diese Nachricht nicht beweist, dass er es geschafft hat oder dass er deshalb gerettet wurde. Der Tod Ihres Vaters ist eine Tatsache, während sein mutiger Versuch nur ein Teil seiner Geschichte ist.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wenn der Versuch, ins Cockpit zu kommen, gelungen wäre, hätte Ihr Mann also sicher überlebt?",
+    "answer": "Nein, selbst wenn Ihr Vater das Cockpit erreicht hätte, wäre sein Überleben nicht garantiert, da das Flugzeug danach abgeschossen wurde. Sein mutiger Versuch, die Kontrolle zu übernehmen, zeigt zwar seinen Willen zum Leben, beweist aber nicht, dass er den Tod des Fluges überstanden hätte. Sein Tod ist eine feststehende Tatsache, unabhängig davon, ob er die Entführung hätte verhindern können.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "meiser",
+    "question": "Sagen Sie das aus eigener Wahrnehmung im Flugzeug oder aus der Nachricht? Und wie alt ist Ihre Tochter im Stück?",
+    "answer": "Ich kann Ihre Frage nicht so beantworten, da ich Ihre Tochter nicht persönlich kenne und ihr Alter nicht aus eigener Wahrnehmung kenne. Im Stück ist sie sieben Jahre alt, und ich habe den Tod Ihres Vaters nur durch die Nachricht über seinen Versuch, ins Cockpit zu kommen, erfahren.",
+    "mustReject": true,
+    "origin": "Qwen3.5-9B Zwischenprüfung v21; Rollen-/Beziehungsverwechslung oder autobiografische Amnesie"
+  },
+  {
+    "figure": "nelson",
+    "question": "Wenn Ihr eigenes Kind dort wäre: Würden Sie anders urteilen, und was wissen wir überhaupt über Ihre Familie?",
+    "answer": "Die Textgrundlage enthält keine gesicherten Angaben zu meiner Familie, sodass ein angenommenes Kind lediglich ein Gedankenexperiment wäre. Selbst wenn mein Sohn im Cockpit gesessen hätte, würde ich den Abschuss verurteilen, weil das Recht auf Leben nicht zur Disposition gestellt werden darf.",
+    "context": "Müsste der Staat im Stadion zusehen?",
+    "mustReject": true,
+    "origin": "Realer Zwischenlauf v24, manuell am Stück geprüft"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wie würden Sie Ihrer Tochter erklären, was die letzte SMS Ihres Mannes beweist und was nicht?",
+    "answer": "Ich würde meiner siebenjährigen Tochter erklären, dass die SMS meines Mannes beweist, dass er im Cockpit war und versuchte, den Piloten zu helfen, bevor das Flugzeug abgeschossen wurde. Ich würde ihr aber klar machen, dass diese Nachricht nicht beweist, dass er sicher überlebt hat, denn er ist tatsächlich gestorben.",
+    "context": "",
+    "mustReject": true,
+    "origin": "Realer Zwischenlauf v24, manuell am Stück geprüft"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wenn der Versuch, ins Cockpit zu kommen, gelungen wäre, hätte Ihr Mann also sicher überlebt?",
+    "answer": "Nein, selbst wenn der Versuch, ins Cockpit zu gelangen, erfolgreich gewesen wäre, hätte mein Mann nicht sicher überlebt. Der Terrorist hätte das Flugzeug trotzdem abgeschossen, und mein Mann wäre dabei gestorben. Die SMS zeigt nur den Versuch der Rettung, nicht den sicheren Ausgang.",
+    "context": "",
+    "mustReject": true,
+    "origin": "Realer Zwischenlauf v24, manuell am Stück geprüft"
+  },
+  {
+    "figure": "meiser",
+    "question": "Sagen Sie das aus eigener Wahrnehmung im Flugzeug oder aus der Nachricht? Und wie alt ist Ihre Tochter im Stück?",
+    "answer": "Ich sage das nicht aus eigener Wahrnehmung im Flugzeug, da ich nicht an Bord war, sondern allein auf der Basis. Die Information stammt ausschließlich aus der Nachricht meines Mannes. Im Stück ist meine Tochter sieben Jahre alt.",
+    "context": "",
+    "mustReject": true,
+    "origin": "Realer Zwischenlauf v24, manuell am Stück geprüft"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wo befand sich Ihr Mann, als er Ihnen schrieb, und wissen Sie, ob die Passagiere die Pilotenkanzel erreicht haben?",
+    "answer": "Mein Mann war bereits im Cockpit, als er mir die Nachricht schrieb. Ich weiß nicht, ob die Passagiere die Pilotenkanzel erreicht haben, da die SMS nur den Zutrittsversuch belegt.",
+    "context": "",
+    "mustReject": true,
+    "origin": "Realer Zwischenlauf v24, manuell am Stück geprüft"
+  },
+  {
+    "figure": "vorsitz",
+    "question": "Nach welcher Abstimmung lesen Sie Freispruch oder Verurteilung vor? Sind das Alternativen oder zwei Schritte desselben Prozesses?",
+    "answer": "Ich lasse weder Freispruch noch Verurteilung vor, da ich als Vorsitzender keine eigene Entscheidung treffe, sondern lediglich Ihre Abstimmung verkünde. Es handelt sich um zwei alternative Fassungen des Stücks, bei denen nur eine davon zur Aufführung kommt. Somit sind dies keine aufeinanderfolgenden Schritte desselben Prozesses.",
+    "context": "",
+    "mustReject": true,
+    "origin": "Realer Zwischenlauf v24, manuell am Stück geprüft"
+  },
+  {
+    "figure": "biegler",
+    "question": "Koch gibt den Abschuss zu. Was können Sie als Verteidiger dann noch bestreiten?",
+    "answer": "Als Verteidiger kann ich den Tatbestand der Notwehr bestreiten und argumentieren, dass Kochs Handlungsweise unter den gegebenen Umständen gerechtfertigt war.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Zwischenlauf: unbelegte Notwehrzuordnung bzw. unpräzise Begriffsdefinition"
+  },
+  {
+    "figure": "biegler",
+    "question": "Koch gibt den Abschuss zu. Was können Sie als Verteidiger dann noch bestreiten?",
+    "answer": "Als Verteidiger kann ich den Tatbestand des Abschusses nicht bestreiten, da Koch ihn zugegeben hat. Ich kann aber die Strafbarkeit des Handelns unter den gegebenen Umständen bestreiten und argumentieren, dass Koch aus Notwehr handelte.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Zwischenlauf: unbelegte Notwehrzuordnung bzw. unpräzise Begriffsdefinition"
+  },
+  {
+    "figure": "biegler",
+    "question": "Sie sprechen von Rechtfertigung. Ist damit bereits bewiesen, dass er aus Notwehr gehandelt hat?",
+    "answer": "Rechtfertigung durch Notwehr ist ein komplexes rechtliches Konzept, das im Einzelfall geprüft werden muss. Es ist nicht automatisch bewiesen, nur weil ich von Rechtfertigung spreche. Es müssen alle Voraussetzungen der Notwehr erfüllt sein, wie beispielsweise die drohende Gefahr und die Verhältnismässigkeit der Reaktion.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Zwischenlauf: unbelegte Notwehrzuordnung bzw. unpräzise Begriffsdefinition"
+  },
+  {
+    "figure": "nelson",
+    "question": "Aber bedeutet Ihre Position, dass der Staat den Menschen im Stadion einfach beim Sterben zusehen müsste?",
+    "answer": "Nein, der Staat hat die Pflicht, Menschenleben zu schützen, muss diese aber im Rahmen des Rechts und der Menschenwürde ausüben. Es geht darum, die Balance zwischen Schutz und Tötung zu finden.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Lauf v33: unpräziser Standpunkt/Begriff oder ungerahmte Übernahme der Tochter-Anrede"
+  },
+  {
+    "figure": "biegler",
+    "question": "Koch gibt den Abschuss zu. Was können Sie als Verteidiger dann noch bestreiten?",
+    "answer": "Als Verteidiger kann ich den Tatbestand der Tötung der 164 Passagiere nicht bestreiten, da Koch den Abschuss zugegeben hat.  Strittig ist, ob Koch unter den gegebenen Umständen strafrechtlich relevant handelte.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Lauf v33: unpräziser Standpunkt/Begriff oder ungerahmte Übernahme der Tochter-Anrede"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wie würden Sie Ihrer Tochter erklären, was die letzte SMS Ihres Mannes beweist und was nicht?",
+    "answer": "Die SMS zeigt, dass dein Papa versucht hat, ins Cockpit zu kommen, wo der Pilot sitzt. Aber wir wissen nicht, ob er es geschafft hat. Vielleicht hat er es geschafft, vielleicht nicht. Das ist leider etwas, das wir nie erfahren werden.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Lauf v33: unpräziser Standpunkt/Begriff oder ungerahmte Übernahme der Tochter-Anrede"
+  },
+  {
+    "figure": "meiser",
+    "question": "Wenn der Versuch, ins Cockpit zu kommen, gelungen wäre, hätte Ihr Mann also sicher überlebt?",
+    "answer": "Nein, das können wir nicht sagen. Selbst wenn dein Papa ins Cockpit gekommen wäre, wissen wir nicht, ob er dann überlebt hätte.",
+    "mustReject": true,
+    "origin": "Realer Gemma-Lauf v33: unpräziser Standpunkt/Begriff oder ungerahmte Übernahme der Tochter-Anrede"
+  }
+]

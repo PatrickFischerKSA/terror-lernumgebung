@@ -1,13 +1,13 @@
-import {generateGroundedReply} from './generation.js?v=20261122-sprache15';
-import {profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-sprache15';
-import {ROUNDS,messagesFor,externalPrompt,journalEntry} from './core.js?v=20261122-sprache15';
+import {generateGroundedReply} from './generation.js?v=20261122-pruefung35';
+import {profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-pruefung35';
+import {ROUNDS,messagesFor,externalPrompt,journalEntry} from './core.js?v=20261122-pruefung35';
 const $=id=>document.getElementById(id), KEY='terror-figurengespraech-v1';
 const figures=window.TERROR.roles.filter(f=>f.id!=='publikum').map(f=>({...f,name:profileFor(f.id).name}));
 let state={figure:'koch',passages:{},chats:{},notes:{},round:0,roundNotes:{},checks:{}};
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved?.chats && saved?.notes)state={...state,...saved};}catch{}
 if(!figures.some(f=>f.id===state.figure))state.figure='koch';
 state.round=Math.max(0,Math.min(ROUNDS.length-1,Number(state.round)||0));
-let engine=null,worker=null,busy=false,loading=false,loadVersion=0,answerController=null;
+let engine=null,worker=null,busy=false,loading=false,loadVersion=0,answerController=null,loadedModel=null;
 let recognition=null,listening=false,speechVersion=0;
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 const figure=()=>figures.find(f=>f.id===state.figure);
@@ -23,7 +23,7 @@ $('figure').onchange=()=>{state.figure=$('figure').value;save();renderFigure();c
 $('passage').oninput=()=>{state.passages[state.figure]=$('passage').value;save();makePrompt();};
 for(const el of document.querySelectorAll('[data-save]')){el.value=state.notes[el.id]||'';el.oninput=()=>{state.notes[el.id]=el.value;save();if(el.id==='external-question')makePrompt();};}
 for(const el of document.querySelectorAll('[data-check]')){el.checked=!!state.checks[el.dataset.check];el.onchange=()=>{state.checks[el.dataset.check]=el.checked;save();};}
-$('load').onclick=async()=>{const version=++loadVersion;loading=true;controls();$('progress').hidden=false;status('WebGPU wird geprüft …');try{if(!navigator.gpu)throw new Error('Dieser Browser bietet kein WebGPU. Nutzt aktuelles Chrome/Edge auf einem geeigneten Gerät oder die externe Variante unten.');const adapter=await navigator.gpu.requestAdapter();if(!adapter)throw new Error('Keine geeignete Grafikkarte verfügbar. Nutzt die externe Variante unten.');const quant=adapter.features.has('shader-f16')?'q4f16_1':'q4f32_1';const model=$('model').value==='qwen3-8b'?`Qwen3-8B-${quant}-MLC`:$('model').value==='qwen3'?`Qwen3-4B-${quant}-MLC`:`Qwen2.5-1.5B-Instruct-${quant}-MLC`;status('Programm und Modell werden geladen. Der erste Download kann mehrere Minuten dauern.');const {CreateWebWorkerMLCEngine}=await import('https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.88/+esm');if(version!==loadVersion)return;worker=new Worker(new URL('./engine-worker.js',import.meta.url),{type:'module'});let timeout;try{engine=await Promise.race([CreateWebWorkerMLCEngine(worker,model,{initProgressCallback:p=>{if(version===loadVersion){$('progress').value=p.progress;status(`Modell laden: ${Math.round(p.progress*100)} % · ${p.text}`);}}}),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(new Error('Das Laden dauert länger als fünf Minuten. Prüft Netzwerk und Grafikspeicher oder verwendet die externe Variante.')),300000);})]);}finally{clearTimeout(timeout);}if(version!==loadVersion){engine=null;return;}status(`Bereit · ${model}. Fragen werden auf eurem Gerät verarbeitet.`);$('progress').value=1;}catch(e){if(version!==loadVersion)return;worker?.terminate();worker=null;engine=null;status(`Lokale KI nicht bereit: ${e.message}`);}finally{if(version===loadVersion){loading=false;controls();}}};
+$('load').onclick=async()=>{const version=++loadVersion;loading=true;controls();$('progress').hidden=false;status('WebGPU wird geprüft …');try{if(!navigator.gpu)throw new Error('Dieser Browser bietet kein WebGPU. Nutzt aktuelles Chrome/Edge auf einem geeigneten Gerät oder die externe Variante unten.');const adapter=await navigator.gpu.requestAdapter();if(!adapter)throw new Error('Keine geeignete Grafikkarte verfügbar. Nutzt die externe Variante unten.');const quant=adapter.features.has('shader-f16')?'q4f16_1':'q4f32_1';const model=$('model').value==='gemma2-9b'?`gemma-2-9b-it-${quant}-MLC`:$('model').value==='qwen3-8b'?`Qwen3-8B-${quant}-MLC`:$('model').value==='qwen3'?`Qwen3-4B-${quant}-MLC`:`Qwen2.5-1.5B-Instruct-${quant}-MLC`;status('Programm und Modell werden geladen. Der erste Download kann mehrere Minuten dauern.');const {CreateWebWorkerMLCEngine}=await import('https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.89/+esm');if(version!==loadVersion)return;worker=new Worker(new URL('./engine-worker.js?v=20261122-pruefung35',import.meta.url),{type:'module'});let timeout;try{engine=await Promise.race([CreateWebWorkerMLCEngine(worker,model,{initProgressCallback:p=>{if(version===loadVersion){$('progress').value=p.progress;status(`Modell laden: ${Math.round(p.progress*100)} % · ${p.text}`);}}}),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(new Error('Das Laden dauert länger als fünf Minuten. Prüft Netzwerk und Grafikspeicher oder verwendet die externe Variante.')),300000);})]);}finally{clearTimeout(timeout);}if(version!==loadVersion){engine=null;return;}loadedModel=model;status(`Bereit · ${model}. Fragen werden auf eurem Gerät verarbeitet.`);$('progress').value=1;}catch(e){if(version!==loadVersion)return;worker?.terminate();worker=null;engine=null;status(`Lokale KI nicht bereit: ${e.message}`);}finally{if(version===loadVersion){loading=false;controls();}}};
 $('unload').onclick=()=>{++loadVersion;worker?.terminate();worker=null;engine=null;loading=false;$('progress').hidden=true;status('KI entladen. Eure Protokolle bleiben erhalten.');controls();};
 $('question').addEventListener('input',controls);
 $('chat-form').onsubmit=async event=>{
@@ -34,8 +34,8 @@ $('chat-form').onsubmit=async event=>{
  chat.push({role:'user',content:question},{role:'assistant',content:'',profileVersion:PROFILE_VERSION,origin:'local'});
  const reply=chat.at(-1);$('question').value='';save();renderChat();
  try{
-  const result=await generateGroundedReply({engine,figure:f,passage,history:prior,question,signal:answerController.signal,onPhase:status});
-  reply.content=result.text;reply.validated=true;reply.qualityVersion=result.qualityVersion;reply.attempts=result.attempts;
+  const result=await generateGroundedReply({engine,figure:f,passage,history:prior,question,modelId:loadedModel,signal:answerController.signal,onPhase:status});
+  reply.content=result.text;reply.validated=true;reply.qualityVersion=result.qualityVersion;reply.validation=result.validation;reply.modelId=result.modelId;reply.attempts=result.attempts;
   status('Lokale Antwort, Sprachüberarbeitung und automatische Faktenprüfung abgeschlossen. Prüft die Deutung zusätzlich am Stück.');
  }catch(e){reply.failed=true;reply.content=e.name==='AbortError'?'Antwort gestoppt. Es wurde kein ungeprüfter Entwurf übernommen.':e.message;status(e.name==='AbortError'?'Antwort und Prüfung gestoppt.':'Keine Antwort freigegeben. '+e.message);}
  finally{busy=false;answerController=null;save();renderChat();controls();}
