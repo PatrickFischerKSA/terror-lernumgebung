@@ -1,4 +1,4 @@
-import {topicAnswer} from './dialogue.js?v=20261122-dialog3';
+import {topicAnswer} from './dialogue.js?v=20261122-dialog4';
 // Redaktionell am bereitgestellten Stücktext geprüft. Keine Modellgenerierung.
 // PDF-Seiten beziehen sich auf die 103-seitige Arbeitsausgabe, nicht auf jede Druckausgabe.
 export const PROFILE_VERSION='2026-11-22-identitaeten-3';

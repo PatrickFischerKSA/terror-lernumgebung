@@ -1,5 +1,5 @@
-import {profileFor,PROFILE_VERSION,contextualIdentityAnswer} from './profiles.js?v=20261122-dialog3';
-import {ROUNDS,messagesFor,externalPrompt,journalEntry,visibleReply} from './core.js?v=20261122-dialog3';
+import {profileFor,PROFILE_VERSION,contextualIdentityAnswer} from './profiles.js?v=20261122-dialog4';
+import {ROUNDS,messagesFor,externalPrompt,journalEntry,visibleReply} from './core.js?v=20261122-dialog4';
 const $=id=>document.getElementById(id), KEY='terror-figurengespraech-v1';
 const figures=window.TERROR.roles.filter(f=>f.id!=='publikum').map(f=>({...f,name:profileFor(f.id).name}));
 let state={figure:'koch',passages:{},chats:{},notes:{},round:0,roundNotes:{},checks:{}};

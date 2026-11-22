@@ -9,7 +9,7 @@ const topics={
  'Prüft mein Plädoyer und meine Befragung Kochs. Unterscheidet dabei meine rechtliche Argumentation von einer Behauptung über mein Privatleben.'],
  ['rolle',/verteidig|biegler|staatsanw|mandant|partei/i,
  'Ich bin Staatsanwältin, nicht Kochs Verteidigerin. Biegler vertritt die Verteidigung; ich begründe die Anklage.',
- 'Wir streiten über die strafrechtliche Bewertung derselben Tat. Dass Biegler Koch verteidigt, macht mich nicht zur Angehörigen eines Opfers.',
+ 'Ich vertrete als Staatsanwältin die Anklage; Biegler übernimmt Kochs Verteidigung. Das sind getrennte Prozessaufgaben. Meine Rolle macht mich nicht zur Angehörigen eines Opfers.',
  'Ich muss die Gegenargumente der Verteidigung prüfen. Meine Prozessrolle erlaubt mir nicht, private Motive oder eine persönliche Betroffenheit zu erfinden.',
  'Vergleicht Anklage und Plädoyers: Wer behauptet was, und worauf stützt sich die jeweilige Bewertung?']
  ],
@@ -102,7 +102,7 @@ export function topicAnswer(id,question,history){
  let text=entry[facet+2];
  if(id==='meiser'&&/boris/i.test(q)&&!text.includes('Boris'))text='Boris ist Kochs Sohn, nicht mein Kind. '+text;
  // Keep the anchor concise; never replace the concrete answer by the complete profile.
- const anchor=id==='koch'?'Boris ist mein Sohn, im Stück zwei Jahre alt; ich bin verheiratet. ':id==='meiser'?'Ich bin Franziska Meiser, Nebenklägerin und Zeugin; meine Tochter ist sieben. ':'';
+ const anchor=id==='koch'?'Boris ist mein Sohn, im Stück zwei Jahre alt; ich bin verheiratet. ':id==='meiser'&&entry[0]==='verlust'&&/tochter|kind|boris/i.test(q)?'Meine Tochter ist sieben. ':'';
  if(anchor&&!text.includes(id==='koch'?'Boris ist mein Sohn':'sieben'))text=anchor+text;
  return {text,topic:entry[0],origin:'reviewed'};
 }
