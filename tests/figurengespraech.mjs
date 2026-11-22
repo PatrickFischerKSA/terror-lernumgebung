@@ -89,3 +89,6 @@ const novel='Auch in diesem Gedankenexperiment würde ich die gleichen Massstäb
 const repEngine=fakeEngine([repeated.replace('Das Recht','Der Staat'),novel,'{"verdict":"pass","reason":""}']);
 assert.equal((await generateGroundedReply({engine:repEngine,figure:figures.find(f=>f.id==='nelson'),passage:'',history:repeatedHistory,question:'Und wenn Ihr Sohn im Stadion wäre?'})).text,novel);
 assert.equal(repEngine.calls[1].messages.length,2);
+
+assert.ok(identityConflicts('meiser','Die SMS zeigt, dass mein Vater sich Sorgen machte.').length);
+assert.equal(identityConflicts('meiser','Mein Mann ist der Vater meiner Tochter. Seine SMS berichtete vom Versuch, ins Cockpit zu gelangen.').length,0);

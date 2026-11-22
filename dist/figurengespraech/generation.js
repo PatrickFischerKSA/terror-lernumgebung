@@ -1,5 +1,5 @@
-import {profileFor,RELATIONS,PROFILE_VERSION} from './profiles.js?v=20261122-free6';
-import {messagesFor,visibleReply} from './core.js?v=20261122-free6';
+import {profileFor,RELATIONS,PROFILE_VERSION} from './profiles.js?v=20261122-free7';
+import {messagesFor,visibleReply} from './core.js?v=20261122-free7';
 export const CHECK_SCHEMA=JSON.stringify({type:'object',properties:{verdict:{type:'string',enum:['pass','revise']},reason:{type:'string',maxLength:180}},required:['verdict','reason'],additionalProperties:false});
 export class ReplyRejected extends Error {}
 const normalized=s=>s.normalize('NFKC').toLowerCase().replace(/ß/g,'ss');
@@ -12,6 +12,7 @@ export function identityConflicts(id,text){
   if(/(?:mein|meine|meinen) (?:sohn|tochter) boris|boris ist mein/.test(s)&&/tochter boris|boris ist meine tochter/.test(s))issues.push('Boris ist Kochs Sohn, keine Tochter.');
   if(/(?:ich habe|mir wurde|auf).{0,25}(?:abschussbefehl|befehl zum abschuss)|ich (?:befolgte|befolgt habe).{0,15}befehl/.test(s)&&!/kein(?:en)? (?:abschussbefehl|befehl)|nicht auf (?:einen )?(?:abschussbefehl|befehl)/.test(s))issues.push('Koch entschied den Abschuss selbst; keinen erhaltenen Abschussbefehl erfinden.');
  }
+ if(id==='meiser'&&/\bmein(?:en|em)? vater\b/.test(s)&&/sms|nachricht|cockpit/.test(s)&&!/nicht mein(?:en|em)? vater/.test(s))issues.push('Der SMS-Absender ist Meisers Ehemann und der Vater ihrer Tochter, nicht Meisers eigener Vater. Die Nachricht berichtet vom Cockpit-Versuch, nicht von einer persönlichen Rettungsaktion für die Tochter.');
  if(id==='meiser'&&/mein sohn boris|boris ist mein sohn|ich (?:bin|war) (?:staatsanwältin|selbst an bord)|ich habe keine kinder/.test(s))issues.push('Meiser ist Nebenklägerin und Zeugin, Mutter einer siebenjährigen Tochter, nicht an Bord.');
  if(!['koch','meiser'].includes(id)&&/mein(?:e|en)? (?:sohn|tochter|ehefrau|ehemann)|ich (?:bin verheiratet|habe (?:ein|zwei|drei|keine) kinder)/.test(assertions))issues.push('Für diese Figur sind private Angehörige und Familienstand nicht belegt.');
  if(id==='nelson'&&/ich (?:bin|vertrete).{0,25}(?:kochs verteidiger|die verteidigung)|mein mandant ist/.test(s))issues.push('Nelson vertritt die Anklage, nicht Kochs Verteidigung.');
