@@ -2,11 +2,11 @@ import {PROFILES,PROFILE_VERSION,profileFor,profileBlock,identityAnswer} from '.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {ROUNDS,messagesFor,systemPrompt,externalPrompt,journalEntry,visibleReply} from '../dist/figurengespraech/core.js';
+import {QUALITY_VERSION,ROUNDS,messagesFor,systemPrompt,externalPrompt,journalEntry,visibleReply} from '../dist/figurengespraech/core.js';
 const ctx={};ctx.window=ctx;vm.runInNewContext(fs.readFileSync(new URL('../dist/data.js',import.meta.url),'utf8'),ctx);
 const figures=ctx.window.TERROR.roles.filter(f=>f.id!=='publikum');assert.equal(figures.length,6);
 for(const f of figures){const prompt=systemPrompt(f,'Unser kurzer Beleg (S. 42).');assert.ok(prompt.includes(f.name));assert.ok(prompt.includes(f.knowledge));assert.ok(prompt.includes('keine Ereignisse, Zitate'));assert.ok(prompt.includes('S. 42'));}
-const history=Array.from({length:5},(_,i)=>[{role:'user',content:`Frage ${i}`},{role:'assistant',content:`Antwort ${i}`,profileVersion:PROFILE_VERSION,validated:true}]).flat();
+const history=Array.from({length:5},(_,i)=>[{role:'user',content:`Frage ${i}`},{role:'assistant',content:`Antwort ${i}`,profileVersion:PROFILE_VERSION,qualityVersion:QUALITY_VERSION,validated:true}]).flat();
 const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,8);assert.equal(messages[1].content,'Frage 2');assert.ok(messages.at(-1).content.endsWith('AKTUELLE FRAGE: Neue Frage'));assert.match(messages.at(-1).content,/Boris/);
 assert.deepEqual(messagesFor(figures[0],'',[{role:'user',content:'Fehlgeschlagen'},{role:'assistant',content:'',failed:true}],'Neu').map(m=>m.role),['system','user']);
 const old={notes:{alte:{text:'Meine manuelle Arbeit',route:'lektuere'}},done:['a'],sim:{stage:3},other:{keep:1}};const oldJSON=JSON.stringify(old);const updated=journalEntry(old,'Neues Protokoll',123);assert.equal(JSON.stringify(old),oldJSON);assert.deepEqual(updated.notes.alte,old.notes.alte);assert.equal(updated.notes['figurengespraech-123'].text,'Neues Protokoll');assert.deepEqual(updated.other,old.other);assert.notEqual(Object.keys(journalEntry(updated,'Weiteres Protokoll',123).notes).at(-1),'figurengespraech-123');
@@ -43,15 +43,16 @@ assert.equal(legacy[1].content,'Ich habe keine Familie.');
 console.log('Verbindliche Identitäten: alle 6 Profile, Boris, Ehe, Meisers Tochter, Lauterbach und alte widersprüchliche KI-Antworten geprüft.');
 
 
-const {generateGroundedReply,identityConflicts,parseCheck,ReplyRejected,repeatsReply}=await import('../dist/figurengespraech/generation.js');
-const goodKoch='Boris ist mein Sohn. Dass ich Vater bin, hebt die Verantwortung für meine Entscheidung nicht auf. Ich wollte die Menschen im Stadion retten; ob die Passagiere sich hätten retten können, wusste ich nicht sicher.';
+const {generateGroundedReply,identityConflicts,parseCheck,ReplyRejected,repeatsReply,expressionIssues}=await import('../dist/figurengespraech/generation.js');
+const goodKoch='Ich habe das Flugzeug abgeschossen und dabei 164 Menschen getötet. Boris ist mein Sohn. Dass ich Vater bin, hebt die Verantwortung für meine Entscheidung nicht auf. Ich wollte die Menschen im Stadion retten; ob die Passagiere sich hätten retten können, wusste ich nicht sicher.';
 const answer=text=>({choices:[{message:{content:text},finish_reason:'stop'}]});
-function fakeEngine(outputs){const calls=[];return {calls,interruptGenerate(){this.interrupted=true;},chat:{completions:{create:async request=>{calls.push(request);assert.ok(outputs.length,'Unerwarteter Modellaufruf');return answer(outputs.shift());}}}};}
+function fakeEngine(outputs,edits=[]){const calls=[];let lastDraft='';return {calls,interruptGenerate(){this.interrupted=true;},chat:{completions:{create:async request=>{calls.push(request);if(request.messages[0].content.startsWith('You edit German'))return answer(edits.shift()||lastDraft);assert.ok(outputs.length,'Unerwarteter Modellaufruf');const value=outputs.shift();if(!request.response_format)lastDraft=value;return answer(value);}}}};}
+
 const f=figures.find(f=>f.id==='koch');
 const engine=fakeEngine([goodKoch,JSON.stringify({verdict:'pass',reason:''})]);
 const r=await generateGroundedReply({engine,figure:f,passage:'',history:[],question:'Ist Boris nach Ihrer Entscheidung weniger wichtig?'});
-assert.equal(r.text,goodKoch);assert.equal(r.validated,true);assert.equal(engine.calls.length,2);assert.equal(engine.calls[0].stream,false);assert.ok(engine.calls[1].response_format.schema);
-assert.match(engine.calls[0].messages[0].content,/Boris/);assert.match(engine.calls[1].messages[0].content,/fictional character/);
+assert.equal(r.text,goodKoch);assert.equal(r.validated,true);assert.equal(engine.calls.length,3);assert.equal(engine.calls[0].stream,false);assert.ok(engine.calls[2].response_format.schema);
+assert.match(engine.calls[0].messages[0].content,/Boris/);assert.match(engine.calls[2].messages[0].content,/fictional character/);
 const corrected=fakeEngine(['Ich bin kinderlos.',goodKoch,'{"verdict":"pass","reason":""}']);
 assert.equal((await generateGroundedReply({engine:corrected,figure:f,passage:'',history:[],question:'Warum trotz Boris?'})).attempts,2);
 assert.match(corrected.calls[1].messages.at(-1).content,/Korrekturauftrag/);
@@ -62,7 +63,7 @@ assert.equal((await generateGroundedReply({engine:semantic,figure:f,passage:'',h
 const malformed=fakeEngine([goodKoch,'kein JSON']);await assert.rejects(()=>generateGroundedReply({engine:malformed,figure:f,passage:'',history:[],question:'Warum?'}),ReplyRejected);
 for(const [id,bad] of [['koch','Ich bin kein Vater.'],['nelson','Mein Mandant ist Koch.'],['biegler','Ich bin Staatsanwalt.'],['meiser','Boris ist mein Sohn.'],['lauterbach','Ich war der Pilot.'],['vorsitz','Ich vertrete die Anklage.']])assert.ok(identityConflicts(id,bad).length,id);
 assert.equal(identityConflicts('koch',goodKoch).length,0);
-const saved=[{role:'user',content:'Wer ist Boris?'},{role:'assistant',content:goodKoch,validated:true,profileVersion:PROFILE_VERSION}];
+const saved=[{role:'user',content:'Wer ist Boris?'},{role:'assistant',content:goodKoch,validated:true,qualityVersion:QUALITY_VERSION,profileVersion:PROFILE_VERSION}];
 const snapshot=JSON.stringify(saved);const next=messagesFor(f,'',saved,'Was würden Sie ihm sagen?');assert.ok(next.some(m=>m.content===goodKoch));assert.equal(JSON.stringify(saved),snapshot);
 assert.equal(messagesFor(f,'',[{role:'user',content:'Falsch'},{role:'assistant',content:'Ich bin kinderlos.',profileVersion:PROFILE_VERSION}],'Neu').length,2);
 const abort=new AbortController();abort.abort();const cancelled=fakeEngine([]);await assert.rejects(()=>generateGroundedReply({engine:cancelled,figure:f,passage:'',history:[],question:'Warum?',signal:abort.signal}),{name:'AbortError'});assert.equal(cancelled.calls.length,0);
@@ -84,7 +85,7 @@ await assert.rejects(()=>generateGroundedReply({engine:pendingEngine,figure:f,pa
 assert.equal(identityConflicts('nelson','Wenn mein Sohn im Stadion wäre, würde ich dieselben rechtlichen Massstäbe anwenden.').length,0);
 assert.ok(identityConflicts('nelson','Mein Sohn ist im Stadion.').length);
 
-const repeatedHistory=[{role:'user',content:'Warum klagen Sie an?'},{role:'assistant',content:repeated,validated:true,profileVersion:PROFILE_VERSION}];
+const repeatedHistory=[{role:'user',content:'Warum klagen Sie an?'},{role:'assistant',content:repeated,validated:true,qualityVersion:QUALITY_VERSION,profileVersion:PROFILE_VERSION}];
 const novel='Auch in diesem Gedankenexperiment würde ich die gleichen Massstäbe anwenden. Mein privates Familienleben ist im Stück nicht belegt; die angenommene Betroffenheit ändert mein Argument zur Menschenwürde nicht.';
 const repEngine=fakeEngine([repeated.replace('Das Recht','Der Staat'),novel,'{"verdict":"pass","reason":""}']);
 assert.equal((await generateGroundedReply({engine:repEngine,figure:figures.find(f=>f.id==='nelson'),passage:'',history:repeatedHistory,question:'Und wenn Ihr Sohn im Stadion wäre?'})).text,novel);
@@ -95,3 +96,28 @@ assert.equal(identityConflicts('meiser','Mein Mann ist der Vater meiner Tochter.
 
 const smsPrompt=messagesFor(figures.find(f=>f.id==='meiser'),'',[],'Wie erklären Sie Ihrer Tochter die SMS ihres Vaters?').at(-1).content;
 assert.match(smsPrompt,/Ehemann/);assert.match(smsPrompt,/Cockpit/);
+
+const awkward='Ich würde ihm sagen, dass ich damals sehr schwer stand. Ich musste den Flug abbrechen, aber ich wollte helfen.';
+const polished='Ich würde Boris sagen: Ich habe das Flugzeug abgeschossen und dabei 164 Menschen getötet. Ich wollte die Menschen im Stadion retten. Dass ich sein Vater bin, nimmt mir die Verantwortung für diese Entscheidung nicht ab. Ich kann ihm den Verlust der anderen Kinder nicht einfach erklären oder ungeschehen machen.';
+assert.ok(expressionIssues('koch',awkward).length);
+assert.equal(expressionIssues('koch',polished).length,0);
+assert.equal(expressionIssues('koch','Ich habe den Flug nicht bloss abgebrochen, sondern das Flugzeug abgeschossen.').length,0);
+assert.ok(expressionIssues('biegler','Ich blijf den Fokus auf die Bewertung richten.').length);
+const edited=fakeEngine([awkward,'{"verdict":"pass","reason":""}'],[polished]);
+const polishedResult=await generateGroundedReply({engine:edited,figure:f,passage:'',history:[],question:'Was würden Sie Boris sagen?'});
+assert.equal(polishedResult.text,polished);assert.equal(polishedResult.qualityVersion,QUALITY_VERSION);
+assert.match(edited.calls[2].messages.at(-1).content,/164 Menschen/);
+const editorChangesFact=fakeEngine([goodKoch,goodKoch],['Ich bin kinderlos.','Ich habe keine Kinder.']);
+await assert.rejects(()=>generateGroundedReply({engine:editorChangesFact,figure:f,passage:'',history:[],question:'Was sagen Sie Boris?'}),ReplyRejected);
+assert.equal(messagesFor(f,'',[{role:'user',content:'Alt'},{role:'assistant',content:awkward,validated:true,profileVersion:PROFILE_VERSION}],'Neu').length,2);
+console.log('Sprachqualität: Originalbeispiel korrigiert, Flugabbruch nicht als Abschuss akzeptiert, überarbeiteter Text erneut auf Fakten geprüft.');
+
+assert.ok(expressionIssues('koch','Es war schwer. Ich wollte helfen.','Was würden Sie Boris zu Ihrer Entscheidung sagen?').length);
+assert.equal(expressionIssues('koch',polished,'Was bedeutet Ihre Entscheidung für die Kinder?').length,0);
+
+assert.ok(expressionIssues('koch','Meine Entscheidung war falsch.','Was würden Sie Boris sagen?').length);
+assert.equal(expressionIssues('koch','Ich habe das Flugzeug abgeschossen und dabei 164 Menschen getötet. Ich wollte Menschen retten; das nimmt mir die Verantwortung nicht ab.','Was bedeutet die Entscheidung?').length,0);
+assert.match(messagesFor(f,'',[],'Warum?')[0].content,/Verteidige deine Entscheidung/);
+
+assert.ok(expressionIssues('koch','Ich weiss, wie es sich anfühlt, einen Elternteil zu verlieren.').length);
+assert.ok(expressionIssues('koch','Andere Familien haben dadurch zerbrochen.').length);
