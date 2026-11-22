@@ -1,5 +1,5 @@
-import {profileFor,RELATIONS,PROFILE_VERSION} from './profiles.js?v=20261122-free7';
-import {messagesFor,visibleReply} from './core.js?v=20261122-free7';
+import {profileFor,RELATIONS,PROFILE_VERSION} from './profiles.js?v=20261122-free8';
+import {messagesFor,visibleReply} from './core.js?v=20261122-free8';
 export const CHECK_SCHEMA=JSON.stringify({type:'object',properties:{verdict:{type:'string',enum:['pass','revise']},reason:{type:'string',maxLength:180}},required:['verdict','reason'],additionalProperties:false});
 export class ReplyRejected extends Error {}
 const normalized=s=>s.normalize('NFKC').toLowerCase().replace(/ß/g,'ss');

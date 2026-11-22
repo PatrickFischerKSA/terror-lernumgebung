@@ -92,3 +92,6 @@ assert.equal(repEngine.calls[1].messages.length,2);
 
 assert.ok(identityConflicts('meiser','Die SMS zeigt, dass mein Vater sich Sorgen machte.').length);
 assert.equal(identityConflicts('meiser','Mein Mann ist der Vater meiner Tochter. Seine SMS berichtete vom Versuch, ins Cockpit zu gelangen.').length,0);
+
+const smsPrompt=messagesFor(figures.find(f=>f.id==='meiser'),'',[],'Wie erklären Sie Ihrer Tochter die SMS ihres Vaters?').at(-1).content;
+assert.match(smsPrompt,/Ehemann/);assert.match(smsPrompt,/Cockpit/);
