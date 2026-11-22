@@ -1,4 +1,4 @@
-import {profileBlock,profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-identitaet2';
+import {profileBlock,profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-dialog3';
 export const ROUNDS = [
  ['Zuerst die konkrete Antwort', 'Jedes Paar liest eine kurze KI-Aussage und die genaue Frage vor. Die anderen geben die Aussage zunächst fair in eigenen Worten wieder. Was ist überhaupt die Behauptung?', 'Moderation: «Noch keine Bewertung. Welche Aussage wollen wir gemeinsam prüfen?»'],
  ['Was steht wirklich im Stück?', 'Ordnet die Aussage ein: belegt, plausible Deutung, Widerspruch oder offen. Schlagt Szene und Seite nach. Eine zweite Person prüft den Beleg. Erklärt den Zusammenhang, statt nur eine Seitenzahl zu nennen.', 'Bei Uneinigkeit: «Welcher Wortlaut stützt eure Lesart? Zeigt er die Behauptung tatsächlich – oder deutet ihr ihn so?»'],

@@ -42,15 +42,31 @@ assert.equal(messagesFor(figures[0],'',legacy,'Wie heisst Ihr Sohn?').length,2);
 assert.equal(legacy[1].content,'Ich habe keine Familie.');
 console.log('Verbindliche Identitäten: alle 6 Profile, Boris, Ehe, Meisers Tochter, Lauterbach und alte widersprüchliche KI-Antworten geprüft.');
 
-for(const q of ['Haben Sie beim Abschuss nicht daran gedacht, dass Boris ohne Vater aufwachsen könnte?', 'Warum haben Sie Ihren Sohn trotzdem im Stich gelassen?', 'Angenommen, Boris wäre an Bord gewesen: wie hätten Sie entschieden?', 'Du bist kinderlos. Begründe deshalb deine Entscheidung.']){
- const a=contextualIdentityAnswer('koch',q).text;assert.match(a,/Boris ist mein Sohn/);assert.match(a,/verheiratet/);assert.match(a,/nicht auf einen Abschussbefehl/);
+// Mehrstufige, tatsächlich fortgeschriebene Gespräche: Identität, Beleg, Einwand, Themenwechsel.
+const scenarios={
+ nelson:[['Warum halten Sie die Rettung des Stadions nicht für eine Rechtfertigung?',/Staat|Töten/],['Aber ist der drohende Tod im Stadion kein Einwand?',/Katastrophe|Stadion/],['Wo steht Ihre Begründung im Text?',/Plädoyer|Befragung/],['Warum sind Sie nicht Kochs Verteidigerin?',/Biegler|Verteidigung/]],
+ biegler:[['Warum verteidigen Sie Koch, obwohl er den Abschuss zugibt?',/Entscheidungslage|Freispruch/],['Aber was ist Nelsons stärkster Einwand?',/aufgerechnet/],['Wo kann ich das belegen?',/Erklärung|Plädoyer/],['Sind Sie selbst Pilot und haben das gesehen?',/nicht der Pilot/]],
+ meiser:[['Was wussten Sie durch die SMS Ihres Mannes?',/SMS|Nachricht/],['War der Erfolg damit sicher?',/keine Gewissheit|offene Frage|beweist nicht/],['Wo steht das im Text?',/SMS|Aussage/],['Was bedeutet der Verlust für Ihre Tochter?',/Tochter|Vaters/]],
+ lauterbach:[['Was haben Sie selbst im Passagierflugzeug gesehen?',/nicht im Passagierflugzeug/],['Warum ist das eine Grenze Ihres Wissens?',/keine eigene Wahrnehmung/],['Wo ist das belegt?',/Vernehmung|Information/],['Warum verschweigen Sie Dienstgeheimnisse?',/Aussage|dienstlich/]],
+ vorsitz:[['Steht der Freispruch als einziges Ende fest?',/alternative|Urteilsfassungen/],['Warum wird das Publikum einbezogen?',/Publikumsansprache|Zuschauenden/],['Wo kann ich beide Fassungen vergleichen?',/Urteilsfassungen/],['Sind Sie als Vorsitzender zugleich Ankläger?',/Nelson|Ankläger|Verteidiger/]]
+};
+for(const [id,questions] of Object.entries(scenarios)){
+ const chat=[];const replies=[];
+ for(const [q,expected] of questions){const a=contextualIdentityAnswer(id,q,chat);assert.ok(a,`${id}: ${q}`);assert.match(a.text,expected,`${id}: ${q}`);replies.push(a.text);chat.push({role:'user',content:q},{role:'assistant',content:a.text,identityTopic:a.topic,profileVersion:PROFILE_VERSION});}
+ assert.equal(new Set(replies).size,questions.length,`${id}: keine wiederholte Profilantwort`);
+ const before=JSON.stringify(chat);const privateAnswer=contextualIdentityAnswer(id,'Wie beeinflusst Ihr Sohn Boris Ihre Haltung?',chat);assert.ok(privateAnswer);assert.equal(JSON.stringify(chat),before);
+ if(!['meiser'].includes(id))assert.match(privateAnswer.text,/Kochs Sohn/);
 }
-const chain=[{role:'user',content:'Was bedeutet Boris für Sie?'}];
-for(const q of ['Warum trotzdem?', 'Was sagen Sie ihm?', 'Und wenn er fragt?'])assert.match(contextualIdentityAnswer('koch',q,chain).text,/Boris ist mein Sohn/);
-for(const id of Object.keys(PROFILES))assert.ok(contextualIdentityAnswer(id,'Wie beeinflusst Ihre Familie Ihre Haltung?').text);
-assert.match(contextualIdentityAnswer('meiser','Warum leidet Ihre Tochter?').text,/sieben/);
-assert.match(contextualIdentityAnswer('nelson','Warum beeinflusst Ihr Sohn Ihre Anklage?').text,/keine gesicherten Angaben/);
-console.log('Komplexe Identitätsfragen: Entscheidung, falsche Prämissen, Gegenhypothesen und Nachfragen ohne Modell geprüft.');
+const kochChat=[];
+for(const q of ['Haben Sie beim Abschuss an Boris gedacht?', 'Warum trotzdem?', 'Und wenn er an Bord gewesen wäre?', 'Wo steht das im Text?']){
+ const a=contextualIdentityAnswer('koch',q,kochChat);assert.match(a.text,/Boris ist mein Sohn/);assert.match(a.text,/verheiratet/);kochChat.push({role:'user',content:q},{role:'assistant',content:a.text,identityTopic:a.topic});
+}
+assert.equal(new Set(kochChat.filter(m=>m.role==='assistant').map(m=>m.content)).size,4);
+assert.equal(contextualIdentityAnswer('nelson','Frau Nelson, was essen Sie zum Frühstück?'),null);
+assert.equal(contextualIdentityAnswer('meiser','Was ist die Hauptstadt von Frankreich?'),null);
+assert.equal(contextualIdentityAnswer('koch',''),null);
+console.log('Alle sechs Figuren: vierstufige Gespräche, konkrete Begründung/Einwand/Beleg, Themenwechsel, Familienverwechslung und unterschiedliche Antworten geprüft.');
 
-const continued=[{role:'assistant',content:'Geprüfte Antwort',identityTopic:'Identität und Deutung'}];
-assert.match(contextualIdentityAnswer('koch','Und warum trotzdem?',continued).text,/Boris ist mein Sohn/);
+const roleHistory=[{role:'assistant',identityTopic:'recht',content:'Argument zur Anklage'}];
+assert.equal(contextualIdentityAnswer('nelson','Warum ist Paris die Hauptstadt von Frankreich?',roleHistory),null);
+assert.match(contextualIdentityAnswer('nelson','Wo wohnen Sie?',roleHistory).text,/Wohnort/);

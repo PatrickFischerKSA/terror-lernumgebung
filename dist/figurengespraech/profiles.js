@@ -1,6 +1,7 @@
+import {topicAnswer} from './dialogue.js?v=20261122-dialog3';
 // Redaktionell am bereitgestellten Stücktext geprüft. Keine Modellgenerierung.
 // PDF-Seiten beziehen sich auf die 103-seitige Arbeitsausgabe, nicht auf jede Druckausgabe.
-export const PROFILE_VERSION='2026-11-22-identitaeten-2';
+export const PROFILE_VERSION='2026-11-22-identitaeten-3';
 const privateUnknown='Zu Ehe, Kindern und sonstigem Privatleben werden in der verwendeten Stückgrundlage keine gesicherten Angaben zu dieser Figur hinterlegt. Das ist keine Aussage, dass die Figur unverheiratet oder kinderlos ist. Keine Angaben erfinden.';
 export const PROFILES=Object.freeze({
  koch:{name:'Lars Koch',intro:'Ich heisse Lars Koch. Ich bin im Stück 31 Jahre alt, verheiratet und Vater eines Sohnes. Als Major und Kampfpilot der Luftwaffe stehe ich hier als Angeklagter vor Gericht.',
@@ -19,7 +20,7 @@ export function identityAnswer(id,question){
  const p=profileFor(id),q=question.normalize('NFKC').toLowerCase().replace(/ß/g,'ss');
  if(/\b(warum|weshalb|wieso|wenn|würde|würden|hätte|hätten|rechtfertig|opfern|abwägen|gefühle|fühlen)\b/.test(q))return null;
  if(/(bist du|sind sie).{0,20}(vater|mutter)/.test(q))return {text:p.family,topic:'Familie'};
- if(/\b(familie|verheiratet|ledig|kinderlos|ehefrau|ehemann|frau|mann|sohn|söhne|tochter|töchter|kinder|kind|boris|ehe|partner)\b/.test(q))return {text:p.family,topic:'Familie'};
+ if(/\b(familie|verheiratet|ledig|kinderlos|ehefrau|ehemann|sohn|söhne|tochter|töchter|kinder|kind|boris|ehe|partner)\b/.test(q))return {text:p.family,topic:'Familie'};
  if(/\b(eltern|vater|mutter|schwester|geschwister)\b/.test(q) && id==='koch')return {text:'Mein Vater war bei der Bundeswehr, meine Mutter Buchhändlerin. Ich habe eine drei Jahre jüngere Schwester und bin in Freiburg aufgewachsen.',topic:'Herkunft'};
  if(/(wie alt|alter\b|geboren|geburtsdatum|geburtstag)/.test(q))return {text:p.age,topic:'Personalien'};
  if(/(wohn|wohnort|woher|herkunft|lebst|leben sie|leben du)/.test(q))return {text:p.home,topic:'Wohnort'};
@@ -28,20 +29,7 @@ export function identityAnswer(id,question){
  return null;
 }
 
-// Identity-bearing interpretations use reviewed text, never unconstrained model output.
-const familyTopic=/famil|verheirat|ledig|kinderlos|ehe|\b(?:frau|mann|sohn|söhne|tochter|töchter|kind|kinder|boris|vater|mutter)\b/i;
-const decisionTopic=/entscheid|abschuss|abgeschossen|absch[iie]ss|befehl|verantwort|opfer|rechtfert|schuld|gewissen/i;
 export function contextualIdentityAnswer(id,question,history=[]){
- const p=profileFor(id), q=question.normalize('NFKC');
- const recent=history.filter(m=>m.role==='user').slice(-2).map(m=>m.content).join(' ');
- const followup=/\b(warum|weshalb|wieso|trotzdem|dennoch|damit|daran|dabei|das|er|ihn|ihm|sie|ihr)\b/i.test(q) && (familyTopic.test(recent)||history.at(-1)?.identityTopic==='Identität und Deutung');
- if(!familyTopic.test(q)&&!followup&&!(id==='koch'&&decisionTopic.test(q)))return identityAnswer(id,q);
- let text=p.family;
- if(id==='koch')text='Boris ist mein Sohn, im Stück zwei Jahre alt. Ich bin verheiratet. Ich habe bei meiner Entscheidung an meine Frau und meinen Sohn gedacht. '+
- 'Ich habe den Abschuss selbst entschieden; ich kann die Verantwortung dafür nicht auf einen Abschussbefehl abschieben. '+
- 'Als mögliche Deutung meiner Haltung: Auch als Vater muss ich mich der Frage stellen, wie ich das Töten der Menschen an Bord rechtfertige. Meine eigene Familie hebt deren Lebensrecht nicht auf. '+
- 'Welche zusätzlichen Gefühle oder Reaktionen Boris haben könnte, ist damit nicht als Tatsache belegt.';
- else if(id==='meiser')text+=' Als mögliche Deutung: Der Verlust meines Mannes betrifft auch unsere Tochter. Welche Gedanken oder späteren Reaktionen sie hat, darf ich ohne Textbeleg nicht als Tatsache ausgeben.';
- else text+=' Aus einer nicht belegten privaten Biografie lässt sich meine Haltung im Verfahren nicht begründen. Dafür sind meine Prozessrolle und die Aussagen im Stück massgeblich.';
- return {text,topic:'Identität und Deutung'};
+ const p=profileFor(id);
+ return topicAnswer(id,question,history)||identityAnswer(id,question);
 }
