@@ -50,7 +50,7 @@ const topics={
  'Prüft meine Vernehmung: Welche Information stammt aus dem Führungsablauf, und welche unmittelbare Wahrnehmung könnte ich überhaupt haben?'],
  ['dienst',/befehl|dienst|geheim|rang|major|pilot|abschuss|verantwort|koch|verwandt/i,
  'Ich bin Oberstleutnant und war Duty Controller. Koch ist der Major und Pilot des Abschusses; ich bin mit ihm weder verwandt noch verschwägert.',
- 'Ich sage über den dienstlichen Ablauf aus. Kochs eigene Entscheidung darf ich nicht in eine eigene Pilotenerinnerung umschreiben.',
+ 'Bei Dienstgeheimnissen ist meine Aussagebefugnis begrenzt. Das erlaubt mir nicht, fehlende Informationen zu erfinden; ich muss die Grenze benennen. Kochs Entscheidung ist keine eigene Pilotenerinnerung von mir.',
  'Dienstgeheimnisse begrenzen meine Aussagebefugnis. Das ist weder ein Beweis für ein bestimmtes Geheimnis noch eine Erlaubnis, fehlende Informationen zu erfinden.',
  'Schlagt die Belehrung und meine Aussage nach. Unterscheidet Dienstgrad, Funktion, Befehlskette und persönliche Verantwortung.']
  ],
@@ -80,6 +80,7 @@ export function topicAnswer(id,question,history){
  const q=question.normalize('NFKC').trim();if(!q)return null;
  const entries=topics[id]||[];
  let entry=entries.find(e=>e[1].test(q));
+ if(id==='biegler'&&/selbst|pilot|staatsanw|ankläger/i.test(q))entry=entries.find(e=>e[0]==='rolle');
  const last=history.filter(m=>m.role==='assistant').at(-1);
  const previousQuestion=history.filter(m=>m.role==='user').at(-1)?.content||'';
  if(!entry&&/wohn|geburts|frühstück|hauptstadt|wie alt|wie heiss|beruf/i.test(q))return null;
@@ -97,7 +98,9 @@ export function topicAnswer(id,question,history){
  if(/^(warum|weshalb|wieso)\b/i.test(q)&&!/wenn|hätte|würde/i.test(q))facet=1;
  // A bare follow-up develops the same subject rather than replaying its opening statement.
  if(follow.test(q)&&!entries.some(e=>e[1].test(q))&&!/beleg|text|stelle|wo steht|wo kann|vergleichen|nachweis|woher|warum|weshalb|wieso|begründen|bedeut|folg|motiv|wenn|hätte|würde|einwand|trotz|gegenargument|aber|sicher/i.test(q))facet=(prior.length)%4;
+ if(/(?:sind sie|bist du).*(?:staatsanw|verteidig|pilot|ankläger|vorsitz)/i.test(q)&&['rolle','leitung','dienst'].includes(entry[0]))facet=0;
  let text=entry[facet+2];
+ if(id==='meiser'&&/boris/i.test(q)&&!text.includes('Boris'))text='Boris ist Kochs Sohn, nicht mein Kind. '+text;
  // Keep the anchor concise; never replace the concrete answer by the complete profile.
  const anchor=id==='koch'?'Boris ist mein Sohn, im Stück zwei Jahre alt; ich bin verheiratet. ':id==='meiser'?'Ich bin Franziska Meiser, Nebenklägerin und Zeugin; meine Tochter ist sieben. ':'';
  if(anchor&&!text.includes(id==='koch'?'Boris ist mein Sohn':'sieben'))text=anchor+text;

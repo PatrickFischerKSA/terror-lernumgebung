@@ -55,7 +55,7 @@ for(const [id,questions] of Object.entries(scenarios)){
  for(const [q,expected] of questions){const a=contextualIdentityAnswer(id,q,chat);assert.ok(a,`${id}: ${q}`);assert.match(a.text,expected,`${id}: ${q}`);replies.push(a.text);chat.push({role:'user',content:q},{role:'assistant',content:a.text,identityTopic:a.topic,profileVersion:PROFILE_VERSION});}
  assert.equal(new Set(replies).size,questions.length,`${id}: keine wiederholte Profilantwort`);
  const before=JSON.stringify(chat);const privateAnswer=contextualIdentityAnswer(id,'Wie beeinflusst Ihr Sohn Boris Ihre Haltung?',chat);assert.ok(privateAnswer);assert.equal(JSON.stringify(chat),before);
- if(!['meiser'].includes(id))assert.match(privateAnswer.text,/Kochs Sohn/);
+ assert.match(privateAnswer.text,/Kochs Sohn/);
 }
 const kochChat=[];
 for(const q of ['Haben Sie beim Abschuss an Boris gedacht?', 'Warum trotzdem?', 'Und wenn er an Bord gewesen wäre?', 'Wo steht das im Text?']){
@@ -70,3 +70,6 @@ console.log('Alle sechs Figuren: vierstufige Gespräche, konkrete Begründung/Ei
 const roleHistory=[{role:'assistant',identityTopic:'recht',content:'Argument zur Anklage'}];
 assert.equal(contextualIdentityAnswer('nelson','Warum ist Paris die Hauptstadt von Frankreich?',roleHistory),null);
 assert.match(contextualIdentityAnswer('nelson','Wo wohnen Sie?',roleHistory).text,/Wohnort/);
+
+assert.match(contextualIdentityAnswer('lauterbach','Warum schweigen Sie über Dienstgeheimnisse?').text,/Aussagebefugnis/);
+assert.match(contextualIdentityAnswer('biegler','Sind Sie als Kochs Verteidiger selbst Pilot?').text,/nicht der Pilot/);
