@@ -121,3 +121,6 @@ assert.match(messagesFor(f,'',[],'Warum?')[0].content,/Verteidige deine Entschei
 
 assert.ok(expressionIssues('koch','Ich weiss, wie es sich anfühlt, einen Elternteil zu verlieren.').length);
 assert.ok(expressionIssues('koch','Andere Familien haben dadurch zerbrochen.').length);
+
+assert.ok(expressionIssues('biegler','Ich vertrete die Position, dass der Abschuss eine Notwehr war.').length);
+assert.equal(expressionIssues('biegler','Ich verteidige Koch und bestreite die strafrechtliche Bewertung der Anklage.').length,0);

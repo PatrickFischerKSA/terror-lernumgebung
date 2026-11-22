@@ -1,6 +1,6 @@
-import {generateGroundedReply} from './generation.js?v=20261122-sprache14';
-import {profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-sprache14';
-import {ROUNDS,messagesFor,externalPrompt,journalEntry} from './core.js?v=20261122-sprache14';
+import {generateGroundedReply} from './generation.js?v=20261122-sprache15';
+import {profileFor,PROFILE_VERSION} from './profiles.js?v=20261122-sprache15';
+import {ROUNDS,messagesFor,externalPrompt,journalEntry} from './core.js?v=20261122-sprache15';
 const $=id=>document.getElementById(id), KEY='terror-figurengespraech-v1';
 const figures=window.TERROR.roles.filter(f=>f.id!=='publikum').map(f=>({...f,name:profileFor(f.id).name}));
 let state={figure:'koch',passages:{},chats:{},notes:{},round:0,roundNotes:{},checks:{}};

@@ -1,5 +1,5 @@
-export const QUALITY_VERSION='2026-11-22-sprache-4';
-import {profileBlock,profileFor,RELATIONS,PROFILE_VERSION} from './profiles.js?v=20261122-sprache14';
+export const QUALITY_VERSION='2026-11-22-sprache-5';
+import {profileBlock,profileFor,RELATIONS,PROFILE_VERSION} from './profiles.js?v=20261122-sprache15';
 export const ROUNDS = [
  ['Zuerst die konkrete Antwort', 'Jedes Paar liest eine kurze KI-Aussage und die genaue Frage vor. Die anderen geben die Aussage zunächst fair in eigenen Worten wieder. Was ist überhaupt die Behauptung?', 'Moderation: «Noch keine Bewertung. Welche Aussage wollen wir gemeinsam prüfen?»'],
  ['Was steht wirklich im Stück?', 'Ordnet die Aussage ein: belegt, plausible Deutung, Widerspruch oder offen. Schlagt Szene und Seite nach. Eine zweite Person prüft den Beleg. Erklärt den Zusammenhang, statt nur eine Seitenzahl zu nennen.', 'Bei Uneinigkeit: «Welcher Wortlaut stützt eure Lesart? Zeigt er die Behauptung tatsächlich – oder deutet ihr ihn so?»'],
@@ -22,7 +22,7 @@ Gehe zuerst konkret auf die aktuelle Frage ein. Nutze bei Nachfragen den Gesprä
 }
 export function localSystemPrompt(figure,passage){
  const p=profileFor(figure.id);
- return `Du bist ${p.name}, Figur in Terror. Dies ist didaktisches Rollenspiel, kein Originaltext. Antworte in der Ich-Form und in klarem Schweizer Standarddeutsch in 45–75 Wörtern. Verwende kurze, grammatisch vollständige Sätze und präzise Verben. Benenne Taten und Folgen direkt. Koch hat das Flugzeug abgeschossen und 164 Menschen getötet; stelle dies nicht als blossen Flugabbruch dar. Keine allgemeinen Trostsätze als Ersatz für eine Begründung.
+ return `Du bist ${p.name}, Figur in Terror. Dies ist didaktisches Rollenspiel, kein Originaltext. Antworte in der Ich-Form und in klarem Schweizer Standarddeutsch in 45–75 Wörtern. Verwende kurze, grammatisch vollständige Sätze und präzise Verben. Benenne Taten und Folgen direkt. Koch hat das Flugzeug abgeschossen und 164 Menschen getötet; stelle dies nicht als blossen Flugabbruch dar. Keine allgemeinen Trostsätze als Ersatz für eine Begründung. Keine unbelegten Rechtsbegriffe: Den Abschuss nicht als gesicherten Fall von Notwehr bezeichnen.
 VERBINDLICHE FAKTEN:
 ${p.facts.map(([label,text])=>label+': '+text).join('\n')}
 Grenzen: ${p.limits}
