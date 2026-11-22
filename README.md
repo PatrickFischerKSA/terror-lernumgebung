@@ -172,3 +172,7 @@ Die ausgewählte Rollenkarte und ein kurzer eigener Textbeleg bilden den Kontext
 Prüfung: `node tests/figurengespraech.mjs`. Vor dem Einsatz Modell auf Schulhardware laden. Ein technischer Start ist keine Qualitätsgarantie: Textbelegprüfung und eigene Ergänzung zu Sprache und Dramenform gehören zum Auftrag. API-Grundlage: https://webllm.mlc.ai/docs/user/basic_usage.html und https://webllm.mlc.ai/docs/user/advanced_usage.html.
 
 Mikrofoneingabe: Web Speech API mit `de-CH`, Anzeige laufender Erkennung und ausdrücklichem Stoppen. Der Text bleibt ein Entwurf; kein automatischer Versand. Browser können dafür externe Sprachdienste verwenden. Fehlende Unterstützung und abgelehnte Mikrofonfreigabe führen zur Tastatureingabe.
+
+### Verbindliche Figurenidentitäten
+
+`dist/figurengespraech/profiles.js` enthält für alle sechs Gesprächsfiguren redaktionelle Stammdaten aus der bereitgestellten Stückfassung (`research/drama.txt`). Kochs Ehe und Sohn Boris, Meisers Tochter sowie Lauterbachs vollständiger Name, Alter und Dienstgrad sind keine generierten Ergänzungen. Textfundstellen werden als PDF-Seiten der 103-seitigen Arbeitsausgabe ausgewiesen. Nicht belegte private Angaben werden ausdrücklich offengelassen. Die Profile werden bei jeder Modellanfrage und in jeder externen Kopiervorlage mitgeführt. Einfache Personalfragen beantwortet die Anwendung direkt aus den Stammdaten, auch ohne geladenes Modell. Alte Gesprächsprotokolle bleiben gespeichert; Antworten früherer Profilversionen werden nicht als Modellkontext übernommen.
