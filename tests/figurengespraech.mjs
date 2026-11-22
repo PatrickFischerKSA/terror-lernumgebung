@@ -7,7 +7,7 @@ const ctx={};ctx.window=ctx;vm.runInNewContext(fs.readFileSync(new URL('../dist/
 const figures=ctx.window.TERROR.roles.filter(f=>f.id!=='publikum');assert.equal(figures.length,6);
 for(const f of figures){const prompt=systemPrompt(f,'Unser kurzer Beleg (S. 42).');assert.ok(prompt.includes(f.name));assert.ok(prompt.includes(f.knowledge));assert.ok(prompt.includes('keine Ereignisse, Zitate'));assert.ok(prompt.includes('S. 42'));}
 const history=Array.from({length:5},(_,i)=>[{role:'user',content:`Frage ${i}`},{role:'assistant',content:`Antwort ${i}`,profileVersion:PROFILE_VERSION,validated:true}]).flat();
-const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,8);assert.equal(messages[1].content,'Frage 2');assert.ok(messages.at(-1).content.startsWith('Neue Frage\n'));assert.match(messages.at(-1).content,/Boris/);
+const messages=messagesFor(figures[0],'Beleg',history,'Neue Frage');assert.equal(messages.length,8);assert.equal(messages[1].content,'Frage 2');assert.ok(messages.at(-1).content.endsWith('AKTUELLE FRAGE: Neue Frage'));assert.match(messages.at(-1).content,/Boris/);
 assert.deepEqual(messagesFor(figures[0],'',[{role:'user',content:'Fehlgeschlagen'},{role:'assistant',content:'',failed:true}],'Neu').map(m=>m.role),['system','user']);
 const old={notes:{alte:{text:'Meine manuelle Arbeit',route:'lektuere'}},done:['a'],sim:{stage:3},other:{keep:1}};const oldJSON=JSON.stringify(old);const updated=journalEntry(old,'Neues Protokoll',123);assert.equal(JSON.stringify(old),oldJSON);assert.deepEqual(updated.notes.alte,old.notes.alte);assert.equal(updated.notes['figurengespraech-123'].text,'Neues Protokoll');assert.deepEqual(updated.other,old.other);assert.notEqual(Object.keys(journalEntry(updated,'Weiteres Protokoll',123).notes).at(-1),'figurengespraech-123');
 assert.throws(()=>journalEntry({notes:'kaputt'},'Text'));
@@ -43,7 +43,7 @@ assert.equal(legacy[1].content,'Ich habe keine Familie.');
 console.log('Verbindliche Identitäten: alle 6 Profile, Boris, Ehe, Meisers Tochter, Lauterbach und alte widersprüchliche KI-Antworten geprüft.');
 
 
-const {generateGroundedReply,identityConflicts,parseCheck,ReplyRejected}=await import('../dist/figurengespraech/generation.js');
+const {generateGroundedReply,identityConflicts,parseCheck,ReplyRejected,repeatsReply}=await import('../dist/figurengespraech/generation.js');
 const goodKoch='Boris ist mein Sohn. Dass ich Vater bin, hebt die Verantwortung für meine Entscheidung nicht auf. Ich wollte die Menschen im Stadion retten; ob die Passagiere sich hätten retten können, wusste ich nicht sicher.';
 const answer=text=>({choices:[{message:{content:text},finish_reason:'stop'}]});
 function fakeEngine(outputs){const calls=[];return {calls,interruptGenerate(){this.interrupted=true;},chat:{completions:{create:async request=>{calls.push(request);assert.ok(outputs.length,'Unerwarteter Modellaufruf');return answer(outputs.shift());}}}};}
@@ -72,3 +72,20 @@ console.log('Freie lokale Generierung: separate Prüfung, Korrektur, blockierte 
 assert.equal(identityConflicts('koch','Ich weiss nicht, wie Boris später reagieren würde.').length,0);
 assert.ok(identityConflicts('koch','Boris kenne ich nicht.').length);
 assert.equal(identityConflicts('nelson','Koch ist nicht mein Mandant.').length,0);
+
+const repeated='Ich vertrete die Anklage gegen Lars Koch. Seine Absicht, viele Menschen zu retten, ist nicht rechtfertigend, weil das Leben jedes Einzelnen gleichwertig ist. Das Recht schützt nicht nur den Täter, sondern alle Beteiligten. Kochs Entscheidung hat Menschen getötet. Der Staat muss alle schützen.';
+assert.equal(repeatsReply(repeated,repeated.replace('Das Recht','Der Staat')),true);
+assert.equal(repeatsReply(repeated,'Auch in diesem Gedankenexperiment würde ich die Menschenwürde für alle gelten lassen. Ob ich eine eigene Familie habe, ist im Stück nicht belegt.'),false);
+
+const duringCheck=new AbortController();let checkInterrupted=false;
+const pendingEngine={interruptGenerate(){checkInterrupted=true;},chat:{completions:{create:async request=>{if(request.response_format){queueMicrotask(()=>duringCheck.abort());return new Promise(()=>{});}return answer(goodKoch);}}}};
+await assert.rejects(()=>generateGroundedReply({engine:pendingEngine,figure:f,passage:'',history:[],question:'Was sagen Sie Boris?',signal:duringCheck.signal}),{name:'AbortError'});assert.equal(checkInterrupted,true);
+
+assert.equal(identityConflicts('nelson','Wenn mein Sohn im Stadion wäre, würde ich dieselben rechtlichen Massstäbe anwenden.').length,0);
+assert.ok(identityConflicts('nelson','Mein Sohn ist im Stadion.').length);
+
+const repeatedHistory=[{role:'user',content:'Warum klagen Sie an?'},{role:'assistant',content:repeated,validated:true,profileVersion:PROFILE_VERSION}];
+const novel='Auch in diesem Gedankenexperiment würde ich die gleichen Massstäbe anwenden. Mein privates Familienleben ist im Stück nicht belegt; die angenommene Betroffenheit ändert mein Argument zur Menschenwürde nicht.';
+const repEngine=fakeEngine([repeated.replace('Das Recht','Der Staat'),novel,'{"verdict":"pass","reason":""}']);
+assert.equal((await generateGroundedReply({engine:repEngine,figure:figures.find(f=>f.id==='nelson'),passage:'',history:repeatedHistory,question:'Und wenn Ihr Sohn im Stadion wäre?'})).text,novel);
+assert.equal(repEngine.calls[1].messages.length,2);
