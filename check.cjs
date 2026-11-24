@@ -25,3 +25,12 @@ ctx.location.hash='#journal';vm.runInContext('render()',ctx);
 assert(els.main.innerHTML.includes('href="#flydubai/ereignis"'));
 ctx.location.hash='#flydubai/unbekannt';vm.runInContext('render()',ctx);
 assert(els.main.innerHTML.includes('Diese Station gibt es nicht.'));
+
+// The conclusion follows all viewing material, never precedes it.
+ctx.location.hash='#film';vm.runInContext('render()',ctx);
+assert(els.main.innerHTML.indexOf('ending-entry')>els.main.innerHTML.lastIndexOf('class="film-credit"'));
+assert.equal((els.main.innerHTML.match(/class="section card ending-entry"/g)||[]).length,1);
+ctx.location.hash='#lektuere/urteile';vm.runInContext('render()',ctx);
+assert(els.main.innerHTML.indexOf('id="filmabschluss"')>els.main.innerHTML.indexOf('id="readerVideoMount"'));
+assert(els.main.innerHTML.indexOf('id="filmabschluss"')>els.main.innerHTML.indexOf('id="readerPdfMount"'));
+console.log('Reihenfolge: Schlussauswahl folgt Szenengalerie, Film und Text.');
