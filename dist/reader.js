@@ -63,7 +63,6 @@ const READER_ORIGINAL_QUESTIONS = {
 
 function readerScene(id){const s=window.TERROR.scenes.find(s=>s.id===id);return s?.parts?{...s,...s.parts[readerPart]}:s;}
 function sceneReading(m){
- if(m.id==='urteile'&&!endingsReady())return endingGate();
  if(readerModule!==m.id){readerQuestion=0;readerPart=0;readerModule=m.id;}const s=readerScene(m.id),index=D.modules.indexOf(m);
  return `<div class="reader-heading"><div><p class="breadcrumb"><a href="#lektuere">Text erschliessen</a> / Leseraum</p>${head((s?'TEXT × FILM / SZENE ':'TEXTSTATION / VERTIEFUNG ')+String(index+1).padStart(2,'0'),m.title,READER_ORIGINAL_QUESTIONS[m.id]?'':m.goal)}</div><a class="button secondary small" href="#journal">Mein Journal ↗</a></div>
  <div class="reader-layout" id="readerWorkspace" data-module="${m.id}"><aside class="scene-rail" aria-label="Szenen und Textstationen"><div class="rail-heading">DEIN LESERAUM <span>12 Stationen</span></div>${D.modules.map((x,i)=>{const c=D.scenes.find(s=>s.id===x.id);return `<a href="#lektuere/${x.id}" class="scene-link ${x.id===m.id?'active':''}" ${x.id===m.id?'aria-current="step"':''}><span class="scene-number">${String(i+1).padStart(2,'0')}</span><span><strong>${c?.title||x.title}</strong><small>PDF ${x.pages}${c?' · '+fmtTime(c.start):' · Vertiefung'}${state.done.includes(x.id)?' · ✓':''}</small></span></a>`;}).join('')}</aside>
