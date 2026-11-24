@@ -39,6 +39,8 @@ jobs:
           node tests/aviation.cjs
           node check.cjs
           node feedback-check.cjs
+          node --check dist/film-endings.js
+          node tests/film-endings.cjs
           node --check dist/spielraum/court.js
           node --check dist/spielraum/content.js
           node tests/content.mjs
