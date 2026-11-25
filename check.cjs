@@ -39,3 +39,9 @@ console.log('Reihenfolge: Schlussauswahl folgt Szenengalerie, Film und Text.');
 for(const route of ['film/abschluss','lektuere/urteile']){ctx.location.hash='#'+route;vm.runInContext('state.notes={};render()',ctx);assert(!els.main.innerHTML.includes('ending-gate'));assert(els.main.innerHTML.includes('data-ending-select="schuldig"'));assert(els.main.innerHTML.includes('data-ending-select="unschuldig"'));assert(!els.main.innerHTML.includes('data-release-endings'));}
 ctx.location.hash='#lektuere/auftakt';vm.runInContext('render()',ctx);assert(els.main.innerHTML.indexOf('id="readerVideoMount"')<els.main.innerHTML.indexOf('data-original-answer'));
 console.log('Schlussclips ohne Pflichtantwort zugänglich; Film und Text stehen vor den Aufgaben.');
+
+// Every scene keeps film/PDF ahead of answer fields, all supplementary clips ahead of tasks.
+for(const m of D.modules){ctx.location.hash='#lektuere/'+m.id;vm.runInContext('render()',ctx);const h=els.main.innerHTML,answer=h.indexOf('data-original-answer');if(answer>=0){assert(h.indexOf('id="readerVideoMount"')<answer,m.id);assert(h.indexOf('id="readerPdfMount"')<answer,m.id);}}
+for(const route of ['start','rollen/koch','rollen/meiser','rollen/lauterbach','recht','philosophie','dilemma','simulation','politik']){ctx.location.hash='#'+route;vm.runInContext('render()',ctx);const h=els.main.innerHTML;assert(h.indexOf('class="film-insert"')>=0,route);assert(h.indexOf('class="film-insert"')<h.indexOf('data-note'),route);assert.equal((h.match(/class="film-insert"/g)||[]).length,1,route);}
+ctx.location.hash='#film/abschluss';vm.runInContext('state.notes={};render()',ctx);assert(els.main.innerHTML.indexOf('data-ending-select')<els.main.innerHTML.indexOf('data-ending-question'));
+console.log('Gesamtfolge: Szenenmedien vor Fragen, Kontextclips vor Arbeitsaufträgen, freie Schlusswahl vor Reflexion.');
